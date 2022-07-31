@@ -8,7 +8,7 @@ function App() {
       {({ signOut }) => ( 
         <div className="App"> 
           <h1>Hello world</h1> 
-          <button onClick={signOut}>Sign Out</button> 
+          <button onClick={signOut}>Sign Ou</button> 
         </div> 
       )} 
 
