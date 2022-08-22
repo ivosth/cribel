@@ -1,9 +1,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = /* GraphQL */ `
-  subscription OnCreateTodo {
-    onCreateTodo {
+export const onCreateTopic = /* GraphQL */ `
+  subscription OnCreateTopic {
+    onCreateTopic {
       id
       name
       description
@@ -12,9 +12,9 @@ export const onCreateTodo = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateTodo = /* GraphQL */ `
-  subscription OnUpdateTodo {
-    onUpdateTodo {
+export const onUpdateTopic = /* GraphQL */ `
+  subscription OnUpdateTopic {
+    onUpdateTopic {
       id
       name
       description
@@ -23,12 +23,54 @@ export const onUpdateTodo = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteTodo = /* GraphQL */ `
-  subscription OnDeleteTodo {
-    onDeleteTodo {
+export const onDeleteTopic = /* GraphQL */ `
+  subscription OnDeleteTopic {
+    onDeleteTopic {
       id
       name
       description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateArticle = /* GraphQL */ `
+  subscription OnCreateArticle {
+    onCreateArticle {
+      id
+      name
+      topics
+      author
+      hmtl
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateArticle = /* GraphQL */ `
+  subscription OnUpdateArticle {
+    onUpdateArticle {
+      id
+      name
+      topics
+      author
+      hmtl
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteArticle = /* GraphQL */ `
+  subscription OnDeleteArticle {
+    onDeleteArticle {
+      id
+      name
+      topics
+      author
+      hmtl
+      date
       createdAt
       updatedAt
     }
