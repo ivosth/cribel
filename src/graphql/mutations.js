@@ -53,8 +53,7 @@ export const createArticle = /* GraphQL */ `
       name
       topics
       author
-      hmtl
-      date
+      html
       createdAt
       updatedAt
     }
@@ -70,8 +69,7 @@ export const updateArticle = /* GraphQL */ `
       name
       topics
       author
-      hmtl
-      date
+      html
       createdAt
       updatedAt
     }
@@ -87,8 +85,7 @@ export const deleteArticle = /* GraphQL */ `
       name
       topics
       author
-      hmtl
-      date
+      html
       createdAt
       updatedAt
     }

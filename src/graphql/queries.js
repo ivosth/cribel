@@ -37,8 +37,7 @@ export const getArticle = /* GraphQL */ `
       name
       topics
       author
-      hmtl
-      date
+      html
       createdAt
       updatedAt
     }
@@ -56,8 +55,7 @@ export const listArticles = /* GraphQL */ `
         name
         topics
         author
-        hmtl
-        date
+        html
         createdAt
         updatedAt
       }

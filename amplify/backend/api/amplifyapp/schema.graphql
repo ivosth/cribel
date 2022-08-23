@@ -31,11 +31,10 @@ type S3Object {
 }
 
 """
-type Article @model @auth(rules: [{ allow: private, operations: [read] }]) {
+type Article @model @auth(rules: [{ allow: groups, groups: ["admin"] } { allow: private, operations: [read] }]) {
   id: ID!
   name: String!
   topics: [String]!
   author: String!
-  hmtl: String #S3Object!
-  date: String
+  html: String #S3Object!
 }
