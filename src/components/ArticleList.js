@@ -1,83 +1,47 @@
 import React from "react";
-import { graphqlOperation } from "aws-amplify";
-import { Connect } from "aws-amplify-react";
-import { listMarkets } from "../graphql/queries";
+import * as queries from '../graphql/queries';
+import { API } from 'aws-amplify';
+import { useState, useEffect } from 'react';
 
-const MarketList = ({ searchResults }) => {
 
+function ArticleList() {
+  const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState([]);
+
+  const getArticles = async() => {
+    setLoading(true);
+    const allArticles = await API.graphql({ query: queries.listArticles });
+    setLoading(false);
+    console.log(allArticles.data.listArticles.items)
+    setArticles(allArticles.data.listArticles.items);
+  };
+
+  useEffect(() => {
+    getArticles();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
   return (
-    <Connect
-      query={graphqlOperation(listMarkets)}
-      subscription={graphqlOperation(onCreateMarket)}
-      onSubscriptionMsg={onNewMarket}
-    >
-      {({ data, loading, errors }) => {
-        if (errors.length > 0) return <Error errors={errors} />;
-        if (loading || !data.listMarkets) return <Loading fullscreen={true} />;
-        const markets =
-          searchResults.length > 0 ? searchResults : data.listMarkets.items;
-
-        return (
-          <>
-            {searchResults.length > 0 ? (
-              <h2 className="text-green">
-                <Icon type="success" name="check" className="icon" />
-                {searchResults.length} Results
-              </h2>
-            ) : (
-              <h2 className="header">
-                <img
-                  src="https://icon.now.sh/store_mall_directory/527FFF"
-                  alt="Store Icon"
-                  className="large-icon"
-                />
-                Markets
-              </h2>
-            )}
-
-            {markets.map(market => (
-              <div key={market.id} className="my-2">
-                <Card
-                  bodyStyle={{
-                    padding: "0.7em",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between"
-                  }}
-                >
-                  <div>
-                    <span className="flex">
-                      <Link className="link" to={`/markets/${market.id}`}>
-                        {market.name}
-                      </Link>
-                      <span style={{ color: "var(--darkAmazonOrange)" }}>
-                        {market.products.items.length}
-                      </span>
-                      <img
-                        src="https://icon.now.sh/shopping_cart/f60"
-                        alt="Shopping Cart"
-                      />
-                    </span>
-                    <div style={{ color: "var(--lightSquidInk)" }}>
-                      {market.owner}
-                    </div>
-                  </div>
-                  <div>
-                    {market.tags &&
-                      market.tags.map(tag => (
-                        <Tag key={tag} type="danger" className="mx-1">
-                          {tag}
-                        </Tag>
-                      ))}
-                  </div>
-                </Card>
-              </div>
-            ))}
-          </>
-        );
-      }}
-    </Connect>
+    <div>
+      {articles.map(article => (
+          <div key={article.id}>
+          <h1>Article: {article.id} </h1>
+          <b>author: </b> {article.author} <br/>
+          <b>createdAt: </b> {article.createdAt} <br/>
+          <b>hmtl normal: </b> {article.html} <br/>
+          <b>hmtl formated: </b> <div className="content" dangerouslySetInnerHTML={{__html: article.html}}></div> <br/>
+          <b>name: </b> {article.name} <br/>
+          <b>topics: </b> 
+          {article.topics.map(topic => <li>{topic}</li>)}  
+          <b>updatedAt: </b> {article.updatedAt} <br/> <br/>
+          </div>
+        ))
+      }
+    </div>
   );
-};
+}
 
-export default MarketList;
+export default ArticleList;
