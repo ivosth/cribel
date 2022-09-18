@@ -1,6 +1,6 @@
 import './App.css';
 import '@aws-amplify/ui-react/styles.css';
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useRef } from "react";
 import { API, Auth, Hub } from "aws-amplify";
 import { Authenticator } from '@aws-amplify/ui-react';
 import ArticleList from './components/ArticleList';
@@ -11,6 +11,7 @@ const UserContext = createContext(null);
 function App() {
   const [user, setUser] = useState(null);
   const [userAttributes, setUserAttributes] = useState(null);
+  const userAttributesRef = useRef(null);
 
   const onSignOutHandler = async () => {
     try {
@@ -43,25 +44,25 @@ function App() {
     const registerUser = async () => {
       try {
         const CreateUserInput = {
-          ...userAttributes,
+          ...userAttributesRef.current,
           emailVerified: true,
-          rol: "estudiante"
         };
         //setUserAttributes(userAttributes => ({ ...CreateUserInput}));
-        console.log("CreateUserInput: ", CreateUserInput);
+        //console.log("CreateUserInput: ", CreateUserInput);
         const newUser = await API.graphql({
           query: createUser,
-          variables: {input: userAttributes},
+          variables: {input: CreateUserInput},
           authMode: 'AWS_IAM'
         });
         console.log({ newUser });
+        setUserAttributes(CreateUserInput);
       } catch (err) {
         console.error("Error registering new user: ", err);
       }
     };
   
     const onAuthEventListener = () => {
-      Hub.listen('auth', async (data) => {
+      Hub.listen('auth', (data) => {
         const authEvent = data.payload.event;
         const authData = data.payload.data;
   
@@ -79,8 +80,9 @@ function App() {
               emailVerified: authData.userConfirmed,
               rol: "estudiante"
             };
-            setUserAttributes(userAttributes => ({...userAttributes, ...registerUserData}));
-            console.log("userAttributes: ", userAttributes);
+            //setUserAttributes(userAttributes => ({...userAttributes, ...registerUserData}));
+            userAttributesRef.current = registerUserData;
+            //console.log("userAttributes: ", userAttributesRef.current);
             break;
   
           case "signOut":
@@ -104,7 +106,7 @@ function App() {
     
     obtainUser();
     onAuthEventListener();
-  },[userAttributes]);
+  },[]);
 
   return !user ? (
     <Authenticator />
