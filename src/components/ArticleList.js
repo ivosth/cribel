@@ -1,9 +1,7 @@
 import { listArticles } from '../graphql/queries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import { Card, CardContent, Typography, CircularProgress} from "@mui/material";
 
 
 function ArticleList() {
@@ -11,7 +9,7 @@ function ArticleList() {
   const [articles, setArticles] = useState([]);
   
 
-  const getArticles = async() => {
+  const obtainListArticles = async() => {
     setLoading(true);
     const allArticles = await API.graphql({ query: listArticles });
     setLoading(false);
@@ -20,11 +18,15 @@ function ArticleList() {
   };
 
   useEffect(() => {
-    getArticles();
+    obtainListArticles();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="centerLoading">
+        <CircularProgress size="25rem" />
+      </div>
+    )
   }
   
 
@@ -33,7 +35,7 @@ function ArticleList() {
         {articles.map(article => (
           <div className="center" key={article.id}>
 
-            <Card sx={{ width: '50rem', margin: '1rem'}}>
+            <Card sx={{ boxShadow: 3, width: '50rem', margin: '1rem'}}>
               <CardContent sx={{ margin: '-0.25rem -0.30rem -0.5rem 0.25rem' }}>
                 <Typography component="div" variant="h5"> 
                   Article ID: {article.id} <br/>

@@ -1,36 +1,42 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTopic = /* GraphQL */ `
-  subscription OnCreateTopic {
-    onCreateTopic {
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser($owner: String) {
+    onCreateUser(owner: $owner) {
       id
-      name
-      description
+      email
+      emailVerified
+      rol
       createdAt
       updatedAt
+      owner
     }
   }
 `;
-export const onUpdateTopic = /* GraphQL */ `
-  subscription OnUpdateTopic {
-    onUpdateTopic {
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser($owner: String) {
+    onUpdateUser(owner: $owner) {
       id
-      name
-      description
+      email
+      emailVerified
+      rol
       createdAt
       updatedAt
+      owner
     }
   }
 `;
-export const onDeleteTopic = /* GraphQL */ `
-  subscription OnDeleteTopic {
-    onDeleteTopic {
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser($owner: String) {
+    onDeleteUser(owner: $owner) {
       id
-      name
-      description
+      email
+      emailVerified
+      rol
       createdAt
       updatedAt
+      owner
     }
   }
 `;

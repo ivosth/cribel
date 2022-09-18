@@ -1,30 +1,34 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTopic = /* GraphQL */ `
-  query GetTopic($id: ID!) {
-    getTopic(id: $id) {
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
       id
-      name
-      description
+      email
+      emailVerified
+      rol
       createdAt
       updatedAt
+      owner
     }
   }
 `;
-export const listTopics = /* GraphQL */ `
-  query ListTopics(
-    $filter: ModelTopicFilterInput
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTopics(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        description
+        email
+        emailVerified
+        rol
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
