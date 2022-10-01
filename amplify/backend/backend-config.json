@@ -64,9 +64,14 @@
               "userPoolId": "authamplifyappfb6ef5ea"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     }
-  }
+  },
+  "function": {}
 }

@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "amplifyappfb6ef5ea_identitypool_fb6ef5ea",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "ampliffb6ef5ea",
     "userPoolName": "amplifyappfb6ef5ea_userpool_fb6ef5ea",
     "autoVerifiedAttributes": [
@@ -36,7 +36,7 @@
     "sharedId": "fb6ef5ea",
     "resourceName": "amplifyappfb6ef5ea",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "default",
+    "useDefault": "manual",
     "usernameAttributes": [
       "email"
     ],
@@ -64,6 +64,11 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "permissions": []
+    "permissions": [],
+    "thirdPartyAuth": false,
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "hostedUI": false,
+    "authProviders": []
   }
 }
