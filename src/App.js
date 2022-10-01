@@ -9,7 +9,6 @@ import { createUser } from "./graphql/mutations";
 const UserContext = createContext(null);
 
 function App() {
-  const [user, setUser] = useState(null);
   const [userAttributes, setUserAttributes] = useState(null);
   const userAttributesRef = useRef(null);
 
@@ -31,87 +30,78 @@ function App() {
           email: currentUser.attributes.email,
           emailVerified: currentUser.attributes.email_verified
         }
-        setUser(currentUser);
         setUserAttributes(currentUserAttributes);
-  
+
       } catch (err) {
-        setUser(null);
         setUserAttributes(null);
-        console.log(err);    
-      }    
+        console.log(err);
+      }
     };
-  
+
     const registerUser = async () => {
       try {
-        const CreateUserInput = {
+        const createUserInput = {
           ...userAttributesRef.current,
           emailVerified: true,
         };
-        //setUserAttributes(userAttributes => ({ ...CreateUserInput}));
-        //console.log("CreateUserInput: ", CreateUserInput);
+
         const newUser = await API.graphql({
           query: createUser,
-          variables: {input: CreateUserInput},
+          variables: { input: createUserInput },
           authMode: 'AWS_IAM'
         });
         console.log({ newUser });
-        setUserAttributes(CreateUserInput);
+        setUserAttributes(createUserInput);
+
       } catch (err) {
         console.error("Error registering new user: ", err);
       }
     };
-  
+
     const onAuthEventListener = () => {
       Hub.listen('auth', (data) => {
         const authEvent = data.payload.event;
         const authData = data.payload.data;
-  
+
+        //Adding console.log inside cases slows down the app a lot
         switch (authEvent) {
           case "signIn":
-            //Adding console.log slows down the signIn a lot.
-            //console.log("signed in");  
             obtainUser();
             break;
-  
+
           case "signUp":
-            const registerUserData = {
+            userAttributesRef.current = {
               id: authData.userSub,
               email: authData.user.username,
               emailVerified: authData.userConfirmed,
               rol: "estudiante"
             };
-            //setUserAttributes(userAttributes => ({...userAttributes, ...registerUserData}));
-            userAttributesRef.current = registerUserData;
-            //console.log("userAttributes: ", userAttributesRef.current);
             break;
-  
+
           case "signOut":
-            //Adding console.log slows down the signOut a lot.
-            //console.log("signed out");
-            setUser(null);
             setUserAttributes(null);
             break;
-  
+
           case "confirmSignUp":
             if (authData === "SUCCESS")
               registerUser();
             break;
-  
+
           default:
             return;
         }
       })
-  
+
     };
-    
+
     obtainUser();
     onAuthEventListener();
-  },[]);
+  }, []);
 
-  return !user ? (
+  return !userAttributes ? (
     <Authenticator />
   ) : (
-    <UserContext.Provider value={{ user, userAttributes }}>
+    <UserContext.Provider value={{ userAttributes }}>
       <div className="user">
         <h2>{userAttributes.email}</h2>
         <button onClick={onSignOutHandler}>Sign Out</button>
