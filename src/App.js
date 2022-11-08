@@ -3,7 +3,8 @@ import '@aws-amplify/ui-react/styles.css';
 import { createContext, useState, useEffect, useRef } from "react";
 import { API, Auth, Hub } from "aws-amplify";
 import { Authenticator } from '@aws-amplify/ui-react';
-import ArticleList from './components/ArticleList';
+//import PostList from './components/PostList';
+import ChannelList from './components/ChannelList';
 import { createUser } from "./graphql/mutations";
 
 const UserContext = createContext(null);
@@ -28,10 +29,11 @@ function App() {
         const currentUserAttributes = {
           id: currentUser.attributes.sub,
           email: currentUser.attributes.email,
-          emailVerified: currentUser.attributes.email_verified
+          emailVerified: currentUser.attributes.email_verified,
+          group: currentUser.signInUserSession.accessToken.payload["cognito:groups"][0]
         }
         setUserAttributes(currentUserAttributes);
-
+        
       } catch (err) {
         setUserAttributes(null);
         console.log(err);
@@ -74,7 +76,7 @@ function App() {
               id: authData.userSub,
               email: authData.user.username,
               emailVerified: authData.userConfirmed,
-              rol: "estudiante"
+              //role: "student" default case in graphql schema
             };
             break;
 
@@ -107,7 +109,8 @@ function App() {
         <button onClick={onSignOutHandler}>Sign Out</button>
       </div>
       <div className="content">
-        <ArticleList />
+        {/*<PostList />*/}
+        <ChannelList />
       </div>
     </UserContext.Provider>
   )

@@ -2,6 +2,22 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 # input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
+#union Subscribable = Channel | User
+"""
+enum Role {
+ STUDENT =  'student',
+ GRADUATED =  'graduated',
+ TECHNICAL = 'technical',
+ PROFESSOR = 'professor'
+}
+
+enum Group {
+ ADMIN =  'admin',
+ CREATOR =  'creator',
+ VIEWER = 'viewer'
+}
+"""
+
 type User 
   @model 
   @auth(
@@ -18,26 +34,46 @@ type User
   ) {
 
   id: ID!
-  email: String!
+  email: AWSEmail!
   emailVerified: Boolean!
-  #photo: S3Object
-  rol: String!
-  #subscriptions: [String]
+  photo: S3Object @hasOne
+  rol: String! @default(value: "student")
+  group: String! @default(value: "admin")
+  posts: [Post] @hasMany
+  ownedChannels: [Channel] @hasMany
+  subscriptions: [Channel] @manyToMany(relationName: "SubscriptionsSubscribers")
+  participantChannels: [Channel] @manyToMany(relationName: "UsersParticipantChannels")
+
   #To prevent an owner from reassigning their record to another user https://docs.amplify.aws/cli/graphql/authorization-rules/#per-user--owner-based-data-access
   #owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 
 }
 
-type S3Object {
+type S3Object @model(queries: null, mutations: null, subscriptions: null) @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   bucket: String!
   region: String!
   key: String!
 }
 
-type Article @model @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, operations: [read] }]) {
+type Post @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
+  id: ID!
+  name: String!
+  topic: String! #En el código se hará una verificación de solo se puedan elegir los topics que haya en el canal
+  #A @hasOne relationship always uses a reference to the primary key of the related model, by default id.
+  owner: User! @belongsTo #(fields: ["userID"]) # field to be used for storing the relationship information
+  content: String!
+  channel: Channel! @belongsTo
+  ranking: Float! @default(value: "0.0") #The value parameter must be formatted as a string regardless of the corresponding field type
+  # https://github.com/trek10inc/graphql-default-value-transformer
+}
+
+type Channel @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   id: ID!
   name: String!
   topics: [String]!
-  author: String!
-  html: String #S3Object!
+  owner: User! @belongsTo
+  subscribers: [User] @manyToMany(relationName: "SubscriptionsSubscribers")
+  participants: [User] @manyToMany(relationName: "UsersParticipantChannels")
+  description: String
+  posts: [Post] @hasMany
 }
