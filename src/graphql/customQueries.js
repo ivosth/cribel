@@ -14,6 +14,7 @@ export const listChannels = /* GraphQL */ `
           email
           emailVerified
           rol
+          group
           createdAt
           updatedAt
           userPhotoId

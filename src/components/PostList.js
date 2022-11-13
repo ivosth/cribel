@@ -50,7 +50,7 @@ function PostList() {
                 </Typography>
                 <Typography component="div" variant="subtitle1" color="text.secondary">
                   <b>content normal:</b> {post.content} <br/>
-                  <b>content formated:</b> <div className="content" dangerouslySetInnerHTML={{__html: post.content}}></div>
+                  <b>content formated:</b> <div className="htmlFormatted" dangerouslySetInnerHTML={{__html: post.content}}></div>
                   {/*<b>topics:</b> {post.topics.map(topic => <li key={topic}> {topic} </li>)}*/}
                   <b>channel:</b> {post.channel.name} <br/>
                   <b>createdAt:</b> {formatDate(post.createdAt)} <b>updatedAt:</b> {formatDate(post.updatedAt)}

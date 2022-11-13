@@ -394,13 +394,9 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
+            "kind" : "ENUM",
+            "name" : "Role",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -409,13 +405,9 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
+            "kind" : "ENUM",
+            "name" : "Group",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -809,6 +801,59 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+        "kind" : "ENUM",
+        "name" : "Role",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "student",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "graduated",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "technical",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "professor",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
+        "kind" : "ENUM",
+        "name" : "Group",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "admin",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "creator",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "viewer",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
         "kind" : "OBJECT",
         "name" : "ModelPostConnection",
         "description" : null,
@@ -946,13 +991,9 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Float",
-              "ofType" : null
-            }
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2586,7 +2627,7 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelStringInput",
+            "name" : "ModelRoleInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2595,7 +2636,7 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelStringInput",
+            "name" : "ModelGroupInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2685,6 +2726,60 @@
           "type" : {
             "kind" : "ENUM",
             "name" : "ModelAttributeTypes",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelRoleInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "Role",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ne",
+          "description" : null,
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "Role",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelGroupInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "Group",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ne",
+          "description" : null,
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "Group",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3240,26 +3335,18 @@
           "name" : "rol",
           "description" : null,
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
+            "kind" : "ENUM",
+            "name" : "Role",
+            "ofType" : null
           },
           "defaultValue" : null
         }, {
           "name" : "group",
           "description" : null,
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
+            "kind" : "ENUM",
+            "name" : "Group",
+            "ofType" : null
           },
           "defaultValue" : null
         }, {
@@ -3303,7 +3390,7 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelStringInput",
+            "name" : "ModelRoleInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3312,7 +3399,7 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelStringInput",
+            "name" : "ModelGroupInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3404,8 +3491,8 @@
           "name" : "rol",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
+            "kind" : "ENUM",
+            "name" : "Role",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3413,8 +3500,8 @@
           "name" : "group",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
+            "kind" : "ENUM",
+            "name" : "Group",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3510,13 +3597,9 @@
           "name" : "ranking",
           "description" : null,
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Float",
-              "ofType" : null
-            }
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
           },
           "defaultValue" : null
         }, {
@@ -5436,22 +5519,18 @@
         "onFragment" : false,
         "onField" : true
       }, {
-        "name" : "aws_publish",
-        "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
-        "locations" : [ "FIELD_DEFINITION" ],
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
         "args" : [ {
-          "name" : "subscriptions",
-          "description" : "List of subscriptions which will be published to when this mutation is called.",
+          "name" : "reason",
+          "description" : null,
           "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
           },
-          "defaultValue" : null
+          "defaultValue" : "\"No longer supported\""
         } ],
         "onOperation" : false,
         "onFragment" : false,
@@ -5465,33 +5544,12 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_cognito_user_pools",
-        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ {
-          "name" : "cognito_groups",
-          "description" : "List of cognito user pool groups which have access on this field",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_auth",
-        "description" : "Directs the schema to enforce authorization on a field",
+        "name" : "aws_publish",
+        "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
         "locations" : [ "FIELD_DEFINITION" ],
         "args" : [ {
-          "name" : "cognito_groups",
-          "description" : "List of cognito user pool groups which have access on this field",
+          "name" : "subscriptions",
+          "description" : "List of subscriptions which will be published to when this mutation is called.",
           "type" : {
             "kind" : "LIST",
             "name" : null,
@@ -5528,18 +5586,23 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_iam",
-        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_api_key",
-        "description" : "Tells the service this field/object has access authorized by an API key.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
+        "name" : "aws_auth",
+        "description" : "Directs the schema to enforce authorization on a field",
+        "locations" : [ "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "cognito_groups",
+          "description" : "List of cognito user pool groups which have access on this field",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
@@ -5552,19 +5615,39 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "name" : "aws_cognito_user_pools",
+        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ {
-          "name" : "reason",
-          "description" : null,
+          "name" : "cognito_groups",
+          "description" : "List of cognito user pool groups which have access on this field",
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
           },
-          "defaultValue" : "\"No longer supported\""
+          "defaultValue" : null
         } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_iam",
+        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_api_key",
+        "description" : "Tells the service this field/object has access authorized by an API key.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false

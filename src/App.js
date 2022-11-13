@@ -1,26 +1,20 @@
 import './App.css';
 import '@aws-amplify/ui-react/styles.css';
-import { createContext, useState, useEffect, useRef } from "react";
+import { /*createContext,*/ useState, useEffect, useRef } from "react";
 import { API, Auth, Hub } from "aws-amplify";
 import { Authenticator } from '@aws-amplify/ui-react';
 //import PostList from './components/PostList';
 import ChannelList from './components/ChannelList';
+import PostList from './components/PostList';
+import Navbar from './components/Navbar'
 import { createUser } from "./graphql/mutations";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
-const UserContext = createContext(null);
+//const UserContext = createContext(null);
 
 function App() {
   const [userAttributes, setUserAttributes] = useState(null);
   const userAttributesRef = useRef(null);
-
-  const onSignOutHandler = async () => {
-    try {
-      await Auth.signOut();
-    } catch (err) {
-      console.error("Error signing out user", err);
-    }
-  };
-
 
   useEffect(() => {
     const obtainUser = async () => {
@@ -100,19 +94,23 @@ function App() {
     onAuthEventListener();
   }, []);
 
+  let navigate = useNavigate();
+
   return !userAttributes ? (
     <Authenticator />
   ) : (
-    <UserContext.Provider value={{ userAttributes }}>
-      <div className="user">
-        <h2>{userAttributes.email}</h2>
-        <button onClick={onSignOutHandler}>Sign Out</button>
+    <> {/*<UserContext.Provider value={{ userAttributes }}>*/}
+      <Navbar email={userAttributes.email} />
+      <div className="content">        
+        <Routes>
+          <Route path="/" element={<div>MainPage</div>}/>
+          <Route path="/channels" element={<ChannelList />}/>
+          <Route path="/posts" element={<PostList />}/>
+          <Route path="/about" element={<div><p>Navigation Test Page</p> <button onClick={()=> {navigate("/channels");}}>Change to Channels</button></div>}/>
+          <Route path = "*" element = {<div>Page not found</div>}/>
+        </Routes>
       </div>
-      <div className="content">
-        {/*<PostList />*/}
-        <ChannelList />
-      </div>
-    </UserContext.Provider>
+    {/*</UserContext.Provider>*/} </> 
   )
 };
 

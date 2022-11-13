@@ -53,7 +53,7 @@ function ChannelList() {
                 </Typography>
                 <Typography component="div" variant="subtitle1" color="text.secondary">
                   <b>description:</b> {channel.description} <br/>
-                  <b>description formated:</b> <div className="content" dangerouslySetInnerHTML={{__html: channel.description}}></div>
+                  <b>description formated:</b> <div className="htmlFormatted" dangerouslySetInnerHTML={{__html: channel.description}}></div>
                   <b>subscribers:</b> {channel.subscribers.items.map(subscriber => <li key={subscriber.user.id}> {subscriber.user.email} </li>)}
                   <b>topics:</b> {channel.topics.map(topic => <li key={topic}> {topic} </li>)}
                   <b>createdAt:</b> {formatDate(channel.createdAt)} <b>updatedAt:</b> {formatDate(channel.updatedAt)}
