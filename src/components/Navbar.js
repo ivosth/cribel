@@ -1,40 +1,51 @@
-import { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
-import {Link} from "react-router-dom"
+import {
+  Box,
+  Flex,
+  Avatar,
+  HStack,
+  Link,
+  IconButton,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useDisclosure,
+  useColorModeValue,
+  Stack,
+  Icon,
+  LinkOverlay,
+  LinkBox,
+  Text
+} from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { MdConnectWithoutContact } from "react-icons/md";
+import { Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
-const pages = ["channels", "about", "posts"];
+const Links = ["channels", "about", "posts"];
+const NavLink = ({ children }) => (
+  <Link
+    fontSize="lg"
+    as={RouterLink}
+    to={children}
+    px={2}
+    py={1}
+    rounded={"md"}
+    _hover={{
+      bg: useColorModeValue("blackAlpha.300", "rgba(0, 0, 0, 0.20)")
+    }}
+    _active={{
+      bg: "rgba(0, 0, 0, 0.40)"
+    }}
+    _focus={{ boxShadow: "none" }}
+  >
+    {children.toUpperCase()}
+  </Link>
+);
+
 
 function Navbar({ email }) {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-
-  const openNavMenuHandler = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const openUserMenuHandler = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const closeNavMenuHandler = () => {
-    setAnchorElNav(null);
-  };
-
-  const closeUserMenuHandler = () => {
-    setAnchorElUser(null);
-  };
 
   const onSignOutHandler = async () => {
     try {
@@ -44,128 +55,98 @@ function Navbar({ email }) {
     }
   };
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <AppBar position = "sticky" color="inherit" >
-      <Container maxWidth="x2">
-        <Toolbar disableGutters>
-          <ConnectWithoutContactIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography variant="h6" noWrap component="a" href="/"
-            sx={{mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none"
-            }}
-          >
-            SERVERLESS APP
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton size="large" color="inherit" onClick={openNavMenuHandler}>
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left"
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={closeNavMenuHandler}
-              sx={{
-                display: { xs: "block", md: "none" }
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={closeNavMenuHandler}>
-                  <Typography textAlign="center" sx={{ textTransform: 'uppercase' }}>
-                    <Link style={{textDecoration: "None", color:"black"}} to={`${page}`}>
-                      {page}
-                    </Link>
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+    <Box
+      bg={useColorModeValue("white", "gray.900")}
+      px={4}
+      fontFamily="monospace"
+      borderWidth="1px"
+      boxShadow="md"
+    >
+      <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+        <IconButton
+          size={"md"}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label={"Open Menu"}
+          display={{ md: "none" }}
+          onClick={isOpen ? onClose : onOpen}
+        />
+        <HStack spacing={8} alignItems={"center"}>
+        <LinkBox>
+          <Box fontSize="2xl" fontWeight="bold">
+            <Icon as={MdConnectWithoutContact} marginRight="0.5rem" />
+            <LinkOverlay as={RouterLink} to="/">SEVERLESS APP</LinkOverlay>
           </Box>
-          <ConnectWithoutContactIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography variant="h5" noWrap component="a" href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none"
-            }}
+          </LinkBox>
+          <HStack
+            as={"nav"}
+            spacing={4}
+            display={{ base: "none", md: "flex" }}
           >
-            SERVERLESS APP
-          </Typography>
-          <Box bgcolor="inherit" sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link key={page} style={{textDecoration: "None", color:"black"}} to={`${page}`}>
-                <Button
-                    onClick={closeNavMenuHandler}
-                    sx={{
-                        color: "black",
-                        display: "block",
-                        "&:hover": { background: "#D3D3D3" }
-                        /*textTransform: 'capitalize'*/
-                    }}
-                >
-                    {page}
-                </Button>
-              </Link>
+            {Links.map((link) => (
+              <NavLink key={link}>{link}</NavLink>
             ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0, display: {sm: 'flex', md: 'flex' } }}>
-            <Typography variant="h6" sx={{mr: '1rem', display: {xs: 'none', sm: 'flex', md: 'flex'}}} > {email} </Typography>
-            <Tooltip title="Open settings">
-              <IconButton onClick={openUserMenuHandler} sx={{ p: 0 }}>
-                <Avatar />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={closeUserMenuHandler}
+          </HStack>
+        </HStack>
+        <Flex alignItems={"center"}>
+          <Text p={5} fontSize="md"> {email} </Text>
+          <Menu autoSelect={false}>
+            <MenuButton
+              as={Button}
+              rounded={"full"}
+              variant={"link"}
+              cursor={"pointer"}
+              minW={0}
+              //_focus={{ boxShadow: "0 0 1px 2px rgb(241, 90, 34)" }}
+              boxShadow="none"
+              borderRadius="0"
+              //_focus={{ boxShadow: "0 0 1px 2px rgb(200, 200, 4)" }}
+              _active={{ borderColor: "grey", boxShadow: "0 0 2px 2px grey" }}
             >
-              
-            <Link style={{textDecoration: "None", color:"black"}} to={"/settings"}>
-                <MenuItem onClick={closeUserMenuHandler}>
-                    <Typography textAlign="center">Settings</Typography>
-                </MenuItem>
-            </Link>
+              <Avatar size={"sm"} bg="grey" />
+            </MenuButton>
+            <MenuList minW="0" w={"100px"} rounded="md" fontSize="md">
+              <MenuItem
+                _hover={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                }}
+                _focus={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                }}
+                /*
+                _active={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                }}
+                _expanded={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                }}*/
+              >
+                Settings
+              </MenuItem>
+              <MenuItem onClick={onSignOutHandler}
+                _hover={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                }}
+              >
+                Logout
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Flex>
+      </Flex>
 
-                <MenuItem onClick={onSignOutHandler}>
-                    <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
-              
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+      {isOpen ? (
+        <Box pb={4} display={{ md: "none" }}>
+          <Stack as={"nav"} spacing={4}>
+            {Links.map((link) => (
+              <NavLink key={link}>{link}</NavLink>
+            ))}
+          </Stack>
+        </Box>
+      ) : null}
+    </Box>
   );
 }
 export default Navbar;

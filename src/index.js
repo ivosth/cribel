@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import Amplify from 'aws-amplify'
 import aws_exports from './aws-exports'
 import { BrowserRouter } from 'react-router-dom';
+import { ChakraProvider } from "@chakra-ui/react";
 
 Amplify.configure(aws_exports)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ChakraProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ChakraProvider>
   </React.StrictMode>
 );
 

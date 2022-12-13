@@ -1,7 +1,8 @@
 import { listPosts } from '../graphql/queries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, CircularProgress} from "@mui/material";
+import { Box, Card, CardHeader, CardBody, Text, CircularProgress } from "@chakra-ui/react";
+
 
 function formatDate(awsDate){
   const dateobj = new Date(awsDate);
@@ -15,7 +16,7 @@ function PostList() {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   
-
+  
   const obtainListPosts = async() => {
     setLoading(true);
     const allPosts = await API.graphql({ query: listPosts });
@@ -31,37 +32,41 @@ function PostList() {
   if (loading) {
     return (
       <div className="centerLoading">
-        <CircularProgress size="25rem" />
+        <CircularProgress isIndeterminate size="25rem" />
       </div>
     )
   }
   
 
   return (
-      <div>
+      <>
         {posts.map(post => (
           <div className="center" key={post.id}>
+            <Box p={6}>
+              <Card boxShadow="lg" border="1px" borderColor="gray.200" maxW='3xl' minW='3xl'>
+                <CardHeader>
+                  <Text pt="2" fontSize="lg">
+                    <b>Post ID:</b> {post.id} <br/>
+                    <b>Name/Title:</b> {post.name} <b>&emsp;&emsp;Author:</b> {post.owner.email}
+                  </Text>
+                </CardHeader>
 
-            <Card sx={{ boxShadow: 3, width: '50rem', margin: '1rem'}}>
-              <CardContent sx={{ margin: '-0.25rem -0.30rem -0.5rem 0.25rem' }}>
-                <Typography component="div" variant="h5"> 
-                  <b>Post ID:</b> {post.id} <br/>
-                  <b>Name/Title:</b> {post.name} <b>Author:</b> {post.owner.email}
-                </Typography>
-                <Typography component="div" variant="subtitle1" color="text.secondary">
-                  <b>content normal:</b> {post.content} <br/>
-                  <b>content formated:</b> <div className="htmlFormatted" dangerouslySetInnerHTML={{__html: post.content}}></div>
-                  {/*<b>topics:</b> {post.topics.map(topic => <li key={topic}> {topic} </li>)}*/}
-                  <b>channel:</b> {post.channel.name} <br/>
-                  <b>createdAt:</b> {formatDate(post.createdAt)} <b>updatedAt:</b> {formatDate(post.updatedAt)}
-                </Typography>
-              </CardContent>
-            </Card>
-
+                <CardBody>
+                    <Box>
+                      <Text pt="2" fontSize="lg">
+                      <b>content normal:</b> {post.content} <br/>
+                      <b>content formated:</b> <div className="htmlFormatted" dangerouslySetInnerHTML={{__html: post.content}}></div>
+                      {/*<b>topics:</b> {post.topics.map(topic => <li key={topic}> {topic} </li>)}*/}
+                      <b>channel:</b> {post.channel.name} <br/>
+                      <b>createdAt:</b> {formatDate(post.createdAt)} <b>updatedAt:</b> {formatDate(post.updatedAt)}
+                      </Text>
+                    </Box>
+                </CardBody>
+              </Card>
+            </Box>
           </div>
-        ))
-      }
-      </div>
+        ))}
+      </>
   );
 }
 
