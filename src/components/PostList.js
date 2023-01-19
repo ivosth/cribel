@@ -1,16 +1,9 @@
 import { listPosts } from '../graphql/queries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { Box, Card, CardHeader, CardBody, Text, CircularProgress } from "@chakra-ui/react";
+import { CircularProgress } from "@chakra-ui/react";
+import CardPost from './CardPost';
 
-
-function formatDate(awsDate){
-  const dateobj = new Date(awsDate);
-  const date = dateobj.toLocaleDateString(navigator.language);
-  const time = dateobj.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
-
-  return (date + ' ' + time);
-}
 
 function PostList() {
   const [loading, setLoading] = useState(true);
@@ -37,13 +30,13 @@ function PostList() {
     )
   }
   
-
+/*
   return (
       <>
         {posts.map(post => (
           <div className="center" key={post.id}>
-            <Box p={6}>
-              <Card boxShadow="lg" border="1px" borderColor="gray.200" maxW='3xl' minW='3xl'>
+            <Box p="1.5rem" minW="40%" maxW="sm">
+              <Card boxShadow="lg" border="1px" borderColor="gray.200">
                 <CardHeader>
                   <Text pt="2" fontSize="lg">
                     <b>Post ID:</b> {post.id} <br/>
@@ -56,7 +49,7 @@ function PostList() {
                       <Text pt="2" fontSize="lg">
                       <b>content normal:</b> {post.content} <br/>
                       <b>content formated:</b> <div className="htmlFormatted" dangerouslySetInnerHTML={{__html: post.content}}></div>
-                      {/*<b>topics:</b> {post.topics.map(topic => <li key={topic}> {topic} </li>)}*/}
+                      
                       <b>channel:</b> {post.channel.name} <br/>
                       <b>createdAt:</b> {formatDate(post.createdAt)} <b>updatedAt:</b> {formatDate(post.updatedAt)}
                       </Text>
@@ -68,6 +61,18 @@ function PostList() {
         ))}
       </>
   );
+*/
+
+  return (
+    <>
+      {posts.map(post => (
+        <div key={post.id}>
+          <CardPost post={post} />
+        </div>
+      ))}
+    </>
+  );
+
 }
 
 export default PostList;

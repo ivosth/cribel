@@ -42,8 +42,8 @@ function ChannelList() {
       <>
         {channels.map(channel => (
           <div className="center" key={channel.id}>
-            <Box p={6}>
-              <Card boxShadow="lg" border="1px" borderColor="gray.200" maxW='3xl' minW='3xl'>
+            <Box p="1.5rem" minW="40%" maxW="sm">
+              <Card boxShadow="lg" border="1px" borderColor="gray.200" >
                 <CardHeader>
                   <Text pt="2" fontSize="lg">
                     <b>Channel ID:</b> {channel.id} <br/>
@@ -57,6 +57,7 @@ function ChannelList() {
                         <b>description:</b> {channel.description} <br/>
                         <b>description formated:</b> <div className="htmlFormatted" dangerouslySetInnerHTML={{__html: channel.description}}></div>
                         <b>subscribers:</b> {channel.subscribers.items.map(subscriber => <li key={subscriber.user.id}> {subscriber.user.email} </li>)}
+                        <b>participants:</b> {channel.participants.items.map(participant => <li key={participant.user.id}> {participant.user.email} </li>)}
                         <b>topics:</b> {channel.topics.map(topic => <li key={topic}> {topic} </li>)}
                         <b>createdAt:</b> {formatDate(channel.createdAt)} <b>&emsp;&emsp;updatedAt:</b> {formatDate(channel.updatedAt)}
                       </Text>

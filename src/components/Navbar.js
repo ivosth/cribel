@@ -16,10 +16,13 @@ import {
   Icon,
   LinkOverlay,
   LinkBox,
-  Text
+  Text,
+  Hide,
+  useColorMode
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { MdConnectWithoutContact } from "react-icons/md";
+import { BsSun, BsMoon, BsGear, BsBoxArrowRight } from 'react-icons/bs';
 import { Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
@@ -56,6 +59,7 @@ function Navbar({ email }) {
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Box
@@ -75,9 +79,9 @@ function Navbar({ email }) {
         />
         <HStack spacing={8} alignItems={"center"}>
         <LinkBox>
-          <Box fontSize="2xl" fontWeight="bold">
+          <Box fontSize="xl" fontWeight="bold">
             <Icon as={MdConnectWithoutContact} marginRight="0.5rem" />
-            <LinkOverlay as={RouterLink} to="/">SEVERLESS APP</LinkOverlay>
+            <LinkOverlay as={RouterLink} to="/">SERVERLESS APP</LinkOverlay>
           </Box>
           </LinkBox>
           <HStack
@@ -91,7 +95,9 @@ function Navbar({ email }) {
           </HStack>
         </HStack>
         <Flex alignItems={"center"}>
-          <Text p={5} fontSize="md"> {email} </Text>
+          <Hide below='md'>
+            <Text p={5} fontSize="md"> {email} </Text>
+          </Hide>
           <Menu autoSelect={false}>
             <MenuButton
               as={Button}
@@ -107,7 +113,21 @@ function Navbar({ email }) {
             >
               <Avatar size={"sm"} bg="grey" />
             </MenuButton>
-            <MenuList minW="0" w={"100px"} rounded="md" fontSize="md">
+            <MenuList minW="8rem" w={"100px"} rounded="md" fontSize="md">
+              
+            <MenuItem  
+              onClick={toggleColorMode}
+              _hover={{
+                bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+              }}
+              >
+              {colorMode === 'light' ? 
+                <Text fontWeight='normal'> <Icon as={BsMoon}/> Dark</Text> 
+                : 
+                <Text fontWeight='normal'> <Icon as={BsSun}/> Light</Text> 
+              }
+            </MenuItem>
+              
               <MenuItem
                 _hover={{
                   bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
@@ -123,14 +143,14 @@ function Navbar({ email }) {
                   bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
                 }}*/
               >
-                Settings
+                <Text> <Icon as={BsGear}/> Settings</Text> 
               </MenuItem>
               <MenuItem onClick={onSignOutHandler}
                 _hover={{
                   bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
                 }}
               >
-                Logout
+                 <Text> <Icon as={BsBoxArrowRight}/> Logout</Text> 
               </MenuItem>
             </MenuList>
           </Menu>
