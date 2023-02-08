@@ -1,6 +1,7 @@
 import {
     extendTheme,
     withDefaultColorScheme,
+    withDefaultProps
   } from "@chakra-ui/react";
   
   
@@ -18,9 +19,27 @@ import {
             "800": "#132655",
             "900": "#061141"
         }
-      }
+      },
+      /*semanticTokens: {
+        colors: {
+          "chakra-ring-color": {
+            _light: "purple.800",
+            _dark: "pink.100",
+          },
+          "chakra-border-color": {
+            _light: "purple.800",
+            _dark: "pink.100",
+          }
+        }
+      }*/
     },
-    withDefaultColorScheme({ colorScheme: "blue" })
+    withDefaultColorScheme({ colorScheme: "blue" }),
+    /*withDefaultProps({
+        defaultProps: {
+            focusBorderColor: 'blue.900'
+        },
+        components: ['Link', 'Button', 'Box'],
+      }),*/
   );
   
   
