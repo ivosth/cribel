@@ -25,7 +25,7 @@ function PostList() {
   if (loading) {
     return (
       <div className="centerLoading">
-        <CircularProgress isIndeterminate size="25rem" />
+        <CircularProgress isIndeterminate size="20rem" />
       </div>
     )
   }

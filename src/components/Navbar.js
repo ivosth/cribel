@@ -21,13 +21,18 @@ import {
   useColorMode
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { MdConnectWithoutContact } from "react-icons/md";
+import { MdConnectWithoutContact, MdHelpOutline, MdOutlineLocalPostOffice, MdScreenSearchDesktop  } from "react-icons/md";
 import { BsSun, BsMoon, BsGear, BsBoxArrowRight } from 'react-icons/bs';
 import { Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
-const Links = ["channels", "about", "posts"];
-const NavLink = ({ children }) => (
+
+const LinkItems = [
+  { name: 'channels', icon: MdScreenSearchDesktop },
+  { name: 'about', icon: MdHelpOutline },
+  { name: 'posts', icon: MdOutlineLocalPostOffice },
+];
+const NavLink = ({ icon, children }) => (
   <Link
     fontSize="lg"
     as={RouterLink}
@@ -36,14 +41,22 @@ const NavLink = ({ children }) => (
     py={1}
     rounded={"md"}
     _hover={{
-      bg: useColorModeValue("blackAlpha.300", "rgba(0, 0, 0, 0.20)")
+      bg: useColorModeValue("blue.50", "blue.700")
     }}
     _active={{
-      bg: "rgba(0, 0, 0, 0.40)"
+      bg: useColorModeValue("blue.50", "blue.700")
+    }}
+    _visited={{
+      bg: useColorModeValue("blue.50", "blue.700")
     }}
     _focus={{ boxShadow: "none" }}
+
   >
-    {children.toUpperCase()}
+    {/*children.toUpperCase()*/}
+    <Flex align="center" px="1rem" >
+      <Icon as={icon} marginRight="0.5rem" />
+      {children.charAt(0).toUpperCase() + children.slice(1)}
+    </Flex>
   </Link>
 );
 
@@ -78,19 +91,19 @@ function Navbar({ email }) {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={"center"}>
-        <LinkBox>
-          <Box fontSize="xl" fontWeight="bold">
-            <Icon as={MdConnectWithoutContact} marginRight="0.5rem" />
-            <LinkOverlay as={RouterLink} to="/">SERVERLESS APP</LinkOverlay>
-          </Box>
+          <LinkBox>
+            <Box fontSize="xl" fontWeight="bold">
+              <Icon as={MdConnectWithoutContact} marginRight="0.5rem" />
+              <LinkOverlay as={RouterLink} to="/">Serverless App</LinkOverlay>
+            </Box>
           </LinkBox>
           <HStack
             as={"nav"}
             spacing={4}
             display={{ base: "none", md: "flex" }}
           >
-            {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+            {LinkItems.map((link) => (
+              <NavLink key={link.name} icon={link.icon}>{link.name}</NavLink>
             ))}
           </HStack>
         </HStack>
@@ -113,44 +126,41 @@ function Navbar({ email }) {
             >
               <Avatar size={"sm"} bg="grey" />
             </MenuButton>
-            <MenuList minW="8rem" w={"100px"} rounded="md" fontSize="md">
-              
-            <MenuItem  
-              onClick={toggleColorMode}
-              _hover={{
-                bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
-              }}
+            <MenuList minW="8.5rem" w={"100px"} rounded="md" fontSize="md">
+
+              <MenuItem
+                onClick={toggleColorMode}
+                _hover={{
+                  bg: useColorModeValue("blue.50", "blue.700")
+                }}
               >
-              {colorMode === 'light' ? 
-                <Text fontWeight='normal'> <Icon as={BsMoon}/> Dark</Text> 
-                : 
-                <Text fontWeight='normal'> <Icon as={BsSun}/> Light</Text> 
-              }
-            </MenuItem>
-              
+                {colorMode === 'light' ?
+                  <Text fontWeight='normal'> <Icon as={BsMoon} /> Dark</Text>
+                  :
+                  <Text fontWeight='normal'> <Icon as={BsSun} /> Light</Text>
+                }
+              </MenuItem>
+
               <MenuItem
                 _hover={{
-                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                  bg: useColorModeValue("blue.50", "blue.700")
                 }}
-                _focus={{
-                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
-                }}
-                /*
-                _active={{
-                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
-                }}
-                _expanded={{
-                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
-                }}*/
+              /*
+              _active={{
+                bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+              }}
+              _expanded={{
+                bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+              }}*/
               >
-                <Text> <Icon as={BsGear}/> Settings</Text> 
+                <Text> <Icon as={BsGear} /> Settings</Text>
               </MenuItem>
               <MenuItem onClick={onSignOutHandler}
                 _hover={{
-                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                  bg: useColorModeValue("blue.50", "blue.700")
                 }}
               >
-                 <Text> <Icon as={BsBoxArrowRight}/> Logout</Text> 
+                <Text> <Icon as={BsBoxArrowRight} /> Logout</Text>
               </MenuItem>
             </MenuList>
           </Menu>
@@ -160,8 +170,8 @@ function Navbar({ email }) {
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
-            {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+            {LinkItems.map((link) => (
+              <NavLink key={link.name} icon={link.icon}>{link.name}</NavLink>
             ))}
           </Stack>
         </Box>

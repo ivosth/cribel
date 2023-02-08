@@ -34,7 +34,7 @@ function CardPost({post}) {
     <ChakraProvider>
       <Flex
         bg={useColorModeValue("#edf3f8", "#3e3e3e")}
-        p={50}
+        pt={50}
         w="full"
         alignItems="center"
         justifyContent="center"
@@ -46,10 +46,11 @@ function CardPost({post}) {
           rounded="lg"
           shadow="lg"
           bg="white"
+          maxW="2xl"
+          minW="50%" //Tocar aquí si se quiere hacer la tarjeta más grande en pantallas grandes
           _dark={{
             bg: "gray.800"
           }}
-          maxW="2xl"
         >
           <Flex justifyContent="space-between" alignItems="center">
             <Text
@@ -62,12 +63,14 @@ function CardPost({post}) {
               {formatDate(post.createdAt)}
             </Text>
             <Link
-              px={3}
+              px="0.50rem"
               py={1}
+
               bg="gray.600"
               color="gray.100"
-              fontSize="sm"
+              fontSize="0.8rem" //Más pequeño con xs
               fontWeight="700"
+              textAlign={"center"}
               rounded="md"
               _hover={{
                 bg: "gray.500"
@@ -109,43 +112,45 @@ function CardPost({post}) {
           <Flex justifyContent="space-between" alignItems="center" mt={4}>
             <Flex alignItems="center">
               <Image
-                mx={4}
+                
                 w={10}
                 h={10}
                 rounded="full"
                 fit="cover"
-                display={{
-                  base: "none",
-                  sm: "block"
-                }}
                 src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80"
                 alt="avatar"
               />
               <Link
                 color="gray.700"
+                pl="1rem"
                 _dark={{
                   color: "gray.200"
                 }}
                 fontWeight="700"
                 cursor="pointer"
+                display={{
+                  base: "none",
+                  sm: "block"
+                }}
               >
                 {post.owner.email}
               </Link>
             </Flex>
 
             <Flex alignItems="center">
+              {/*
               <Button
-                size="lg"
-                onClick={setLike.toggle}
-                variant="link"
-                minW={0}
-              >
-                {like ? <FaHeart color="red" /> : <FaRegHeart /> }
-              </Button>
-              <Text pl="0.3rem" pr="1.5rem">
-                {/*likes*/} 2
-              </Text>
-
+                  size="lg"
+                  onClick={setLike.toggle}
+                  variant="link"
+                  minW={0}
+                >
+                  {like ? <FaHeart color="red" /> : <FaRegHeart /> }
+                </Button>
+                <Text pl="0.3rem" pr="1.5rem">
+                  2
+                </Text>
+              */}
               <Rating onClick={handleRating}
                 allowFraction
                 fillColorArray={["#e79b3b","#e9a435","#ebab30","#edb32a","#f0bb25","#f2c320","#f4cb1a","#f6d215","#f8da0f","#fae20a"]} 
