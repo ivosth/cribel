@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from 'react';
 import {
   ChakraProvider,
   Flex,
@@ -11,6 +11,7 @@ import {
   useColorModeValue
 } from "@chakra-ui/react";
 import { FaHeart, FaRegHeart, FaRegEye } from "react-icons/fa";
+import { Rating } from "react-simple-star-rating";
 
 
 function formatDate(awsDate){
@@ -23,6 +24,11 @@ function formatDate(awsDate){
 
 function CardPost({post}) {
   const [like, setLike] = useBoolean();
+
+  const [ratingValue, setRatingValue] = useState(0);
+  const handleRating = (rate) => {
+    setRatingValue(rate);
+  };
 
   return (
     <ChakraProvider>
@@ -140,7 +146,15 @@ function CardPost({post}) {
                 {/*likes*/} 2
               </Text>
 
-              <FaRegEye size="22px" />
+              <Rating onClick={handleRating}
+                allowFraction
+                fillColorArray={["#e79b3b","#e9a435","#ebab30","#edb32a","#f0bb25","#f2c320","#f4cb1a","#f6d215","#f8da0f","#fae20a"]} 
+                SVGstyle={{display: "inline-block"}}
+                size={25}
+                style={{marginTop: "6px", marginRight: "1.5rem"}}
+              />
+
+              <FaRegEye size="22px"/>
               <Text pl="0.3rem"> {/*views*/}123 </Text>
             </Flex>
           </Flex>
