@@ -21,22 +21,19 @@ import {
   Hide,
   useColorMode,
   MenuDivider,
-  Image
+  Image,
+  MenuGroup
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { MdConnectWithoutContact, MdHelpOutline, MdOutlineLocalPostOffice, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
 import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsHouseDoor } from 'react-icons/bs';
 import { FiBell, FiChevronDown } from 'react-icons/fi';
 import { Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import SearchBar from "./SearchBar";
+import { channels } from "./Static.js";
 
-const LinkItems = [
-  { name: 'home', icon: BsHouseDoor },
-  { name: 'channels', icon: MdScreenSearchDesktop },
-  //{ name: 'about', icon: MdHelpOutline },
-  { name: 'posts', icon: MdOutlineLocalPostOffice },
-];
+
+
 const NavLink = ({ icon, link, children }) => (
   <Link
     fontSize="lg"
@@ -45,12 +42,12 @@ const NavLink = ({ icon, link, children }) => (
     px={2}
     py={1}
     rounded={"md"}
-    
     _hover={{
       bg: useColorModeValue("blue.100", "blue.600"),
     }}
-    //_focus={{ boxShadow: "none" }}
+  //_focus={{ boxShadow: "none" }}
   >
+
     {/*children.toUpperCase()*/}
 
     <Flex align="center" >
@@ -60,13 +57,13 @@ const NavLink = ({ icon, link, children }) => (
           {children.charAt(0).toUpperCase() + children.slice(1)}
         </Text>
       </Hide>
-      
+
     </Flex>
   </Link>
 );
 
 
-function Navbar({ email }) {
+function Navbar({ id, role, username, profilePic }) {
 
   const onSignOutHandler = async () => {
     try {
@@ -76,7 +73,7 @@ function Navbar({ email }) {
     }
   };
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  //const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -100,63 +97,40 @@ function Navbar({ email }) {
         <HStack alignItems={"center"}>
           <Hide below="md">
             <LinkBox>
-              <Box fontSize="xl" fontWeight="bold">                  
+              <Box fontSize="xl" fontWeight="bold">
                 <Icon as={MdConnectWithoutContact} marginRight="0.5rem" />
-                <LinkOverlay as={RouterLink} to="/">App TFG</LinkOverlay>
+                <LinkOverlay as={RouterLink} to="/">Cribel</LinkOverlay>
               </Box>
             </LinkBox>
           </Hide>
-            <NavLink icon={BsHouseDoor} link={"posts"}>{"home"}</NavLink>
+          <NavLink icon={BsHouseDoor} link={"posts"}>{"home"}</NavLink>
         </HStack>
 
 
         {/************ CHANNELS AND SEARCH *******************/}
-        <Flex align="center" px="0.4rem">       
+        <Flex align="center" px="0.4rem">
           <Menu autoSelect={false}>
             <MenuButton>
               <Flex fontSize="lg" align="center" >
                 <Icon as={MdScreenSearchDesktop} />
                 <Hide below='md'>
-                  <Text mx="0.5rem"> Channels </Text>
+                  <Text ml="0.5rem"> Channels </Text>
                 </Hide>
-                <Icon as={FiChevronDown} mx="0.3rem" />
-              </Flex> 
+                <Icon as={FiChevronDown} ml="0.2rem" mr="0.7rem" />
+              </Flex>
             </MenuButton>
-            <MenuList h='20rem' sx={{overflowY:"scroll"}}>
-              <MenuItem minH='48px'>
-                <Image
-                  boxSize='2rem'
-                  borderRadius='full'
-                  src='https://placekitten.com/100/100'
-                  alt='Fluffybuns the destroyer'
-                  mr='12px'
-                />
-                <span>Fluffybuns the Destroyer</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Simon the pensive</span>
-              </MenuItem>
-              <MenuItem minH='48px'>
-                <span>Fluffybuns the Destroyer</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Simon the pensive</span>
-              </MenuItem>
-              <MenuItem minH='48px'>
-                <span>Fluffybuns the Destroyer</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Simon the pensive</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Simon the pensive</span>
-              </MenuItem>
-              <MenuItem minH='48px'>
-                <span>Fluffybuns the Destroyer</span>
-              </MenuItem>
-              <MenuItem minH='40px'>
-                <span>Simon the pensive</span>
-              </MenuItem>
+
+            <MenuList maxH='20rem' sx={{ overflowY: "scroll" }}>
+              <MenuGroup title='Your followed channels'>
+                <MenuDivider />
+                {channels.map((channel, id) => (
+                  <MenuItem key={id}>
+                    <Avatar size="sm" name={channel.name} src={channel.image} mr="0.75rem" />
+                    {channel.name}
+                  </MenuItem>
+                ))}
+              </MenuGroup>
+
             </MenuList>
           </Menu>
           <SearchBar />
@@ -165,14 +139,17 @@ function Navbar({ email }) {
 
         {/************ EXPLORE, NOTIFICATION AND PROFILE *************/}
         <HStack>
-          <NavLink icon={MdManageSearch} link={"channels"}>{"explore"}</NavLink>
+          {/************ EXPLORE AND NOTIFICATION *************/}
+          <NavLink icon={MdManageSearch} link={"explore"}>{"explore"}</NavLink>
           <IconButton
             size="lg"
             variant="ghost"
-            color = {useColorModeValue("gray.600", "gray.200")}
+            color={useColorModeValue("gray.600", "gray.200")}
             aria-label="open menu"
             icon={<FiBell />}
           />
+
+          {/********** PROFILE *************/}
           <Flex alignItems={'center'}>
             <Menu autoSelect={false}>
               <MenuButton
@@ -180,78 +157,87 @@ function Navbar({ email }) {
                 transition="all 0.3s"
                 _focus={{ boxShadow: 'none' }}>
                 <HStack>
-                  <Avatar
-                    size={'sm'}
-                    src={
-                      'https://images.vexels.com/content/145922/preview/female-avatar-maker-2b76c7.png'
+                    {profilePic != null ?
+                      <Avatar size={'sm'} src={profilePic} />
+                      :
+                      <Avatar size={'sm'} bg="grey" />
                     }
-                  />
+                  
                   <VStack
                     display={{ base: 'none', md: 'flex' }}
                     alignItems="flex-start"
                     spacing="1px"
-                    ml="2">
-                    <Text fontSize="sm">Justina Clark</Text>
-                    <Text fontSize="xs">
-                      Admin
-                    </Text>
+                    ml="2"
+                  >
+                    { username != null ?
+                      <Text fontSize="sm"> {username} </Text>
+                      :
+                      <Text fontSize="sm"> Nombre Apellido </Text>
+                    }
+                    { role != null ?
+                      <Text fontSize="xs"> {role} </Text>
+                      :
+                      <Text fontSize="xs"> Role </Text>
+                    }
+                    
                   </VStack>
+
                   <Box display={{ base: 'none', md: 'flex' }}>
                     <FiChevronDown />
                   </Box>
                 </HStack>
               </MenuButton>
+
               <MenuList minW="8.5rem" rounded="md" fontSize="md">
-
-              <MenuItem
-                onClick={toggleColorMode}
-                _hover={{
-                  bg: useColorModeValue("blue.50", "blue.700")
+                <MenuItem
+                  onClick={toggleColorMode}
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                >
+                  {colorMode === 'light' ?
+                    <Text fontWeight='normal'> <Icon as={BsMoon} /> Dark</Text>
+                    :
+                    <Text fontWeight='normal'> <Icon as={BsSun} /> Light</Text>
+                  }
+                </MenuItem>
+                <MenuItem
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                /*
+                _active={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
                 }}
-              >
-                {colorMode === 'light' ?
-                  <Text fontWeight='normal'> <Icon as={BsMoon} /> Dark</Text>
-                  :
-                  <Text fontWeight='normal'> <Icon as={BsSun} /> Light</Text>
-                }
-              </MenuItem>
-
-              <MenuItem
-                _hover={{
-                  bg: useColorModeValue("blue.50", "blue.700")
-                }}
-              /*
-              _active={{
-                bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
-              }}
-              _expanded={{
-                bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
-              }}*/
-              >
-                <Text> <Icon as={BsGear} /> Settings</Text>
-              </MenuItem>
-
-              <MenuItem
-                _hover={{
-                  bg: useColorModeValue("blue.50", "blue.700")
-                }}
-              >
-                <Text> <Icon as={MdHelpOutline} /> About</Text>
-              </MenuItem>
-              <MenuDivider/>
-              <MenuItem onClick={onSignOutHandler}
-                _hover={{
-                  bg: useColorModeValue("blue.50", "blue.700")
-                }}
-              >
-                <Text> <Icon as={BsBoxArrowRight} /> Logout</Text>
-              </MenuItem>
-            </MenuList>
+                _expanded={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                }}*/
+                >
+                  <Text> <Icon as={BsGear} /> Settings</Text>
+                </MenuItem>
+                <MenuItem
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                >
+                  <Text> <Icon as={MdHelpOutline} /> About </Text>
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem onClick={onSignOutHandler}
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                >
+                  <Text> <Icon as={BsBoxArrowRight} /> Logout</Text>
+                </MenuItem>
+              </MenuList>
             </Menu>
           </Flex>
+
+
         </HStack>
       </Flex>
-      
+
 
       {/*isOpen ? (
         <Box pb={4} display={{ md: "none" }}>

@@ -2,7 +2,7 @@ import { listChannels } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { Box, Card, CardHeader, CardBody, Text, CircularProgress } from "@chakra-ui/react";
-
+import ChannelCard from './ChannelCard';
 
 function formatDate(awsDate){
   const dateobj = new Date(awsDate);
@@ -39,7 +39,7 @@ function ChannelList() {
   
 
   return (
-      <>
+      /*<>
         {channels.map(channel => (
           <div className="center" key={channel.id}>
             <Box p="1.5rem" minW="40%" maxW="sm">
@@ -67,7 +67,14 @@ function ChannelList() {
             </Box>
           </div>
         ))}
-      </>
+      </>*/
+      <>
+      {channels.map(channel => (
+        <div key={channel.id}>
+          <ChannelCard channel={channel} />
+        </div>
+      ))}
+    </>
   );
 }
 
