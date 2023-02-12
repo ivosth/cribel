@@ -27,7 +27,7 @@ import {
 import { MdConnectWithoutContact, MdHelpOutline, MdOutlineLocalPostOffice, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
 import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsHouseDoor } from 'react-icons/bs';
 import { FiBell, FiChevronDown } from 'react-icons/fi';
-import { Link as RouterLink } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import SearchBar from "./SearchBar";
 import { channels } from "./Static.js";
@@ -75,6 +75,7 @@ function Navbar({ id, role, username, profilePic }) {
 
   //const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -124,10 +125,12 @@ function Navbar({ id, role, username, profilePic }) {
               <MenuGroup title='Your followed channels'>
                 <MenuDivider />
                 {channels.map((channel, id) => (
-                  <MenuItem key={id}>
-                    <Avatar size="sm" name={channel.name} src={channel.image} mr="0.75rem" />
-                    {channel.name}
-                  </MenuItem>
+                  <Link href={`/channel/${channel.id}`}>
+                    <MenuItem key={id}>
+                      <Avatar size="sm" name={channel.name} src={channel.image} mr="0.75rem" />
+                      <Text> {channel.name} </Text>
+                    </MenuItem>
+                  </Link>
                 ))}
               </MenuGroup>
 
@@ -157,29 +160,29 @@ function Navbar({ id, role, username, profilePic }) {
                 transition="all 0.3s"
                 _focus={{ boxShadow: 'none' }}>
                 <HStack>
-                    {profilePic != null ?
-                      <Avatar size={'sm'} src={profilePic} />
-                      :
-                      <Avatar size={'sm'} bg="grey" />
-                    }
-                  
+                  {profilePic != null ?
+                    <Avatar size={'sm'} src={profilePic} />
+                    :
+                    <Avatar size={'sm'} bg="grey" />
+                  }
+
                   <VStack
                     display={{ base: 'none', md: 'flex' }}
                     alignItems="flex-start"
                     spacing="1px"
                     ml="2"
                   >
-                    { username != null ?
+                    {username != null ?
                       <Text fontSize="sm"> {username} </Text>
                       :
                       <Text fontSize="sm"> Nombre Apellido </Text>
                     }
-                    { role != null ?
+                    {role != null ?
                       <Text fontSize="xs"> {role} </Text>
                       :
                       <Text fontSize="xs"> Role </Text>
                     }
-                    
+
                   </VStack>
 
                   <Box display={{ base: 'none', md: 'flex' }}>

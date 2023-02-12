@@ -8,12 +8,15 @@ import {
   Icon,
   Text,
   Hide,
-  useBoolean, Spacer
+  Link, 
+  Spacer
 } from "@chakra-ui/react";
 import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar, MdOutlineDataSaverOn } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 
 function ChannelCard({ channel }) {
+  const navigate = useNavigate();
 
   return (
       <Box
@@ -35,7 +38,15 @@ function ChannelCard({ channel }) {
             ml="2"
             display={{ md: 'flex' }} 
           >
-            <Text as="b" fontSize={[16, 20, 20, 25]} align="center"> {channel.name} </Text>
+            {/*<Text onClick={() => navigate(`/channel/${channel.id}`)} 
+              as="b" fontSize={[16, 20, 20, 25]} align="center"> {channel.name} </Text>*/}
+            <Button mb="0.3rem"
+              onClick={() => navigate(`/channel/${channel.id}`)}
+              fontSize={[13, 18, 18, 23]}
+            >
+              {channel.name}
+            </Button>
+            
             <Flex>
               <Hide below="sm">
                 <Avatar size={'sm'} bg="grey" mr="0.5rem" />
@@ -48,7 +59,7 @@ function ChannelCard({ channel }) {
             <Flex fontSize="lg" align="center" >
                 <Icon as={MdOutlineDataSaverOn} size="1.5rem"/>
                 <Hide below='xl'>
-                  <Text ml="0.3rem" fontSize="lg" >Suscribirse</Text>
+                  <Text ml="0.3rem" fontSize="md" >Suscribirse</Text>
                 </Hide>
             </Flex>
           </Button>
@@ -65,7 +76,7 @@ function ChannelCard({ channel }) {
             <Text fontSize="sm" ml="0.1rem" mr="1.1rem"> 4.5 de 5 </Text>
             
         </Flex>
-        <Text my="0.6rem" fontSize="md">{channel.description}</Text>
+        <Text my="0.6rem" fontSize={[11, 15, 15, 18]}>{channel.description}</Text>
         <Flex alignItems="center">
           <Spacer/>
           {channel.topics.map(topic =>         

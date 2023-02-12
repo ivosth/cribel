@@ -46,7 +46,7 @@ function SearchBar() {
                 <Link
                   fontSize="lg"
                   as={RouterLink}
-                  to={'channels/' + channel.name}
+                  to={'channel/' + channel.id}
                   rounded={"xl"}
                   _hover={{
                     bg: "blue.100",

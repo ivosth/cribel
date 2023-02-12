@@ -11,18 +11,19 @@ import {
 } from "@chakra-ui/react";
 import { FaHeart, FaRegHeart, FaRegEye } from "react-icons/fa";
 import { Rating } from "react-simple-star-rating";
+import { useNavigate } from 'react-router-dom';
 
+function formatDate(awsDate) {
+  const dateobj = new Date(awsDate);
+  const date = dateobj.toLocaleDateString(navigator.language);
+  const time = dateobj.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 
-function formatDate(awsDate){
-    const dateobj = new Date(awsDate);
-    const date = dateobj.toLocaleDateString(navigator.language);
-    const time = dateobj.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
-    
-    return (date + ' ' + time);
+  return (date + ' ' + time);
 }
 
-function PostCard({post}) {
+function PostCard({ post }) {
   const [like, setLike] = useBoolean();
+  const navigate = useNavigate();
 
   const [ratingValue, setRatingValue] = useState(0);
   const handleRating = (rate) => {
@@ -52,22 +53,26 @@ function PostCard({post}) {
       >
         <Flex justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
-          <Link
-              px="0.50rem"
-              py={1}
-
-              bg="blue.600"
-              color="blue.100"
-              fontSize="0.8rem" //Más pequeño con xs
-              fontWeight="700"
-              textAlign={"center"}
-              rounded="md"
-              _hover={{
-                bg: "blue.500"
-              }}
-            >
-              Canal
-            </Link>
+            {post.hasOwnProperty("channel") ?
+                          <Link
+                          px="0.50rem"
+                          py={1}
+                          onClick={() => navigate(`/channel/${post.channel.id}`)}
+                          bg="blue.600"
+                          color="blue.100"
+                          fontSize="0.8rem" //Más pequeño con xs
+                          fontWeight="700"
+                          textAlign={"center"}
+                          rounded="md"
+                          _hover={{
+                            bg: "blue.500"
+                          }}
+                        >
+                          {post.channel.name}
+                        </Link>
+              :
+              <></>
+            }
             <Text
               fontSize="sm"
               color="gray.600"
@@ -98,23 +103,16 @@ function PostCard({post}) {
         </Flex>
 
         <Box mt={2}>
-          <Link
+          <Text
             fontSize="2xl"
             color="gray.700"
             _dark={{
               color: "white"
             }}
             fontWeight="700"
-            _hover={{
-              color: "gray.600",
-              _dark: {
-                color: "gray.200"
-              },
-              textDecor: "underline"
-            }}
           >
             {post.name}
-          </Link>
+          </Text>
           <Text
             mt={2}
             color="gray.600"
@@ -149,7 +147,8 @@ function PostCard({post}) {
                 sm: "block"
               }}
             >
-              {post.owner.email}
+              {/*post.owner.email*/}
+              estoeselemail@hola.com
             </Link>
           </Flex>
 
@@ -167,17 +166,17 @@ function PostCard({post}) {
                 2
               </Text>
             */}
-            
+
             <Rating onClick={handleRating}
               allowFraction
-              fillColorArray={["#e79b3b","#e9a435","#ebab30","#edb32a","#f0bb25","#f2c320","#f4cb1a","#f6d215","#f8da0f","#fae20a"]} 
-              SVGstyle={{display: "inline-block"}}
+              fillColorArray={["#e79b3b", "#e9a435", "#ebab30", "#edb32a", "#f0bb25", "#f2c320", "#f4cb1a", "#f6d215", "#f8da0f", "#fae20a"]}
+              SVGstyle={{ display: "inline-block" }}
               size={25}
-              style={{marginTop: "6px"}}
+              style={{ marginTop: "6px" }}
             />
             <Text pl="0.3rem" marginRight="1.5rem"> {/*views*/}4.5 </Text>
 
-            <FaRegEye size="22px"/>
+            <FaRegEye size="22px" />
             <Text pl="0.3rem"> {/*views*/}123 </Text>
           </Flex>
         </Flex>
