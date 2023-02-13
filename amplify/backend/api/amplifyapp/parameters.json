@@ -8,5 +8,6 @@
       "Outputs.UserPoolId"
     ]
   },
-  "AuthModeLastUpdated": "2022-09-17T17:34:50.456Z"
+  "AuthModeLastUpdated": "2022-09-17T17:34:50.456Z",
+  "CreateAPIKey": 0
 }

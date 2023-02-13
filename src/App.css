@@ -4,7 +4,11 @@
 }
 
 .content {
-  margin-left: 30px;
+  margin-top: 3rem;
+}
+
+.htmlFormatted {
+  margin-left: 3rem;
 }
 
 .center {
