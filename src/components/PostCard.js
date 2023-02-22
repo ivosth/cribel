@@ -54,22 +54,22 @@ function PostCard({ post }) {
         <Flex justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
             {post.hasOwnProperty("channel") ?
-                          <Link
-                          px="0.50rem"
-                          py={1}
-                          onClick={() => navigate(`/channel/${post.channel.id}`)}
-                          bg="blue.600"
-                          color="blue.100"
-                          fontSize="0.8rem" //Más pequeño con xs
-                          fontWeight="700"
-                          textAlign={"center"}
-                          rounded="md"
-                          _hover={{
-                            bg: "blue.500"
-                          }}
-                        >
-                          {post.channel.name}
-                        </Link>
+              <Link
+                px="0.50rem"
+                py={1}
+                onClick={() => navigate(`/channel/${post.channel.id}`)}
+                bg="blue.600"
+                color="blue.100"
+                fontSize="0.8rem" //Más pequeño con xs
+                fontWeight="700"
+                textAlign={"center"}
+                rounded="md"
+                _hover={{
+                  bg: "blue.500"
+                }}
+              >
+                {post.channel.name}
+              </Link>
               :
               <></>
             }
@@ -84,22 +84,20 @@ function PostCard({ post }) {
               {formatDate(post.createdAt)}
             </Text>
           </Flex>
-          <Link
+          <Box
+            key={post.topic}
             px="0.50rem"
             py={1}
-
+            marginRight="0.5rem"
             bg="gray.600"
             color="gray.100"
             fontSize="0.8rem" //Más pequeño con xs
             fontWeight="700"
             textAlign={"center"}
             rounded="md"
-            _hover={{
-              bg: "gray.500"
-            }}
           >
-            {post.topic}
-          </Link>
+            <Text fontSize={[8, 10, 12, 12]}> {post.topic} </Text>
+          </Box>
         </Flex>
 
         <Box mt={2}>

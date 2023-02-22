@@ -31,7 +31,7 @@ import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import SearchBar from "./SearchBar";
 import { channels } from "./Static.js";
-
+import IconCribel from "./IconCribel";
 
 
 const NavLink = ({ icon, link, children }) => (
@@ -39,7 +39,6 @@ const NavLink = ({ icon, link, children }) => (
     fontSize="lg"
     as={RouterLink}
     to={link}
-    px={2}
     py={1}
     rounded={"md"}
     _hover={{
@@ -97,10 +96,12 @@ function Navbar({ id, role, username, profilePic }) {
         />*/}
         <HStack alignItems={"center"}>
           <Hide below="md">
-            <LinkBox>
+            <LinkBox as={RouterLink} to="/">
               <Box fontSize="xl" fontWeight="bold">
-                <Icon as={MdConnectWithoutContact} marginRight="0.5rem" />
-                <LinkOverlay as={RouterLink} to="/">Cribel</LinkOverlay>
+                <IconCribel marginRight="0.5rem" boxSize="4rem"/>
+                <Hide below="lg">
+                  <LinkOverlay marginRight="0.8rem" fontSize={["1.1rem", "1.1rem", "1.1rem", "1.1rem", "1.6rem"]}>Cribel</LinkOverlay>
+                </Hide>
               </Box>
             </LinkBox>
           </Hide>
@@ -125,12 +126,12 @@ function Navbar({ id, role, username, profilePic }) {
               <MenuGroup title='Your followed channels'>
                 <MenuDivider />
                 {channels.map((channel, id) => (
-                  <Link href={`/channel/${channel.id}`}>
+                  <RouterLink to={`/channel/${channel.id}`}>
                     <MenuItem key={id}>
                       <Avatar size="sm" name={channel.name} src={channel.image} mr="0.75rem" />
                       <Text> {channel.name} </Text>
                     </MenuItem>
-                  </Link>
+                  </RouterLink>
                 ))}
               </MenuGroup>
 
@@ -216,7 +217,9 @@ function Navbar({ id, role, username, profilePic }) {
                   bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
                 }}*/
                 >
-                  <Text> <Icon as={BsGear} /> Settings</Text>
+                  <RouterLink to="/settings">
+                    <Text> <Icon as={BsGear} /> Settings</Text>
+                  </RouterLink>
                 </MenuItem>
                 <MenuItem
                   _hover={{

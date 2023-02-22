@@ -9,8 +9,12 @@ import PostList from './components/PostList';
 import Navbar from './components/Navbar'
 import Explore from './pages/Explore'
 import Channel from './pages/Channel';
+import Home from './pages/Home';
 import { createUser } from "./graphql/mutations";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import Settings from './pages/Settings';
+import SettingsProfile from './pages/SettingsProfile';
+import SettingsChannel from './pages/SettingsChannel';
 
 //const UserContext = createContext(null);
 
@@ -104,10 +108,15 @@ function App() {
     <> {/*<UserContext.Provider value={{ userAttributes }}>*/}
       <Navbar email={userAttributes.email} />
         <Routes>
-          <Route path="/" element={<div>MainPage</div>}/>
+          <Route path="/" element={<Home/>}/>
           <Route path="/explore" element={<Explore/>}>
             <Route path="channels" element={<ChannelList />}/>
             <Route path="posts" element={<PostList />}/>
+          </Route>
+          <Route path="/settings" element={<Settings/>}>
+            <Route path="profile" element={<SettingsProfile />}/>
+            <Route path="channels" element={<SettingsChannel/>}/>
+            <Route path="advanced" element={<p>/settings/advanced</p>}/>
           </Route>
           <Route path="/channel/:id" element={<Channel />}/>
           <Route path="/posts" element={<PostList />}/>

@@ -1,13 +1,28 @@
 import {
     Tabs, Tab, TabList, TabPanels, TabPanel,
-    Flex, Button, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, HStack
+    Flex, Button, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, HStack, Image, SimpleGrid, Show
 } from "@chakra-ui/react";
 import { getChannel } from '../graphql/queries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { useParams, Link as RouterLink } from "react-router-dom";
-import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp } from "react-icons/md";
+import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp, MdHeadset, MdLocationOn, MdEmail } from "react-icons/md";
 import PostCard from "../components/PostCard";
+import { BsFillBriefcaseFill } from "react-icons/bs";
+import { RiUserStarLine } from "react-icons/ri";
+import { BsStarFill } from "react-icons/bs";
+import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar, MdOutlineDataSaverOn } from "react-icons/md";
+import ChannelInfo from "../components/ChannelInfo";
+
+function formatDate(awsDate) {
+    const dateobj = new Date(awsDate);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = dateobj.toLocaleDateString(navigator.language, options);
+
+    return (date);
+}
+
+
 
 const NavLink = ({ icon, link, children }) => (
     <Link
@@ -54,7 +69,7 @@ function Channel() {
 
     useEffect(() => {
         obtainChannel();
-    }, []);
+    }, id);
 
     if (loading) {
         return (
@@ -72,12 +87,13 @@ function Channel() {
             boxShadow="md"
             justifyContent="center"
             _light={{
-                bg: "gray.50",
+                bg: "gray.100",
             }}
             _dark={{
-                bg: "gray.500",
+                bg: "gray.600",
             }}
         >
+            {/****** HEADER WITH FILTERS *************/}
             <Text fontSize="3xl" fontWeight="bold" textAlign="center" mb="1rem">
                 {channel.name}
             </Text>
@@ -90,34 +106,39 @@ function Channel() {
                 </Flex>
                 <Spacer />
             </Flex>
+
+            {/****** POSTS CARDS AND INFO CHANNEL *************/}
             <Flex mx="2%">
-                <Hide below='md'>
-                    <Box w='32%' />
-                </Hide>
-                <Box maxW="2xl"
-                    minW="50%">
+                <Hide below='xl'> <Box w='100%' /> </Hide>
+                <Show below='lg'> <Spacer /> </Show>
+
+                <Box maxW="2xl" minW="50%">
+
+                    {/****** INFO CHANNEL FOR SMALL SCREENS *************/}
+                    <Box p='4' maxW="2xl" minW="50%" display={{ lg: 'none' }}>
+                        <ChannelInfo channel={channel} />
+                    </Box>
+
+                    {/*************** POSTS CARDS  ***************/}
                     {channel.posts.items.map(post => (
                         <div key={post.id}>
                             <PostCard post={post} />
                         </div>
                     ))}
                 </Box>
-                <Box w='5%' />
+
+                <Hide below='xl'> <Box w='5%' /> </Hide>
                 <Spacer />
-                <Hide below='md'>
-                    <Box p='4' bg='gray.100' maxW="25%">
-                        <b>id: </b> {channel.id}<br />
-                        <b>name: </b> {channel.name}<br />
-                        <b>createdAt: </b> {channel.createdAt}<br />
-                        <b>updatedAt: </b> {channel.updatedAt}<br />
-                        <b>description: </b> {channel.description}<br />
-                        <b>subscribers:</b> {channel.subscribers.items.map(subscriber => <li key={subscriber.userID}> {subscriber.userID} </li>)}<br />
-                        <b>participants:</b> {channel.participants.items.map(participant => <li key={participant.userID}> {participant.userID} </li>)}<br />
-                        <b>topics:</b> {channel.topics.map(topic => <li key={topic}> {topic} </li>)}<br />
+
+                {/****** INFO CHANNEL FOR BIGGER SCREENS *************/}
+                <Hide below='lg'>
+                    <Box p='4' w="30%" minW="25%">
+                        <ChannelInfo channel={channel} />
                     </Box>
-                </Hide>
-            </Flex>
-        </Box>
+                </Hide >
+
+            </Flex >
+        </Box >
     );
 }
 
