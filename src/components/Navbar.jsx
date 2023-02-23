@@ -30,7 +30,7 @@ import { FiBell, FiChevronDown } from 'react-icons/fi';
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import SearchBar from "./SearchBar";
-import { channels } from "./Static.js";
+import { channels } from "./Static";
 import IconCribel from "./IconCribel";
 
 

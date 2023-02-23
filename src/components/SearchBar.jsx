@@ -20,7 +20,7 @@ import {
 } from "@choc-ui/chakra-autocomplete";
 import { MdOutlineSearch, MdOutlineYoutubeSearchedFor } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
-import { channels } from "./Static.js";
+import { channels } from "./Static";
 
 function SearchBar() {
 
