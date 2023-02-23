@@ -15,6 +15,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Settings from './pages/Settings';
 import SettingsProfile from './pages/SettingsProfile';
 import SettingsChannel from './pages/SettingsChannel';
+import SettingsAdvanced from './pages/SettingsAdvanced';
 
 //const UserContext = createContext(null);
 
@@ -116,7 +117,7 @@ function App() {
           <Route path="/settings" element={<Settings/>}>
             <Route path="profile" element={<SettingsProfile />}/>
             <Route path="channels" element={<SettingsChannel/>}/>
-            <Route path="advanced" element={<p>/settings/advanced</p>}/>
+            <Route path="advanced" element={<SettingsAdvanced />}/>
           </Route>
           <Route path="/channel/:id" element={<Channel />}/>
           <Route path="/posts" element={<PostList />}/>

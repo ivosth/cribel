@@ -1,16 +1,16 @@
 import {
-    Flex, useColorModeValue, Icon, Text, Stack, Button, SimpleGrid, ButtonGroup, IconButton
+    Flex, useColorModeValue, Icon, Text, Stack, Button, SimpleGrid, ButtonGroup, IconButton, Box, Hide
 } from "@chakra-ui/react";
-import { AiTwotoneLock, AiFillEdit } from "react-icons/ai";
+import { AiTwotoneLock, AiFillEdit, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 import { MdPeopleOutline, MdStar } from "react-icons/md";
-
+import { BiMessageAdd } from "react-icons/bi";
 
 
 function SettingsChannel() {
     const data = [
         {
-            name: "Daggy",
+            name: "Machine learning and Intelligent Systems",
             created: "7 days ago",
         },
         {
@@ -26,15 +26,15 @@ function SettingsChannel() {
             created: "A few hours ago",
         },
     ];
-    const bg = useColorModeValue("white", "gray.800");
-    const bg2 = useColorModeValue("white", "gray.800");
-    const bg3 = useColorModeValue("gray.100", "gray.700");
+    const bg = useColorModeValue("gray.100", "gray.800");
+    const bg2 = useColorModeValue("gray.50", "gray.800");
 
 
 
 
     return (
         <Flex display={{ base: "inline", xl: "flex" }} >
+
             <Flex
                 w="full"
                 bg="#edf3f8"
@@ -45,119 +45,84 @@ function SettingsChannel() {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Stack
-                    direction={{
-                        base: "column",
-                    }}
-                    w="full"
-                    bg={{
-                        md: bg,
-                    }}
-                    shadow="lg"
-                >
-                    {data.map((token, tid) => {
-                        return (
-                            <Flex
-                                direction={{
-                                    base: "row",
-                                    md: "column",
-                                }}
-                                bg={bg2}
-                                key={tid}
-                            >
-                                <SimpleGrid
-                                    spacingY={3}
-                                    columns={{
-                                        base: 1,
-                                        md: 4,
+                <Box w="full" >
+                    <Text fontSize="xl" fontWeight="bold">Owned by me:</Text>
+                    <Stack
+                        direction={{
+                            base: "column",
+
+                        }}
+                        w="full"
+                        bg={{
+                            md: bg,
+                        }}
+
+                    >
+
+                        {data.map((token, tid) => {
+                            return (
+                                <Flex
+                                    direction={{
+                                        base: "row",
+                                        md: "column",
                                     }}
-                                    w={{
-                                        base: 120,
-                                        md: "full",
-                                    }}
-                                    textTransform="uppercase"
-                                    bg={bg3}
-                                    color={"gray.500"}
-                                    py={{
-                                        base: 1,
-                                        md: 4,
-                                    }}
-                                    px={{
-                                        base: 2,
-                                        md: 10,
-                                    }}
-                                    fontSize="md"
-                                    fontWeight="hairline"
+                                    bg={bg2}
+                                    key={tid}
+                                    shadow="lg"
+                                    rounded="lg"
                                 >
-                                    <span>Name</span>
-                                    <span>Created</span>
-                                    <span>Data</span>
-                                    <Text
-                                        textAlign={{
-                                            md: "right",
+                                    <SimpleGrid
+                                        spacingY={3}
+                                        columns={{
+                                            base: 1,
+                                            sm: 2,
                                         }}
+                                        w="full"
+                                        py={2}
+                                        px="0.25rem"
+                                        fontWeight="hairline"
                                     >
-                                        Actions
-                                    </Text>
-                                </SimpleGrid>
-                                <SimpleGrid
-                                    spacingY={3}
-                                    columns={{
-                                        base: 1,
-                                        md: 4,
-                                    }}
-                                    w="full"
-                                    py={2}
-                                    px={10}
-                                    fontWeight="hairline"
-                                >
-                                    <span>{token.name}</span>
-                                    <Text
-                                        textOverflow="ellipsis"
-                                        overflow="hidden"
-                                        whiteSpace="nowrap"
-                                    >
-                                        {token.created}
-                                    </Text>
-                                    <Flex>
-                                        <Button
-                                            size="sm"
-                                            variant="solid"
-                                            leftIcon={<Icon as={AiTwotoneLock} />}
-                                            colorScheme="purple"
+                                        <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem">{token.name}</Text>
+
+
+                                        <Flex
+                                            justify={{
+                                                md: "end",
+                                            }}
                                         >
-                                            View Profile
-                                        </Button>
-                                    </Flex>
-                                    <Flex
-                                        justify={{
-                                            md: "end",
-                                        }}
-                                    >
-                                        <ButtonGroup variant="solid" size="sm" spacing={3}>
-                                            <IconButton
-                                                colorScheme="blue"
-                                                icon={<BsBoxArrowUpRight />}
-                                                aria-label="Up"
-                                            />
-                                            <IconButton
-                                                colorScheme="green"
-                                                icon={<AiFillEdit />}
-                                                aria-label="Edit"
-                                            />
-                                            <IconButton
-                                                colorScheme="red"
-                                                variant="outline"
-                                                icon={<BsFillTrashFill />}
-                                                aria-label="Delete"
-                                            />
-                                        </ButtonGroup>
-                                    </Flex>
-                                </SimpleGrid>
-                            </Flex>
-                        );
-                    })}
-                </Stack>
+                                            <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
+                                                <Button colorScheme="purple" variant="solid">
+                                                    <Flex fontSize="lg" align="center" >
+                                                        <Icon as={BiMessageAdd} size="1.5rem" />
+                                                        <Hide below='md'>
+                                                            <Text ml="0.3rem" fontSize="md" >New Post</Text>
+                                                        </Hide>
+                                                    </Flex>
+                                                </Button>
+                                                <IconButton
+                                                    colorScheme="blue"
+                                                    icon={<AiOutlineUsergroupAdd />}
+                                                    aria-label="Up"
+                                                />
+                                                <IconButton
+                                                    colorScheme="green"
+                                                    icon={<AiFillEdit />}
+                                                    aria-label="Edit"
+                                                />
+                                                <IconButton
+                                                    colorScheme="red"
+                                                    variant="outline"
+                                                    icon={<BsFillTrashFill />}
+                                                    aria-label="Delete"
+                                                />
+                                            </ButtonGroup>
+                                        </Flex>
+                                    </SimpleGrid>
+                                </Flex>
+                            );
+                        })}
+                    </Stack>
+                </Box>
             </Flex>
             <Flex
                 w="full"
@@ -169,119 +134,82 @@ function SettingsChannel() {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Stack
-                    direction={{
-                        base: "column",
-                    }}
-                    w="full"
-                    bg={{
-                        md: bg,
-                    }}
-                    shadow="lg"
-                >
-                    {data.map((token, tid) => {
-                        return (
-                            <Flex
-                                direction={{
-                                    base: "row",
-                                    md: "column",
-                                }}
-                                bg={bg2}
-                                key={tid}
-                            >
-                                <SimpleGrid
-                                    spacingY={3}
-                                    columns={{
-                                        base: 1,
-                                        md: 4,
+
+                <Box w="full">
+                    <Text fontSize="xl" fontWeight="bold">I participate in:</Text>
+                    <Stack
+                        direction={{
+                            base: "column",
+                        }}
+                        w="full"
+                        bg={{
+                            md: bg,
+                        }}
+                    >
+                        {data.map((token, tid) => {
+                            return (
+                                <Flex
+                                    direction={{
+                                        base: "row",
+                                        md: "column",
                                     }}
-                                    w={{
-                                        base: 120,
-                                        md: "full",
-                                    }}
-                                    textTransform="uppercase"
-                                    bg={bg3}
-                                    color={"gray.500"}
-                                    py={{
-                                        base: 1,
-                                        md: 4,
-                                    }}
-                                    px={{
-                                        base: 2,
-                                        md: 10,
-                                    }}
-                                    fontSize="md"
-                                    fontWeight="hairline"
+                                    bg={bg2}
+                                    key={tid}
+                                    shadow="lg"
+                                    rounded="lg"
                                 >
-                                    <span>Name</span>
-                                    <span>Created</span>
-                                    <span>Data</span>
-                                    <Text
-                                        textAlign={{
-                                            md: "right",
+                                    <SimpleGrid
+                                        spacingY={3}
+                                        columns={{
+                                            base: 1,
+                                            sm: 2,
                                         }}
+                                        w="full"
+                                        py={2}
+                                        px="0.25rem"
+                                        fontWeight="hairline"
                                     >
-                                        Actions
-                                    </Text>
-                                </SimpleGrid>
-                                <SimpleGrid
-                                    spacingY={3}
-                                    columns={{
-                                        base: 1,
-                                        md: 4,
-                                    }}
-                                    w="full"
-                                    py={2}
-                                    px={10}
-                                    fontWeight="hairline"
-                                >
-                                    <span>{token.name}</span>
-                                    <Text
-                                        textOverflow="ellipsis"
-                                        overflow="hidden"
-                                        whiteSpace="nowrap"
-                                    >
-                                        {token.created}
-                                    </Text>
-                                    <Flex>
-                                        <Button
-                                            size="sm"
-                                            variant="solid"
-                                            leftIcon={<Icon as={AiTwotoneLock} />}
-                                            colorScheme="purple"
+                                        <Text fontSize="md" ml="1rem">{token.name}</Text>
+
+
+                                        <Flex
+                                            justify={{
+                                                md: "end",
+                                            }}
                                         >
-                                            View Profile
-                                        </Button>
-                                    </Flex>
-                                    <Flex
-                                        justify={{
-                                            md: "end",
-                                        }}
-                                    >
-                                        <ButtonGroup variant="solid" size="sm" spacing={3}>
-                                            <IconButton
-                                                colorScheme="blue"
-                                                icon={<BsBoxArrowUpRight />}
-                                                aria-label="Up"
-                                            />
-                                            <IconButton
-                                                colorScheme="green"
-                                                icon={<AiFillEdit />}
-                                                aria-label="Edit"
-                                            />
-                                            <IconButton
-                                                colorScheme="red"
-                                                variant="outline"
-                                                icon={<BsFillTrashFill />}
-                                                aria-label="Delete"
-                                            />
-                                        </ButtonGroup>
-                                    </Flex>
-                                </SimpleGrid>
-                            </Flex>
-                        );
-                    })}
-                </Stack>
+                                            <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing={3}>
+                                                <Button colorScheme="purple" variant="solid">
+                                                    <Flex fontSize="lg" align="center" >
+                                                        <Icon as={BiMessageAdd} size="1.5rem" />
+                                                        <Hide below='md'>
+                                                            <Text ml="0.3rem" fontSize="md" >New Post</Text>
+                                                        </Hide>
+                                                    </Flex>
+                                                </Button>
+                                                <IconButton
+                                                    colorScheme="blue"
+                                                    icon={<AiOutlineUsergroupAdd />}
+                                                    aria-label="Up"
+                                                />
+                                                <IconButton
+                                                    colorScheme="green"
+                                                    icon={<AiFillEdit />}
+                                                    aria-label="Edit"
+                                                />
+                                                <IconButton
+                                                    colorScheme="red"
+                                                    variant="outline"
+                                                    icon={<BsFillTrashFill />}
+                                                    aria-label="Delete"
+                                                />
+                                            </ButtonGroup>
+                                        </Flex>
+                                    </SimpleGrid>
+                                </Flex>
+                            );
+                        })}
+                    </Stack>
+                </Box>
             </Flex>
         </Flex>
     );
