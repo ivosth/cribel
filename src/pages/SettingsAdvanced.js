@@ -76,11 +76,7 @@ function SettingsAdvanced() {
 
     return (
 
-        <Box w="full" bg="#edf3f8" p={50} alignItems="center" justifyContent="center" mt="2rem"
-            _dark={{
-                bg: "#3e3e3e",
-            }}
-        >
+        <Box w="full" p={50} alignItems="center" justifyContent="center" mt="2rem">
             {/*********** SEARCH USERS BY INITIAL LETTERS *******************/}
             <Box>
                 <Text fontSize="3xl" fontWeight="bold">

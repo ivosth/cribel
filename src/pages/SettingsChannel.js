@@ -26,7 +26,7 @@ function SettingsChannel() {
             created: "A few hours ago",
         },
     ];
-    const bg = useColorModeValue("gray.100", "gray.800");
+    const bg = useColorModeValue("gray.100", "gray.600");
     const bg2 = useColorModeValue("gray.50", "gray.800");
 
 
@@ -37,10 +37,6 @@ function SettingsChannel() {
 
             <Flex
                 w="full"
-                bg="#edf3f8"
-                _dark={{
-                    bg: "#3e3e3e",
-                }}
                 p={50}
                 alignItems="center"
                 justifyContent="center"
@@ -126,10 +122,6 @@ function SettingsChannel() {
             </Flex>
             <Flex
                 w="full"
-                bg="#edf3f8"
-                _dark={{
-                    bg: "#3e3e3e",
-                }}
                 p={50}
                 alignItems="center"
                 justifyContent="center"
@@ -145,6 +137,7 @@ function SettingsChannel() {
                         bg={{
                             md: bg,
                         }}
+                        rounded="lg"
                     >
                         {data.map((token, tid) => {
                             return (

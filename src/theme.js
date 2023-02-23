@@ -3,7 +3,7 @@ import {
     withDefaultColorScheme,
     withDefaultProps
   } from "@chakra-ui/react";
-  
+import { mode } from "@chakra-ui/theme-tools";
   
   const CustomTheme = extendTheme({
       colors: {
@@ -19,6 +19,13 @@ import {
             "800": "#132655",
             "900": "#061141"
         }
+      },
+      styles: {
+        global: (props) => ({
+          body: {
+            bg: mode("gray.100", "gray.600")(props),
+          }
+        })
       },
       /*semanticTokens: {
         colors: {

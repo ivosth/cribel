@@ -16,7 +16,8 @@ import Settings from './pages/Settings';
 import SettingsProfile from './pages/SettingsProfile';
 import SettingsChannel from './pages/SettingsChannel';
 import SettingsAdvanced from './pages/SettingsAdvanced';
-
+import About from './pages/About';
+import Error from './pages/Error';
 //const UserContext = createContext(null);
 
 function App() {
@@ -121,8 +122,8 @@ function App() {
           </Route>
           <Route path="/channel/:id" element={<Channel />}/>
           <Route path="/posts" element={<PostList />}/>
-          <Route path="/about" element={<div><p>Navigation Test Page</p> <button onClick={()=> {navigate("/channels");}}>Change to Channels</button></div>}/>
-          <Route path = "*" element = {<div>Page not found</div>}/>
+          <Route path="/about" element={<About />}/>
+          <Route path = "*" element = {<Error />}/>
         </Routes>
     {/*</UserContext.Provider>*/} </> 
   )

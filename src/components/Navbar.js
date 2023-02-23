@@ -226,7 +226,9 @@ function Navbar({ id, role, username, profilePic }) {
                     bg: useColorModeValue("blue.50", "blue.700")
                   }}
                 >
+                  <RouterLink to="/about">
                   <Text> <Icon as={MdHelpOutline} /> About </Text>
+                  </RouterLink>
                 </MenuItem>
                 <MenuDivider />
                 <MenuItem onClick={onSignOutHandler}

@@ -21,11 +21,6 @@ function SettingsProfile() {
 
         <Box>
             <Flex
-                bg="#edf3f8"
-                _dark={{
-                    bg: "#3e3e3e",
-                }}
-
                 w="full"
                 alignItems="center"
                 justifyContent="center"
@@ -47,7 +42,7 @@ function SettingsProfile() {
                             bg: "gray.400",
                         }}
                         _dark={{
-                            bg: "gray.600",
+                            bg: "gray.700",
                         }}>
 
                         <Box>

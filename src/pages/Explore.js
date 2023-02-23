@@ -41,8 +41,6 @@ function Explore() {
             bg={useColorModeValue("gray.100", "gray.600")}
             py="2rem"
             fontFamily="monospace"
-            borderWidth="1px"
-            boxShadow="md"
             justifyContent="center"
         >
             <Tabs variant='solid-rounded' colorScheme='blue' align="center">

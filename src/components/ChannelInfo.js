@@ -21,11 +21,6 @@ function ChannelInfo({channel}) {
 
         <Box>
             <Flex
-                bg="#edf3f8"
-                _dark={{
-                    bg: "#3e3e3e",
-                }}
-
                 w="full"
                 alignItems="center"
                 justifyContent="center"
