@@ -5,9 +5,10 @@ import { AiTwotoneLock, AiFillEdit, AiOutlineUsergroupAdd } from "react-icons/ai
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 import { MdPeopleOutline, MdStar } from "react-icons/md";
 import { BiMessageAdd } from "react-icons/bi";
+import { Link as RouterLink } from "react-router-dom";
 
 
-function SettingsChannel() {
+function SettingsChannel({ user }) {
     const data = [
         {
             name: "Machine learning and Intelligent Systems",
@@ -55,15 +56,16 @@ function SettingsChannel() {
 
                     >
 
-                        {data.map((token, tid) => {
-                            return (
+                        {user.ownedChannels.items.length > 0 ?
+                            user.ownedChannels.items.map(channel => {
+                                return (
                                 <Flex
                                     direction={{
                                         base: "row",
                                         md: "column",
                                     }}
                                     bg={bg2}
-                                    key={tid}
+                                    key={channel.id}
                                     shadow="lg"
                                     rounded="lg"
                                 >
@@ -78,7 +80,9 @@ function SettingsChannel() {
                                         px="0.25rem"
                                         fontWeight="hairline"
                                     >
-                                        <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem">{token.name}</Text>
+                                        <RouterLink to={`/channel/${channel.id}`}>
+                                            <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem">{channel.name}</Text>
+                                        </RouterLink>
 
 
                                         <Flex
@@ -115,8 +119,14 @@ function SettingsChannel() {
                                         </Flex>
                                     </SimpleGrid>
                                 </Flex>
-                            );
-                        })}
+                            );                    
+                        })
+                        :
+                            <Text as="h2" px={2} fontSize="lg" >
+                                No channel has been created by you
+                            </Text>  
+                    
+                        }
                     </Stack>
                 </Box>
             </Flex>
@@ -139,15 +149,18 @@ function SettingsChannel() {
                         }}
                         rounded="lg"
                     >
-                        {data.map((token, tid) => {
-                            return (
+
+
+                        {user.participantChannels.items.length > 0 ?
+                            user.participantChannels.items.map(channel => {
+                                return (
                                 <Flex
                                     direction={{
                                         base: "row",
                                         md: "column",
                                     }}
                                     bg={bg2}
-                                    key={tid}
+                                    key={channel.channelID}
                                     shadow="lg"
                                     rounded="lg"
                                 >
@@ -162,7 +175,9 @@ function SettingsChannel() {
                                         px="0.25rem"
                                         fontWeight="hairline"
                                     >
-                                        <Text fontSize="md" ml="1rem">{token.name}</Text>
+                                        <RouterLink to={`/channel/${channel.channelID}`}>
+                                            <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem">{channel.channel.name}</Text>
+                                        </RouterLink>
 
 
                                         <Flex
@@ -199,8 +214,14 @@ function SettingsChannel() {
                                         </Flex>
                                     </SimpleGrid>
                                 </Flex>
-                            );
-                        })}
+                            );                    
+                        })
+                        :
+                            <Text as="h2" px={2} fontSize="lg" >
+                                Does not participate in any channel
+                            </Text>  
+                    
+                        }
                     </Stack>
                 </Box>
             </Flex>

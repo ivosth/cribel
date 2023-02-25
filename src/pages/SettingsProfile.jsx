@@ -5,6 +5,7 @@ import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import ProfileEdit from "../components/ProfileEdit";
+import { Link as RouterLink } from "react-router-dom";
 
 function formatDate(awsDate) {
     const dateobj = new Date(awsDate);
@@ -15,8 +16,8 @@ function formatDate(awsDate) {
 }
 
 
-function SettingsProfile() {
-
+function SettingsProfile({ user }) {
+    console.log(user);
     return (
 
         <Box>
@@ -57,19 +58,19 @@ function SettingsProfile() {
                                 textAlign={"center"}
                                 rounded="md"
                             >
-                                <Text fontSize="sm"> Student </Text>
+                                <Text fontSize="sm"> {user.rol.charAt(0).toUpperCase() + user.rol.slice(1) || "Role"} </Text>
                             </Box>
                         </Box>
 
 
                         <Spacer />
-                        <ProfileEdit/>
+                        <ProfileEdit />
 
                     </Flex>
 
                     <Box py="1rem" px="2rem">
                         <Text as="h2" fontSize={{ base: 'md', sm: 'lg', md: '2xl' }} fontWeight="bold" >
-                            Javier Mancha Diéguez
+                            {`${user.givenName} ${user.familyName}` || "Nombre Apellido"}
                         </Text>
 
                         <Text as="h3" fontSize={{ base: 'sm', sm: 'md', md: 'lg' }} fontWeight="bold" >
@@ -97,7 +98,7 @@ function SettingsProfile() {
                                 Channels
                             </Text>
                         </Flex>
-                        
+
                         <Flex
                             alignItems="center"
                             mt={4}
@@ -113,10 +114,22 @@ function SettingsProfile() {
                                         As Creator
                                     </Text>
                                 </Flex>
-                                <Text as="h2" px={2} fontSize="sm" >
-                                    {/*channel.owner*/}
-                                    Javier Mancha Diéguez
-                                </Text>
+
+                                {user.ownedChannels.items.length > 0 ?
+                                    user.ownedChannels.items.map(channel => (
+                                        <RouterLink to={`/channel/${channel.id}`}>
+                                            <Text key={channel.id} as="h2" px={2} fontSize="sm" >
+                                                {channel.name}
+                                            </Text>
+                                        </RouterLink>
+                                    ))
+                                    :
+                                    <Text as="h2" px={2} fontSize="sm" >
+                                        No channel has been created by you
+                                    </Text>
+                                }
+
+                                
                             </Box>
                         </Flex>
 
@@ -135,9 +148,21 @@ function SettingsProfile() {
                                     <Text as="h1" px={2} fontSize="md" fontWeight="bold">
                                         As Participant
                                     </Text></Flex>
-                                <Text as="h2" px={2} fontSize="sm" >
-                                    aaaaa
-                                </Text>
+
+
+                                    {user.participantChannels.items.length > 0 ?
+                                        user.participantChannels.items.map(channel => (
+                                            <RouterLink to={`/channel/${channel.channelID}`}>
+                                                <Text key={channel.channelID} as="h2" px={2} fontSize="sm" >
+                                                    {channel.channel.name}
+                                                </Text>
+                                            </RouterLink>
+                                    ))
+                                    :
+                                    <Text as="h2" px={2} fontSize="sm" >
+                                        Does not participate in any channel
+                                    </Text>
+                                }
                             </Box>
                         </Flex>
 

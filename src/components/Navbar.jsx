@@ -62,7 +62,7 @@ const NavLink = ({ icon, link, children }) => (
 );
 
 
-function Navbar({ id, role, username, profilePic }) {
+function Navbar({ user }) {
 
   const onSignOutHandler = async () => {
     try {
@@ -161,8 +161,8 @@ function Navbar({ id, role, username, profilePic }) {
                 transition="all 0.3s"
                 _focus={{ boxShadow: 'none' }}>
                 <HStack>
-                  {profilePic != null ?
-                    <Avatar size={'sm'} src={profilePic} />
+                  {user.photo != null ?
+                    <Avatar size={'sm'} src={user.photo} />
                     :
                     <Avatar size={'sm'} bg="grey" />
                   }
@@ -173,17 +173,9 @@ function Navbar({ id, role, username, profilePic }) {
                     spacing="1px"
                     ml="2"
                   >
-                    {username != null ?
-                      <Text fontSize="sm"> {username} </Text>
-                      :
-                      <Text fontSize="sm"> Nombre Apellido </Text>
-                    }
-                    {role != null ?
-                      <Text fontSize="xs"> {role} </Text>
-                      :
-                      <Text fontSize="xs"> Role </Text>
-                    }
 
+                    <Text fontSize="sm"> {`${user.givenName} ${user.familyName}` || "Nombre Apellido"} </Text>
+                    <Text fontSize="xs"> {user.rol.charAt(0).toUpperCase() + user.rol.slice(1) || "Role"} </Text>
                   </VStack>
 
                   <Box display={{ base: 'none', md: 'flex' }}>

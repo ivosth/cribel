@@ -43,7 +43,11 @@ function ProfileEdit() {
                   <Input type="file" accept="image/png, image/jpeg" />
                 </FormControl>
                 <FormControl>
-                  <FormLabel>Change description</FormLabel>
+                  <FormLabel>Change position</FormLabel>
+                  <Input />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Current description</FormLabel>
                   <Input />
                 </FormControl>
               </form>

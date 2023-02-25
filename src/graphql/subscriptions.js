@@ -7,6 +7,8 @@ export const onCreateUser = /* GraphQL */ `
       id
       email
       emailVerified
+      givenName
+      familyName
       photo {
         bucket
         region
@@ -78,6 +80,8 @@ export const onUpdateUser = /* GraphQL */ `
       id
       email
       emailVerified
+      givenName
+      familyName
       photo {
         bucket
         region
@@ -149,6 +153,8 @@ export const onDeleteUser = /* GraphQL */ `
       id
       email
       emailVerified
+      givenName
+      familyName
       photo {
         bucket
         region
@@ -224,6 +230,8 @@ export const onCreatePost = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -260,6 +268,8 @@ export const onCreatePost = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -299,6 +309,8 @@ export const onUpdatePost = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -335,6 +347,8 @@ export const onUpdatePost = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -374,6 +388,8 @@ export const onDeletePost = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -410,6 +426,8 @@ export const onDeletePost = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -449,6 +467,8 @@ export const onCreateChannel = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -529,6 +549,8 @@ export const onUpdateChannel = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -609,6 +631,8 @@ export const onDeleteChannel = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -689,6 +713,8 @@ export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -724,6 +750,8 @@ export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -761,6 +789,8 @@ export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -796,6 +826,8 @@ export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -833,6 +865,8 @@ export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -868,6 +902,8 @@ export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -905,6 +941,8 @@ export const onCreateUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -940,6 +978,8 @@ export const onCreateUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -977,6 +1017,8 @@ export const onUpdateUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -1012,6 +1054,8 @@ export const onUpdateUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -1049,6 +1093,8 @@ export const onDeleteUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -1084,6 +1130,8 @@ export const onDeleteUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt

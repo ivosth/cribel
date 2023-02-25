@@ -7,6 +7,8 @@ export const getUser = /* GraphQL */ `
       id
       email
       emailVerified
+      givenName
+      familyName
       photo {
         bucket
         region
@@ -83,6 +85,8 @@ export const listUsers = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -124,6 +128,8 @@ export const getPost = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -160,6 +166,8 @@ export const getPost = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -204,6 +212,8 @@ export const listPosts = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -241,6 +251,8 @@ export const getChannel = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -326,6 +338,8 @@ export const listChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -361,6 +375,8 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -396,6 +412,8 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -442,6 +460,8 @@ export const listSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -476,6 +496,8 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        givenName
+        familyName
         photo {
           bucket
           region
@@ -511,6 +533,8 @@ export const getUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt
@@ -557,6 +581,8 @@ export const listUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          givenName
+          familyName
           rol
           group
           createdAt

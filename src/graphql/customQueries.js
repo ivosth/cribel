@@ -1,3 +1,84 @@
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      email
+      emailVerified
+      givenName
+      familyName
+      photo {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+      }
+      rol
+      group
+      posts {
+        items {
+          id
+          name
+          topic
+          content
+          ranking
+          createdAt
+          updatedAt
+          userPostsId
+          channelPostsId
+        }
+        nextToken
+      }
+      ownedChannels {
+        items {
+          id
+          name
+          topics
+          description
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        nextToken
+      }
+      subscriptions {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      participantChannels {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+          owner
+          channel {
+            name
+          }
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      userPhotoId
+      owner
+    }
+  }
+`;
+
+
+
+
+
 export const listChannels = /* GraphQL */ `
   query ListChannels(
     $filter: ModelChannelFilterInput
@@ -52,3 +133,50 @@ export const listChannels = /* GraphQL */ `
     }
   }
 `;
+
+
+export const listUsersWithFilters = /* GraphQL */ `
+      query ListUsersWithFilters(
+      $filter: ModelUserFilterInput
+      $limit: Int
+      $nextToken: String
+
+    ) {
+      listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+        items {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          photo {
+            bucket
+            region
+            key
+            id
+            createdAt
+            updatedAt
+          }
+          rol
+          group
+          posts {
+            nextToken
+          }
+          ownedChannels {
+            nextToken
+          }
+          subscriptions {
+            nextToken
+          }
+          participantChannels {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          userPhotoId
+          owner
+        }
+        nextToken
+      }
+    }
+  `;

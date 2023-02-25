@@ -11,7 +11,8 @@ import Explore from './pages/Explore'
 import Channel from './pages/Channel';
 import Home from './pages/Home';
 import { createUser } from "./graphql/mutations";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { getUser } from "./graphql/customQueries";
+import { Routes, Route } from "react-router-dom";
 import Settings from './pages/Settings';
 import SettingsProfile from './pages/SettingsProfile';
 import SettingsChannel from './pages/SettingsChannel';
@@ -22,7 +23,6 @@ import Error from './pages/Error';
 
 function App() {
   const [userAttributes, setUserAttributes] = useState(null);
-  const userAttributesRef = useRef(null);
 
   useEffect(() => {
     const obtainUser = async () => {
@@ -34,9 +34,46 @@ function App() {
           emailVerified: currentUser.attributes.email_verified,
           givenName: currentUser.attributes.given_name,
           familyName: currentUser.attributes.family_name,
-          group: "admin"
         }
-        setUserAttributes(currentUserAttributes);
+
+        console.log({ currentUserAttributes });
+
+        {/* Check if user exists in database */}
+        {/* If not, create user in database */}
+        const user = await API.graphql({ query: getUser, variables: { id: currentUserAttributes.id } });
+        console.log({ user });
+        if (!user.data.getUser) {
+          try {
+            const newUser = await API.graphql({
+              query: createUser,
+              variables: { input: currentUserAttributes }
+            });
+            console.log({ newUser });
+            setUserAttributes(currentUserAttributes);
+    
+          } catch (err) {
+            console.error("Error registering new user: ", err);
+          }
+
+        } else {
+          {/* If user exists, update currentUserAttributes with user information from database */}
+          const newCurrentUserAttribute = {
+            ...currentUserAttributes,
+            group: user.data.getUser.group || null,
+            photo: user.data.getUser.photo || null,
+            rol: user.data.getUser.rol || null,
+            posts: user.data.getUser.posts || null,
+            ownedChannels: user.data.getUser.ownedChannels || null,
+            subscriptions: user.data.getUser.subscriptions || null,
+            participantChannels: user.data.getUser.participantChannels || null,
+            /// Delete this
+            givenName: user.data.getUser.givenName,
+            familyName: user.data.getUser.familyName,
+            /////
+          };
+          setUserAttributes(newCurrentUserAttribute);
+          console.log(newCurrentUserAttribute);
+        }
 
       } catch (err) {
         setUserAttributes(null);
@@ -44,30 +81,10 @@ function App() {
       }
     };
 
-    const registerUser = async () => {
-      try {
-        const createUserInput = {
-          ...userAttributesRef.current,
-          emailVerified: true,
-        };
-
-        const newUser = await API.graphql({
-          query: createUser,
-          variables: { input: createUserInput },
-          authMode: 'AWS_IAM'
-        });
-        console.log({ newUser });
-        setUserAttributes(createUserInput);
-
-      } catch (err) {
-        console.error("Error registering new user: ", err);
-      }
-    };
 
     const onAuthEventListener = () => {
       Hub.listen('auth', (data) => {
         const authEvent = data.payload.event;
-        const authData = data.payload.data;
 
         //Adding console.log inside cases slows down the app a lot
         switch (authEvent) {
@@ -75,22 +92,8 @@ function App() {
             obtainUser();
             break;
 
-          case "signUp":
-            userAttributesRef.current = {
-              id: authData.userSub,
-              email: authData.user.username,
-              emailVerified: authData.userConfirmed,
-              //role: "student" default case in graphql schema
-            };
-            break;
-
           case "signOut":
             setUserAttributes(null);
-            break;
-
-          case "confirmSignUp":
-            if (authData === "SUCCESS")
-              registerUser();
             break;
 
           default:
@@ -102,9 +105,9 @@ function App() {
 
     obtainUser();
     onAuthEventListener();
-  }, []);
+  }, userAttributes);
 
-  let navigate = useNavigate();
+
 
   return !userAttributes ? (
     <Authenticator signUpAttributes={[
@@ -113,7 +116,7 @@ function App() {
     ]}/>
   ) : (
     <> {/*<UserContext.Provider value={{ userAttributes }}>*/}
-      <Navbar email={userAttributes.email} />
+      <Navbar user={userAttributes} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />}>
@@ -121,8 +124,8 @@ function App() {
           <Route path="posts" element={<PostList />} />
         </Route>
         <Route path="/settings" element={<Settings />}>
-          <Route path="profile" element={<SettingsProfile />} />
-          <Route path="channels" element={<SettingsChannel />} />
+          <Route path="profile" element={<SettingsProfile user={userAttributes}/>} />
+          <Route path="channels" element={<SettingsChannel user={userAttributes}/>} />
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>
         <Route path="/channel/:id" element={<Channel />} />

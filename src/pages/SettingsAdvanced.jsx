@@ -18,12 +18,23 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { listUsersWithFilters } from "../graphql/customQueries";
+import { API } from "aws-amplify";
+import { CircularProgress } from "@chakra-ui/react";
+import { AiTwotoneLock, AiFillEdit, AiOutlineUsergroupAdd } from "react-icons/ai";
+import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
+import { MdPeopleOutline, MdStar } from "react-icons/md";
+import { BiMessageAdd } from "react-icons/bi";
+import { Link as RouterLink } from "react-router-dom";
 
 function SettingsAdvanced() {
     const letters = ["All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",];
     const roles = ["All", "Student", "Graduate", "Technical", "Professor"];
+    const bg = useColorModeValue("gray.100", "gray.600");
+    const bg2 = useColorModeValue("gray.50", "gray.800");
+
 
     const [nameLetter, setNameLetter] = useState('All');
     const [nameLetterBg, setNameLetterBg] = useState({ [nameLetter]: '#C0C0C0' });
@@ -74,9 +85,49 @@ function SettingsAdvanced() {
         });
     };
 
+
+    const [loading, setLoading] = useState(false);
+    const [users, setUsers] = useState([]);
+
+
+    const obtainListUsersWithFilters = async () => {
+        setLoading(true);
+
+        const filterExpression = {};
+        if (nameLetter != 'All') {
+            filterExpression.givenName = { beginsWith: nameLetter };
+        }
+        if (lastNameLetter != 'All') {
+            filterExpression.familyName = { beginsWith: lastNameLetter };
+        }
+        if (role != 'All') {
+            filterExpression.rol = { eq: role.charAt(0).toLowerCase() + role.slice(1) };
+        }
+
+        const usersWithFilters = await API.graphql({ query: listUsersWithFilters, 
+            variables: {
+                filter: filterExpression
+            },
+            
+        })
+
+        setLoading(false);
+        console.log(usersWithFilters.data.listUsers.items)
+        setUsers(usersWithFilters.data.listUsers.items);
+    };
+
+
+    if (loading) {
+        return (
+            <div className="centerLoading">
+                <CircularProgress isIndeterminate size="20rem" />
+            </div>
+        )
+    }
+
     return (
 
-        <Box w="full" p={50} alignItems="center" justifyContent="center" mt="2rem">
+        <Box w="full" px={50} alignItems="center" justifyContent="center" >
             {/*********** SEARCH USERS BY INITIAL LETTERS *******************/}
             <Box>
                 <Text fontSize="3xl" fontWeight="bold">
@@ -88,6 +139,8 @@ function SettingsAdvanced() {
                         event.preventDefault();
                         console.log(nameLetter, lastNameLetter, role);
                         setSearchParams({ name: nameLetter, lastName: lastNameLetter, role: role });
+                        
+                        obtainListUsersWithFilters();
                     }}
                 >
                     <FormControl>
@@ -170,9 +223,95 @@ function SettingsAdvanced() {
             </Box>
 
             {/************** LIST OF USERS *******************/}
-            <h3>Role is {searchRole} </h3>
-            <h3>First Name starts with {searchName} </h3>
-            <h3>Last Name starts with {searchLastName} </h3>
+            <Box mt="2rem" w="full">
+                    <Text fontSize="xl" fontWeight="bold">Search results: </Text>
+                    <Stack
+                        direction={{
+                            base: "column",
+                        }}
+                        w="full"
+                        bg={{
+                            md: bg,
+                        }}
+                        rounded="lg"
+                    >
+
+
+                        {users.length > 0 ?
+                            users.map(user => {
+                                return (
+                                <Flex
+                                    direction={{
+                                        base: "row",
+                                        md: "column",
+                                    }}
+                                    bg={bg2}
+                                    key={user.id}
+                                    shadow="lg"
+                                    rounded="lg"
+                                >
+                                    <SimpleGrid
+                                        spacingY={3}
+                                        columns={{
+                                            base: 1,
+                                            sm: 2,
+                                        }}
+                                        w="full"
+                                        py={2}
+                                        px="0.25rem"
+                                        fontWeight="hairline"
+                                    >
+                                        <RouterLink to={`/channel/${user.id}`}>
+                                            <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem">
+                                                {`${user.givenName} ${user.familyName}` || "Nombre Apellido"}
+                                            </Text>
+                                        </RouterLink>
+
+
+                                        <Flex
+                                            justify={{
+                                                md: "end",
+                                            }}
+                                        >
+                                            <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing={3}>
+                                                <Button colorScheme="purple" variant="solid">
+                                                    <Flex fontSize="lg" align="center" >
+                                                        <Icon as={BiMessageAdd} size="1.5rem" />
+                                                        <Hide below='md'>
+                                                            <Text ml="0.3rem" fontSize="md" >New Post</Text>
+                                                        </Hide>
+                                                    </Flex>
+                                                </Button>
+                                                <IconButton
+                                                    colorScheme="blue"
+                                                    icon={<AiOutlineUsergroupAdd />}
+                                                    aria-label="Up"
+                                                />
+                                                <IconButton
+                                                    colorScheme="green"
+                                                    icon={<AiFillEdit />}
+                                                    aria-label="Edit"
+                                                />
+                                                <IconButton
+                                                    colorScheme="red"
+                                                    variant="outline"
+                                                    icon={<BsFillTrashFill />}
+                                                    aria-label="Delete"
+                                                />
+                                            </ButtonGroup>
+                                        </Flex>
+                                    </SimpleGrid>
+                                </Flex>
+                            );                    
+                        })
+                        :
+                            <Text as="h2" px={2} fontSize="lg" >
+                               No users found
+                            </Text>  
+                    
+                        }
+                    </Stack>
+                </Box>
 
         </Box>
     );
