@@ -32,10 +32,12 @@ function App() {
           id: currentUser.attributes.sub,
           email: currentUser.attributes.email,
           emailVerified: currentUser.attributes.email_verified,
-          group: currentUser.signInUserSession.accessToken.payload["cognito:groups"][0]
+          givenName: currentUser.attributes.given_name,
+          familyName: currentUser.attributes.family_name,
+          group: "admin"
         }
         setUserAttributes(currentUserAttributes);
-        
+
       } catch (err) {
         setUserAttributes(null);
         console.log(err);
@@ -105,27 +107,30 @@ function App() {
   let navigate = useNavigate();
 
   return !userAttributes ? (
-    <Authenticator />
+    <Authenticator signUpAttributes={[
+      'given_name',
+      'family_name',
+    ]}/>
   ) : (
     <> {/*<UserContext.Provider value={{ userAttributes }}>*/}
       <Navbar email={userAttributes.email} />
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/explore" element={<Explore/>}>
-            <Route path="channels" element={<ChannelList />}/>
-            <Route path="posts" element={<PostList />}/>
-          </Route>
-          <Route path="/settings" element={<Settings/>}>
-            <Route path="profile" element={<SettingsProfile />}/>
-            <Route path="channels" element={<SettingsChannel/>}/>
-            <Route path="advanced" element={<SettingsAdvanced />}/>
-          </Route>
-          <Route path="/channel/:id" element={<Channel />}/>
-          <Route path="/posts" element={<PostList />}/>
-          <Route path="/about" element={<About />}/>
-          <Route path = "*" element = {<Error />}/>
-        </Routes>
-    {/*</UserContext.Provider>*/} </> 
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/explore" element={<Explore />}>
+          <Route path="channels" element={<ChannelList />} />
+          <Route path="posts" element={<PostList />} />
+        </Route>
+        <Route path="/settings" element={<Settings />}>
+          <Route path="profile" element={<SettingsProfile />} />
+          <Route path="channels" element={<SettingsChannel />} />
+          <Route path="advanced" element={<SettingsAdvanced />} />
+        </Route>
+        <Route path="/channel/:id" element={<Channel />} />
+        <Route path="/posts" element={<PostList />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+      {/*</UserContext.Provider>*/} </>
   )
 };
 

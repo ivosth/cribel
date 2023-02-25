@@ -36,6 +36,9 @@ type User
   id: ID!
   email: AWSEmail!
   emailVerified: Boolean!
+  givenName: String!
+  familyName: String!
+  prueba: String
   photo: S3Object @hasOne
   rol: Role @default(value: "student")
   group: Group @default(value: "admin")
