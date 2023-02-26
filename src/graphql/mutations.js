@@ -20,8 +20,10 @@ export const createUser = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      rol
+      role
       group
+      currentPosition
+      description
       posts {
         items {
           id
@@ -96,8 +98,10 @@ export const updateUser = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      rol
+      role
       group
+      currentPosition
+      description
       posts {
         items {
           id
@@ -172,8 +176,10 @@ export const deleteUser = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      rol
+      role
       group
+      currentPosition
+      description
       posts {
         items {
           id
@@ -252,8 +258,10 @@ export const createPost = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -282,8 +290,10 @@ export const createPost = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -334,8 +344,10 @@ export const updatePost = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -364,8 +376,10 @@ export const updatePost = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -416,8 +430,10 @@ export const deletePost = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -446,8 +462,10 @@ export const deletePost = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -498,8 +516,10 @@ export const createChannel = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -583,8 +603,10 @@ export const updateChannel = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -668,8 +690,10 @@ export const deleteChannel = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -753,8 +777,10 @@ export const createSubscriptionsSubscribers = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -782,8 +808,10 @@ export const createSubscriptionsSubscribers = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -832,8 +860,10 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -861,8 +891,10 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -911,8 +943,10 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -940,8 +974,10 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -990,8 +1026,10 @@ export const createUsersParticipantChannels = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -1019,8 +1057,10 @@ export const createUsersParticipantChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -1069,8 +1109,10 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -1098,8 +1140,10 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -1148,8 +1192,10 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -1177,8 +1223,10 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId

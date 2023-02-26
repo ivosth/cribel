@@ -133,6 +133,7 @@ function PostCard({ post }) {
               alt="avatar"
             />
             <Link
+              onClick={() => navigate(`/profile/${post.userPostsId}`)}
               color="gray.700"
               pl="1rem"
               _dark={{
@@ -145,8 +146,7 @@ function PostCard({ post }) {
                 sm: "block"
               }}
             >
-              {/*post.owner.email*/}
-              estoeselemail@hola.com
+              {`${post.owner.givenName} ${post.owner.familyName}` || "Nombre Apellido"}
             </Link>
           </Flex>
 
@@ -172,7 +172,7 @@ function PostCard({ post }) {
               size={25}
               style={{ marginTop: "6px" }}
             />
-            <Text pl="0.3rem" marginRight="1.5rem"> {/*views*/}4.5 </Text>
+            <Text pl="0.3rem" marginRight="1.5rem"> {post.ranking || 'X.X'}  </Text>
 
             <FaRegEye size="22px" />
             <Text pl="0.3rem"> {/*views*/}123 </Text>

@@ -4,7 +4,7 @@ import {
 import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
 import { MdPeopleOutline, MdStar } from "react-icons/md";
-
+import { Link as RouterLink } from "react-router-dom";
 
 function formatDate(awsDate) {
     const dateobj = new Date(awsDate);
@@ -155,11 +155,13 @@ function ChannelInfo({channel}) {
                                     <Icon as={BsStarFill} boxSize="1.5rem" />
                                     <Text as="h1" px={2} fontSize="lg" fontWeight="bold">
                                         Creator
-                                    </Text></Flex>
-                                <Text as="h2" px={2} fontSize="md" >
-                                    {/*channel.owner*/}
-                                    Javier Mancha Diéguez
-                                </Text>
+                                    </Text>
+                                </Flex>
+                                <RouterLink to={`/profile/${channel.owner.id}`}>
+                                    <Text as="h2" px={2} fontSize="md" >
+                                        {`${channel.owner.givenName} ${channel.owner.familyName}` || "Nombre Apellido"}
+                                    </Text>
+                                </RouterLink>
                             </Box>
 
                         </Flex>
@@ -179,10 +181,14 @@ function ChannelInfo({channel}) {
                                 <Flex>
                                     <Icon as={RiUserStarLine} boxSize="1.5rem" />
                                     <Text as="h1" px={2} fontSize="lg" fontWeight="bold">
-                                        Participants (8)
+                                        Participants ({channel.participants.items.length})
                                     </Text></Flex>
                                 <Text as="h2" px={2} fontSize="md" >
-                                    {channel.participants.items.map(participant => <Text key={participant.userID}> {participant.userID} </Text>)}
+                                    {channel.participants.items.map(participant => 
+                                        <RouterLink to={`/profile/${participant.userID}`}>
+                                            <Text key={participant.userID}> {`${participant.user.givenName} ${participant.user.familyName}` || "Nombre Apellido"} </Text>
+                                        </RouterLink>
+                                    )}
                                 </Text>
                             </Box>
 

@@ -1,26 +1,48 @@
 import {
-    Flex, Box, Icon, Text, Spacer, Image, SimpleGrid, Avatar, Button
+    Flex, Box, Icon, Text, Spacer, Image, SimpleGrid, Avatar, CircularProgress
 } from "@chakra-ui/react";
 import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
 import { MdOutlineCastForEducation } from "react-icons/md";
-import ProfileEdit from "../components/ProfileEdit";
 import { Link as RouterLink } from "react-router-dom";
-
-function formatDate(awsDate) {
-    const dateobj = new Date(awsDate);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date = dateobj.toLocaleDateString(navigator.language, options);
-
-    return (date);
-}
+import { useParams } from "react-router-dom";
+import { getProfile } from "../graphql/customQueries";
+import { API } from "aws-amplify";
+import { useEffect, useState } from "react";
 
 
-function SettingsProfile({ user }) {
-    console.log(user);
+
+function Profile() {
+
+    let { id } = useParams();
+
+    const [loading, setLoading] = useState(true);
+    const [profile, setProfile] = useState([]);
+
+
+    const obtainProfile = async () => {
+        setLoading(true);
+        const profile = await API.graphql({ query: getProfile, variables: { id: id } });
+        setLoading(false);
+        console.log(profile.data.getUser)
+        setProfile(profile.data.getUser);
+    };
+
+    useEffect(() => {
+        obtainProfile();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div className="centerLoading">
+                <CircularProgress isIndeterminate size="25rem" />
+            </div>
+        )
+    }
+
     return (
 
-        <Box>
+        <Box mt="4rem">
             <Flex
                 w="full"
                 alignItems="center"
@@ -46,6 +68,7 @@ function SettingsProfile({ user }) {
                             bg: "gray.700",
                         }}>
 
+                        <Spacer />
                         <Box>
                             <Avatar bg='teal.500' size='xl' mb="0.5rem" />
                             <Box
@@ -58,23 +81,20 @@ function SettingsProfile({ user }) {
                                 textAlign={"center"}
                                 rounded="md"
                             >
-                                <Text fontSize="sm"> {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} </Text>
+                                <Text fontSize="sm"> {profile.role.charAt(0).toUpperCase() + profile.role.slice(1) || "Role"} </Text>
                             </Box>
                         </Box>
-
-
                         <Spacer />
-                        <ProfileEdit />
 
                     </Flex>
 
                     <Box py="1rem" px="2rem">
                         <Text as="h2" fontSize={{ base: 'md', sm: 'lg', md: '2xl' }} fontWeight="bold" >
-                            {`${user.givenName} ${user.familyName}` || "Nombre Apellido"}
+                            {`${profile.givenName} ${profile.familyName}` || "Nombre Apellido"}
                         </Text>
 
                         <Text as="h3" fontSize={{ base: 'sm', sm: 'md', md: 'lg' }} fontWeight="bold" >
-                            {user.currentPosition || "No information provided on current occupation"}
+                            {profile.currentPosition || "No information provided on current occupation"}
                         </Text>
                         <Text as="h4"
                             my="0.5rem"
@@ -84,7 +104,7 @@ function SettingsProfile({ user }) {
                                 color: "white",
                             }}
                         >
-                            {user.description ||
+                            {profile.description ||
                             "No description provided. \
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus ex odio, et vulputate metus suscipit quis. \
                             Vestibulum tincidunt eros at lacinia cursus. Vivamus nec elit ac ante faucibus egestas at a arcu. Phasellus sed \
@@ -121,8 +141,8 @@ function SettingsProfile({ user }) {
                                     </Text>
                                 </Flex>
 
-                                {user.ownedChannels.items.length > 0 ?
-                                    user.ownedChannels.items.map(channel => (
+                                {profile.ownedChannels.items.length > 0 ?
+                                    profile.ownedChannels.items.map(channel => (
                                         <RouterLink to={`/channel/${channel.id}`}>
                                             <Text key={channel.id} as="h2" px={2} fontSize="sm" >
                                                 {channel.name}
@@ -156,8 +176,8 @@ function SettingsProfile({ user }) {
                                     </Text></Flex>
 
 
-                                    {user.participantChannels.items.length > 0 ?
-                                        user.participantChannels.items.map(channel => (
+                                    {profile.participantChannels.items.length > 0 ?
+                                        profile.participantChannels.items.map(channel => (
                                             <RouterLink to={`/channel/${channel.channelID}`}>
                                                 <Text key={channel.channelID} as="h2" px={2} fontSize="sm" >
                                                     {channel.channel.name}
@@ -181,4 +201,4 @@ function SettingsProfile({ user }) {
     );
 }
 
-export default SettingsProfile;
+export default Profile;

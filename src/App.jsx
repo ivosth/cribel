@@ -19,6 +19,7 @@ import SettingsChannel from './pages/SettingsChannel';
 import SettingsAdvanced from './pages/SettingsAdvanced';
 import About from './pages/About';
 import Error from './pages/Error';
+import Profile from './pages/Profile';
 //const UserContext = createContext(null);
 
 function App() {
@@ -61,7 +62,9 @@ function App() {
             ...currentUserAttributes,
             group: user.data.getUser.group || null,
             photo: user.data.getUser.photo || null,
-            rol: user.data.getUser.rol || null,
+            role: user.data.getUser.role || null,
+            currentPosition: user.data.getUser.currentPosition || null,
+            description: user.data.getUser.description || null,
             posts: user.data.getUser.posts || null,
             ownedChannels: user.data.getUser.ownedChannels || null,
             subscriptions: user.data.getUser.subscriptions || null,
@@ -129,6 +132,7 @@ function App() {
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>
         <Route path="/channel/:id" element={<Channel />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/posts" element={<PostList />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />

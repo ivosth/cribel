@@ -45,6 +45,7 @@ function SearchBar() {
               {channels.map((channel, id) => (
                 <Link
                   fontSize="lg"
+                  key={id}
                   as={RouterLink}
                   to={'channel/' + channel.id}
                   rounded={"xl"}

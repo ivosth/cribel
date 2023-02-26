@@ -17,8 +17,10 @@ export const getUser = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      rol
+      role
       group
+      currentPosition
+      description
       posts {
         items {
           id
@@ -95,8 +97,10 @@ export const listUsers = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -138,8 +142,10 @@ export const getPost = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -168,8 +174,10 @@ export const getPost = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -214,8 +222,10 @@ export const listPosts = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -261,8 +271,10 @@ export const getChannel = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -340,8 +352,10 @@ export const listChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -385,8 +399,10 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -414,8 +430,10 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -462,8 +480,10 @@ export const listSubscriptionsSubscribers = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -506,8 +526,10 @@ export const getUsersParticipantChannels = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        rol
+        role
         group
+        currentPosition
+        description
         posts {
           nextToken
         }
@@ -535,8 +557,10 @@ export const getUsersParticipantChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId
@@ -583,8 +607,10 @@ export const listUsersParticipantChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
-          rol
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
           userPhotoId

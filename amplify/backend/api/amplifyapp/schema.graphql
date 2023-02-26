@@ -39,7 +39,7 @@ type User
   givenName: String!
   familyName: String!
   photo: S3Object @hasOne
-  rol: Role @default(value: "student")
+  role: Role @default(value: "student")
   group: Group @default(value: "admin")
   currentPosition: String 
   description: String

@@ -6,6 +6,8 @@ export const getUser = /* GraphQL */ `
       emailVerified
       givenName
       familyName
+      currentPosition
+      description
       photo {
         bucket
         region
@@ -14,7 +16,7 @@ export const getUser = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      rol
+      role
       group
       posts {
         items {
@@ -50,6 +52,9 @@ export const getUser = /* GraphQL */ `
           createdAt
           updatedAt
           owner
+          channel {
+            name
+          }
         }
         nextToken
       }
@@ -75,7 +80,151 @@ export const getUser = /* GraphQL */ `
   }
 `;
 
+export const getProfile = /* GraphQL */ `
+  query getProfile($id: ID!) {
+    getUser(id: $id) {
+      id
+      email
+      givenName
+      familyName
+      currentPosition
+      description
+      photo {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+      }
+      role
+      group
+      ownedChannels {
+        items {
+          id
+          name
+          topics
+          description
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        nextToken
+      }
+      participantChannels {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+          owner
+          channel {
+            name
+          }
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      userPhotoId
+      owner
+    }
+  }
+`;
 
+export const getChannel = /* GraphQL */ `
+  query GetChannel($id: ID!) {
+    getChannel(id: $id) {
+      id
+      name
+      topics
+      owner {
+        id
+        email
+        emailVerified
+        givenName
+        familyName
+        photo {
+          bucket
+          region
+          key
+          id
+          createdAt
+          updatedAt
+        }
+        role
+        group
+        currentPosition
+        description
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userPhotoId
+        owner
+      }
+      subscribers {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      participants {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+          owner
+          user {
+              familyName
+              givenName
+            }
+        }
+        nextToken
+      }
+      description
+      posts {
+        items {
+          id
+          name
+          topic
+          content
+          ranking
+          createdAt
+          updatedAt
+          userPostsId
+          channelPostsId
+          owner {
+            familyName
+            givenName
+          }
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      userOwnedChannelsId
+    }
+  }
+`;
 
 
 
@@ -94,7 +243,7 @@ export const listChannels = /* GraphQL */ `
           id
           email
           emailVerified
-          rol
+          role
           group
           createdAt
           updatedAt
@@ -157,7 +306,7 @@ export const listUsersWithFilters = /* GraphQL */ `
             createdAt
             updatedAt
           }
-          rol
+          role
           group
           posts {
             nextToken

@@ -2,7 +2,7 @@ import {
     Tabs, Tab, TabList, TabPanels, TabPanel,
     Flex, Button, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, HStack, Image, SimpleGrid, Show
 } from "@chakra-ui/react";
-import { getChannel } from '../graphql/queries';
+import { getChannel } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { useParams, Link as RouterLink } from "react-router-dom";
@@ -69,7 +69,7 @@ function Channel() {
 
     useEffect(() => {
         obtainChannel();
-    }, id);
+    }, [id]);
 
     if (loading) {
         return (

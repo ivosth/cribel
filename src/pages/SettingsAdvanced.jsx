@@ -17,6 +17,7 @@ import {
     FormControl,
     FormLabel,
     Input,
+    Spacer,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -31,7 +32,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 function SettingsAdvanced() {
     const letters = ["All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",];
-    const roles = ["All", "Student", "Graduate", "Technical", "Professor"];
+    const roles = ["All", "Student", "Graduated", "Technical", "Professor"];
     const bg = useColorModeValue("gray.100", "gray.600");
     const bg2 = useColorModeValue("gray.50", "gray.800");
 
@@ -94,21 +95,22 @@ function SettingsAdvanced() {
         setLoading(true);
 
         const filterExpression = {};
-        if (nameLetter != 'All') {
+        if (nameLetter !== 'All') {
             filterExpression.givenName = { beginsWith: nameLetter };
         }
-        if (lastNameLetter != 'All') {
+        if (lastNameLetter !== 'All') {
             filterExpression.familyName = { beginsWith: lastNameLetter };
         }
-        if (role != 'All') {
-            filterExpression.rol = { eq: role.charAt(0).toLowerCase() + role.slice(1) };
+        if (role !== 'All') {
+            filterExpression.role = { eq: role.charAt(0).toLowerCase() + role.slice(1) };
         }
 
-        const usersWithFilters = await API.graphql({ query: listUsersWithFilters, 
+        const usersWithFilters = await API.graphql({
+            query: listUsersWithFilters,
             variables: {
                 filter: filterExpression
             },
-            
+
         })
 
         setLoading(false);
@@ -116,14 +118,6 @@ function SettingsAdvanced() {
         setUsers(usersWithFilters.data.listUsers.items);
     };
 
-
-    if (loading) {
-        return (
-            <div className="centerLoading">
-                <CircularProgress isIndeterminate size="20rem" />
-            </div>
-        )
-    }
 
     return (
 
@@ -139,7 +133,7 @@ function SettingsAdvanced() {
                         event.preventDefault();
                         console.log(nameLetter, lastNameLetter, role);
                         setSearchParams({ name: nameLetter, lastName: lastNameLetter, role: role });
-                        
+
                         obtainListUsersWithFilters();
                     }}
                 >
@@ -147,7 +141,7 @@ function SettingsAdvanced() {
                         <Wrap py="0.5rem">
                             <FormLabel>
                                 <Text fontSize="xl" fontWeight="bold">
-                                    Rol:
+                                    Role:
                                 </Text>
                             </FormLabel>
                             {roles.map((role) => (
@@ -223,97 +217,159 @@ function SettingsAdvanced() {
             </Box>
 
             {/************** LIST OF USERS *******************/}
-            <Box mt="2rem" w="full">
-                    <Text fontSize="xl" fontWeight="bold">Search results: </Text>
-                    <Stack
-                        direction={{
-                            base: "column",
-                        }}
+            {loading ?
+                <div className="centerLoading">
+                    <CircularProgress isIndeterminate size="20rem" />
+                </div>
+                :
+
+                <Box>
+                    <Flex
                         w="full"
-                        bg={{
-                            md: bg,
-                        }}
-                        rounded="lg"
+                        alignItems="center"
+                        justifyContent="center"
                     >
+                        <Box
+                            w="2xl"
+                            mx="auto"
+
+                            _dark={{
+                                bg: "gray.800",
+                            }}
 
 
-                        {users.length > 0 ?
-                            users.map(user => {
-                                return (
-                                <Flex
-                                    direction={{
-                                        base: "row",
-                                        md: "column",
-                                    }}
-                                    bg={bg2}
-                                    key={user.id}
-                                    shadow="lg"
-                                    rounded="lg"
-                                >
-                                    <SimpleGrid
-                                        spacingY={3}
-                                        columns={{
-                                            base: 1,
-                                            sm: 2,
-                                        }}
-                                        w="full"
-                                        py={2}
-                                        px="0.25rem"
-                                        fontWeight="hairline"
-                                    >
-                                        <RouterLink to={`/channel/${user.id}`}>
-                                            <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem">
-                                                {`${user.givenName} ${user.familyName}` || "Nombre Apellido"}
-                                            </Text>
-                                        </RouterLink>
+                        >
+                            <Text fontSize="xl" fontWeight="bold">Search results: </Text>
+                            <Stack
+                                direction={{
+                                    base: "column",
+                                }}
+                                w="full"
+                                bg={{
+                                    md: bg,
+                                }}
+                                rounded="lg"
+                                py="1rem"
+                                spacing='1rem' //padding between elements
+                            >
 
 
-                                        <Flex
-                                            justify={{
-                                                md: "end",
-                                            }}
-                                        >
-                                            <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing={3}>
-                                                <Button colorScheme="purple" variant="solid">
-                                                    <Flex fontSize="lg" align="center" >
-                                                        <Icon as={BiMessageAdd} size="1.5rem" />
-                                                        <Hide below='md'>
-                                                            <Text ml="0.3rem" fontSize="md" >New Post</Text>
-                                                        </Hide>
+                                {users.length > 0 ?
+                                    users.map(user => {
+                                        return (
+                                            <Flex
+                                                direction={{
+                                                    base: "row",
+                                                    md: "column",
+                                                }}
+                                                bg={bg2}
+                                                key={user.id}
+                                                shadow="lg"
+                                                rounded="lg"
+
+                                            >
+                                                <SimpleGrid
+                                                    spacingY={3}
+                                                    columns={{
+                                                        base: 1,
+                                                        sm: 2,
+                                                    }}
+                                                    w="full"
+                                                    py={3}
+                                                    px="0.25rem"
+                                                    fontWeight="hairline"
+                                                >
+                                                    <Box>
+                                                        <RouterLink to={`/profile/${user.id}`}>
+                                                            <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} mx="1rem">
+                                                                {`${user.givenName} ${user.familyName}` || "Nombre Apellido"}
+                                                            </Text>
+                                                        </RouterLink>
+
+                                                        <Box
+                                                            display={{ base: "flex", md: "none" }}
+                                                            px="0.50rem"
+                                                            py={1}
+                                                            bg="gray.600"
+                                                            color="gray.100"
+                                                            fontSize="xs" //Más pequeño con xs
+                                                            fontWeight="700"
+                                                            alignItems='center'
+                                                            justifyContent='center'
+                                                            rounded="md"
+                                                            mx="2rem"
+                                                        >
+                                                            <Text fontSize="sm"> {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} </Text>
+                                                        </Box>
+                                                    </Box>
+
+                                                    <Flex
+                                                        justify={{
+                                                            md: "end",
+                                                            sm: "end",
+                                                            base: "end",
+                                                        }}
+                                                    >
+                                                        <Box
+                                                            display={{ base: "none", md: "flex" }}
+                                                            px="0.50rem"
+                                                            py={1}
+                                                            bg="gray.600"
+                                                            color="gray.100"
+                                                            fontSize="xs" //Más pequeño con xs
+                                                            fontWeight="700"
+                                                            alignItems='center'
+                                                            justifyContent='center'
+                                                            rounded="md"
+                                                        >
+                                                            <Text fontSize="sm"> {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} </Text>
+                                                        </Box>
+
+                                                        <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing={3} alignItems='center'>
+                                                            <Button colorScheme="purple" variant="solid">
+                                                                <Flex fontSize="lg" align="center" >
+                                                                    <Icon as={BiMessageAdd} size="1.5rem" />
+                                                                    <Hide below='md'>
+                                                                        <Text ml="0.3rem" fontSize="md" >New Post</Text>
+                                                                    </Hide>
+                                                                </Flex>
+                                                            </Button>
+                                                            <IconButton
+                                                                colorScheme="blue"
+                                                                icon={<AiOutlineUsergroupAdd />}
+                                                                aria-label="Up"
+                                                            />
+                                                            <IconButton
+                                                                colorScheme="green"
+                                                                icon={<AiFillEdit />}
+                                                                aria-label="Edit"
+                                                            />
+                                                            <IconButton
+                                                                colorScheme="red"
+                                                                variant="outline"
+                                                                icon={<BsFillTrashFill />}
+                                                                aria-label="Delete"
+                                                            />
+                                                        </ButtonGroup>
                                                     </Flex>
-                                                </Button>
-                                                <IconButton
-                                                    colorScheme="blue"
-                                                    icon={<AiOutlineUsergroupAdd />}
-                                                    aria-label="Up"
-                                                />
-                                                <IconButton
-                                                    colorScheme="green"
-                                                    icon={<AiFillEdit />}
-                                                    aria-label="Edit"
-                                                />
-                                                <IconButton
-                                                    colorScheme="red"
-                                                    variant="outline"
-                                                    icon={<BsFillTrashFill />}
-                                                    aria-label="Delete"
-                                                />
-                                            </ButtonGroup>
-                                        </Flex>
-                                    </SimpleGrid>
-                                </Flex>
-                            );                    
-                        })
-                        :
-                            <Text as="h2" px={2} fontSize="lg" >
-                               No users found
-                            </Text>  
-                    
-                        }
-                    </Stack>
-                </Box>
+                                                </SimpleGrid>
+                                            </Flex>
+                                        );
+                                    })
+                                    :
+                                    <Text as="h2" px={2} fontSize="lg" >
+                                        No users found
+                                    </Text>
 
+                                }
+                            </Stack>
+                        </Box>
+                    </Flex>
+                </Box>
+            }
         </Box>
+
+
     );
 }
 

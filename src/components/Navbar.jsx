@@ -116,7 +116,7 @@ function Navbar({ user }) {
               <Flex fontSize="lg" align="center" >
                 <Icon as={MdScreenSearchDesktop} />
                 <Hide below='md'>
-                  <Text ml="0.5rem"> Channels </Text>
+                  <Text ml="0.5rem" onClick={() => console.log(user)}> Channels </Text>
                 </Hide>
                 <Icon as={FiChevronDown} ml="0.2rem" mr="0.7rem" />
               </Flex>
@@ -125,11 +125,11 @@ function Navbar({ user }) {
             <MenuList maxH='20rem' sx={{ overflowY: "scroll" }}>
               <MenuGroup title='Your followed channels'>
                 <MenuDivider />
-                {channels.map((channel, id) => (
-                  <RouterLink to={`/channel/${channel.id}`}>
-                    <MenuItem key={id}>
-                      <Avatar size="sm" name={channel.name} src={channel.image} mr="0.75rem" />
-                      <Text> {channel.name} </Text>
+                {user.subscriptions.items.map(channel => (
+                  <RouterLink to={`/channel/${channel.channelID}`} key={channel.channelID}>
+                    <MenuItem>
+                      <Avatar size="sm" name={channel.channel.name} src="https://intellipaat.com/blog/wp-content/uploads/2020/04/postimage-2.jpg" mr="0.75rem" />
+                      <Text> {channel.channel.name} </Text>
                     </MenuItem>
                   </RouterLink>
                 ))}
@@ -175,7 +175,7 @@ function Navbar({ user }) {
                   >
 
                     <Text fontSize="sm"> {`${user.givenName} ${user.familyName}` || "Nombre Apellido"} </Text>
-                    <Text fontSize="xs"> {user.rol.charAt(0).toUpperCase() + user.rol.slice(1) || "Role"} </Text>
+                    <Text fontSize="xs"> {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} </Text>
                   </VStack>
 
                   <Box display={{ base: 'none', md: 'flex' }}>
