@@ -6,20 +6,29 @@ import { BsStarFill } from "react-icons/bs";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import ProfileEdit from "../components/ProfileEdit";
 import { Link as RouterLink } from "react-router-dom";
-
-function formatDate(awsDate) {
-    const dateobj = new Date(awsDate);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date = dateobj.toLocaleDateString(navigator.language, options);
-
-    return (date);
-}
+import { useEffect, useState } from "react";
 
 
 function SettingsProfile({ user }) {
-    console.log(user);
-    return (
 
+    const [userImage, setUserImage] = useState(user.image);
+    const [userCurrentPosition, setUserCurrentPosition] = useState(user.currentPosition);
+    const [userDescription, setUserDescription] = useState(user.description);
+
+    function handleUpdateProfile(image, currentPosition, description) {
+        if(image){
+            setUserImage(image);
+        }
+        if(currentPosition){
+            setUserCurrentPosition(currentPosition);
+        }
+        if(description){
+            setUserDescription(description);
+        }
+    }
+
+
+    return (
         <Box>
             <Flex
                 w="full"
@@ -47,7 +56,7 @@ function SettingsProfile({ user }) {
                         }}>
 
                         <Box>
-                            <Avatar bg='teal.500' size='xl' mb="0.5rem" />
+                            <Avatar bg='teal.500' size='xl' mb="0.5rem" src={userImage}/>
                             <Box
                                 px="0.50rem"
                                 py={1}
@@ -64,7 +73,13 @@ function SettingsProfile({ user }) {
 
 
                         <Spacer />
-                        <ProfileEdit />
+                        <ProfileEdit 
+                            userID={user.id} 
+                            image={userImage} 
+                            currentPosition={userCurrentPosition} 
+                            description={userDescription} 
+                            handleUpdateProfile={handleUpdateProfile} 
+                        />
 
                     </Flex>
 
@@ -74,7 +89,7 @@ function SettingsProfile({ user }) {
                         </Text>
 
                         <Text as="h3" fontSize={{ base: 'sm', sm: 'md', md: 'lg' }} fontWeight="bold" >
-                            {user.currentPosition || "No information provided on current occupation"}
+                            {userCurrentPosition || "No information provided on current occupation"}
                         </Text>
                         <Text as="h4"
                             my="0.5rem"
@@ -84,7 +99,7 @@ function SettingsProfile({ user }) {
                                 color: "white",
                             }}
                         >
-                            {user.description ||
+                            {userDescription ||
                             "No description provided. \
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus ex odio, et vulputate metus suscipit quis. \
                             Vestibulum tincidunt eros at lacinia cursus. Vivamus nec elit ac ante faucibus egestas at a arcu. Phasellus sed \

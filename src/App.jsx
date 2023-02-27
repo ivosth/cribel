@@ -61,7 +61,7 @@ function App() {
           const newCurrentUserAttribute = {
             ...currentUserAttributes,
             group: user.data.getUser.group || null,
-            photo: user.data.getUser.photo || null,
+            image: user.data.getUser.image || null,
             role: user.data.getUser.role || null,
             currentPosition: user.data.getUser.currentPosition || null,
             description: user.data.getUser.description || null,

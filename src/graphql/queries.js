@@ -9,25 +9,30 @@ export const getUser = /* GraphQL */ `
       emailVerified
       givenName
       familyName
-      photo {
-        bucket
-        region
-        key
-        id
-        createdAt
-        updatedAt
-      }
+      image
       role
       group
       currentPosition
       description
+      postsRating {
+        items {
+          postID
+          stars
+          id
+          createdAt
+          updatedAt
+          userPostsRatingId
+          owner
+        }
+        nextToken
+      }
       posts {
         items {
           id
           name
           topic
           content
-          ranking
+          ratings
           createdAt
           updatedAt
           userPostsId
@@ -41,6 +46,7 @@ export const getUser = /* GraphQL */ `
           name
           topics
           description
+          image
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -71,7 +77,6 @@ export const getUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userPhotoId
       owner
     }
   }
@@ -89,18 +94,14 @@ export const listUsers = /* GraphQL */ `
         emailVerified
         givenName
         familyName
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
+        image
         role
         group
         currentPosition
         description
+        postsRating {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -115,7 +116,6 @@ export const listUsers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       nextToken
@@ -134,18 +134,14 @@ export const getPost = /* GraphQL */ `
         emailVerified
         givenName
         familyName
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
+        image
         role
         group
         currentPosition
         description
+        postsRating {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -160,7 +156,6 @@ export const getPost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       content
@@ -174,13 +169,13 @@ export const getPost = /* GraphQL */ `
           emailVerified
           givenName
           familyName
+          image
           role
           group
           currentPosition
           description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -190,6 +185,7 @@ export const getPost = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -197,7 +193,7 @@ export const getPost = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
-      ranking
+      ratings
       createdAt
       updatedAt
       userPostsId
@@ -222,13 +218,13 @@ export const listPosts = /* GraphQL */ `
           emailVerified
           givenName
           familyName
+          image
           role
           group
           currentPosition
           description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         content
@@ -237,11 +233,12 @@ export const listPosts = /* GraphQL */ `
           name
           topics
           description
+          image
           createdAt
           updatedAt
           userOwnedChannelsId
         }
-        ranking
+        ratings
         createdAt
         updatedAt
         userPostsId
@@ -263,18 +260,14 @@ export const getChannel = /* GraphQL */ `
         emailVerified
         givenName
         familyName
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
+        image
         role
         group
         currentPosition
         description
+        postsRating {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -289,7 +282,6 @@ export const getChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       subscribers {
@@ -315,13 +307,14 @@ export const getChannel = /* GraphQL */ `
         nextToken
       }
       description
+      image
       posts {
         items {
           id
           name
           topic
           content
-          ranking
+          ratings
           createdAt
           updatedAt
           userPostsId
@@ -352,13 +345,13 @@ export const listChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
+          image
           role
           group
           currentPosition
           description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -368,12 +361,46 @@ export const listChannels = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
         createdAt
         updatedAt
         userOwnedChannelsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPostsRating = /* GraphQL */ `
+  query GetPostsRating($id: ID!) {
+    getPostsRating(id: $id) {
+      postID
+      stars
+      id
+      createdAt
+      updatedAt
+      userPostsRatingId
+      owner
+    }
+  }
+`;
+export const listPostsRatings = /* GraphQL */ `
+  query ListPostsRatings(
+    $filter: ModelPostsRatingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostsRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        postID
+        stars
+        id
+        createdAt
+        updatedAt
+        userPostsRatingId
+        owner
       }
       nextToken
     }
@@ -391,18 +418,14 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         emailVerified
         givenName
         familyName
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
+        image
         role
         group
         currentPosition
         description
+        postsRating {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -417,7 +440,6 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       channel {
@@ -430,13 +452,13 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
           emailVerified
           givenName
           familyName
+          image
           role
           group
           currentPosition
           description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -446,6 +468,7 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -480,13 +503,13 @@ export const listSubscriptionsSubscribers = /* GraphQL */ `
           emailVerified
           givenName
           familyName
+          image
           role
           group
           currentPosition
           description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         channel {
@@ -494,6 +517,7 @@ export const listSubscriptionsSubscribers = /* GraphQL */ `
           name
           topics
           description
+          image
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -518,18 +542,14 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         emailVerified
         givenName
         familyName
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
+        image
         role
         group
         currentPosition
         description
+        postsRating {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -544,7 +564,6 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       channel {
@@ -557,13 +576,13 @@ export const getUsersParticipantChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
+          image
           role
           group
           currentPosition
           description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -573,6 +592,7 @@ export const getUsersParticipantChannels = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -607,13 +627,13 @@ export const listUsersParticipantChannels = /* GraphQL */ `
           emailVerified
           givenName
           familyName
+          image
           role
           group
           currentPosition
           description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         channel {
@@ -621,6 +641,7 @@ export const listUsersParticipantChannels = /* GraphQL */ `
           name
           topics
           description
+          image
           createdAt
           updatedAt
           userOwnedChannelsId

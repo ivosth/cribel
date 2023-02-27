@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Box,
   Flex,
@@ -8,7 +7,6 @@ import {
   Icon,
   Text,
   Hide,
-  Link, 
   Spacer
 } from "@chakra-ui/react";
 import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar, MdOutlineDataSaverOn } from "react-icons/md";
@@ -49,7 +47,7 @@ function ChannelCard({ channel }) {
             
             <Flex>
               <Hide below="sm">
-                <Avatar size={'sm'} bg="grey" mr="0.5rem" />
+                <Avatar size={'sm'} bg="grey" mr="0.5rem" src={channel.owner.image}/>
               </Hide>
               <Text fontSize={[10, 18, 18, 18]}> {channel.owner.email} </Text>
             </Flex>

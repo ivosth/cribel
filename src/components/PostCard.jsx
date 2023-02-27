@@ -129,7 +129,7 @@ function PostCard({ post }) {
               h={10}
               rounded="full"
               fit="cover"
-              src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80"
+              src={post.owner.image}
               alt="avatar"
             />
             <Link
