@@ -25,6 +25,10 @@ import Profile from './pages/Profile';
 function App() {
   const [userAttributes, setUserAttributes] = useState(null);
 
+  const updateUserNavbar = (newAttributes) => {
+    setUserAttributes({ ...userAttributes, ...newAttributes });
+  };
+
   useEffect(() => {
     const obtainUser = async () => {
       try {
@@ -126,8 +130,8 @@ function App() {
           <Route path="channels" element={<ChannelList />} />
           <Route path="posts" element={<PostList />} />
         </Route>
-        <Route path="/settings" element={<Settings />}>
-          <Route path="profile" element={<SettingsProfile user={userAttributes}/>} />
+        <Route path="/settings" element={<Settings updateUserNavbar={updateUserNavbar}/>}>
+          <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserNavbar}/>} />
           <Route path="channels" element={<SettingsChannel user={userAttributes}/>} />
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>

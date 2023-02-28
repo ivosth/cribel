@@ -161,7 +161,7 @@ function Navbar({ user }) {
                 transition="all 0.3s"
                 _focus={{ boxShadow: 'none' }}>
                 <HStack>
-                    <Avatar bg="grey" size={'sm'} src={user.image} />
+                    <Avatar bg="teal.500" size={'sm'} src={user.image} />
 
                   <VStack
                     display={{ base: 'none', md: 'flex' }}

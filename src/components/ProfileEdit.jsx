@@ -43,6 +43,7 @@ function ProfileEdit(props) {
 
       await API.graphql({ query: updateUser, variables: { input: newUserInput } })
       props.handleUpdateProfile(url, currentPosition, description);
+      props.updateUserNavbar({ image: url })
 
     } catch (err) {
       console.log('error: ', err)

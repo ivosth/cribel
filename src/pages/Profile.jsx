@@ -70,7 +70,7 @@ function Profile() {
 
                         <Spacer />
                         <Box>
-                            <Avatar bg='teal.500' size='xl' mb="0.5rem" />
+                            <Avatar bg='teal.500' size='xl' mb="0.5rem" src={profile.image}/>
                             <Box
                                 px="0.50rem"
                                 py={1}
@@ -143,8 +143,8 @@ function Profile() {
 
                                 {profile.ownedChannels.items.length > 0 ?
                                     profile.ownedChannels.items.map(channel => (
-                                        <RouterLink to={`/channel/${channel.id}`}>
-                                            <Text key={channel.id} as="h2" px={2} fontSize="sm" >
+                                        <RouterLink key={channel.id} to={`/channel/${channel.id}`}>
+                                            <Text as="h2" px={2} fontSize="sm" >
                                                 {channel.name}
                                             </Text>
                                         </RouterLink>

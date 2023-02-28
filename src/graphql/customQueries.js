@@ -209,6 +209,7 @@ export const getChannel = /* GraphQL */ `
           owner {
             familyName
             givenName
+            image
           }
         }
         nextToken

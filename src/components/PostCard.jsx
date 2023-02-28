@@ -5,7 +5,7 @@ import {
   Text,
   Link,
   Image,
-  Button,
+  Avatar,
   useBoolean,
   useColorModeValue
 } from "@chakra-ui/react";
@@ -124,13 +124,10 @@ function PostCard({ post }) {
 
         <Flex justifyContent="space-between" alignItems="center" mt={4}>
           <Flex alignItems="center">
-            <Image
-              w={10}
-              h={10}
-              rounded="full"
-              fit="cover"
+            <Avatar
+              size="sm"
+              bg="teal.500"
               src={post.owner.image}
-              alt="avatar"
             />
             <Link
               onClick={() => navigate(`/profile/${post.userPostsId}`)}

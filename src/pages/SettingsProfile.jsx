@@ -9,8 +9,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 
-function SettingsProfile({ user }) {
-
+function SettingsProfile({ user, updateUserNavbar }) {
+    
     const [userImage, setUserImage] = useState(user.image);
     const [userCurrentPosition, setUserCurrentPosition] = useState(user.currentPosition);
     const [userDescription, setUserDescription] = useState(user.description);
@@ -78,7 +78,8 @@ function SettingsProfile({ user }) {
                             image={userImage} 
                             currentPosition={userCurrentPosition} 
                             description={userDescription} 
-                            handleUpdateProfile={handleUpdateProfile} 
+                            handleUpdateProfile={handleUpdateProfile}
+                            updateUserNavbar={updateUserNavbar} 
                         />
 
                     </Flex>
@@ -138,8 +139,8 @@ function SettingsProfile({ user }) {
 
                                 {user.ownedChannels.items.length > 0 ?
                                     user.ownedChannels.items.map(channel => (
-                                        <RouterLink to={`/channel/${channel.id}`}>
-                                            <Text key={channel.id} as="h2" px={2} fontSize="sm" >
+                                        <RouterLink key={channel.id} to={`/channel/${channel.id}`}>
+                                            <Text as="h2" px={2} fontSize="sm" >
                                                 {channel.name}
                                             </Text>
                                         </RouterLink>
@@ -173,8 +174,8 @@ function SettingsProfile({ user }) {
 
                                     {user.participantChannels.items.length > 0 ?
                                         user.participantChannels.items.map(channel => (
-                                            <RouterLink to={`/channel/${channel.channelID}`}>
-                                                <Text key={channel.channelID} as="h2" px={2} fontSize="sm" >
+                                            <RouterLink key={channel.channelID} to={`/channel/${channel.channelID}`}>
+                                                <Text as="h2" px={2} fontSize="sm" >
                                                     {channel.channel.name}
                                                 </Text>
                                             </RouterLink>
