@@ -15,7 +15,31 @@ function formatDate(awsDate) {
 }
 
 
-function ChannelInfo({channel}) {
+function computeRating(posts) {
+    //console.log("posts", posts)
+    if(posts.length === 0) return 'N/A';
+    else{
+        let rating = 0;
+        let count = 0;
+        posts.map((post) => {
+            if (post.ratings) {
+                let sum = 0;
+                for (let i = 0; i < post.ratings.length; i++) {
+                    sum += post.ratings[i];
+                }
+                rating += sum / post.ratings.length;
+                count++;
+            }
+        });
+        if(count === 0) return 'N/A';
+        else return String((rating / count));
+    }
+}
+
+
+
+
+function ChannelInfo({ channel }) {
 
     return (
 
@@ -100,7 +124,7 @@ function ChannelInfo({channel}) {
                                     <Spacer />
                                     <Icon as={MdPeopleOutline} boxSize="1.5rem" />
                                     <Text as="h2" px={2} fontSize="md" fontWeight="bold">
-                                        300
+                                        {channel.subscribers.items.length}
                                     </Text>
                                     <Spacer />
                                 </Flex>
@@ -108,13 +132,18 @@ function ChannelInfo({channel}) {
 
                             <Box w="full" py="0.4rem" rounded="lg">
                                 <Text as="h1" px={2} fontSize="lg" fontWeight="bold" align="center">
-                                    Ranking
+                                    Rating
                                 </Text>
                                 <Flex>
                                     <Spacer />
                                     <Icon as={MdStar} color="#fae20a" boxSize="1.5rem" />
+
+                                    {/*channel.posts.items.ratings ?
+                                        <Text pl="0.3rem" marginRight="1.5rem"> {post.ratings.reduce((acc, val) => acc + val, 0) / post.ratings.length} </Text>
+                                        : <Text pl="0.3rem" marginRight="1.5rem"> N/A </Text>
+                        */}
                                     <Text as="h2" px={2} fontSize="md" fontWeight="bold">
-                                        4.5
+                                        {computeRating(channel.posts.items)}
                                     </Text>
                                     <Spacer />
                                 </Flex>
@@ -184,7 +213,7 @@ function ChannelInfo({channel}) {
                                         Participants ({channel.participants.items.length})
                                     </Text></Flex>
                                 <Text as="h2" px={2} fontSize="md" >
-                                    {channel.participants.items.map(participant => 
+                                    {channel.participants.items.map(participant =>
                                         <RouterLink key={participant.userID} to={`/profile/${participant.userID}`}>
                                             <Text> {`${participant.user.givenName} ${participant.user.familyName}` || "Nombre Apellido"} </Text>
                                         </RouterLink>

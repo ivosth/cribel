@@ -31,7 +31,7 @@ function ProfileEdit(props) {
         const creds = await Auth.currentCredentials()
         url = `https://${awsExports.aws_user_files_s3_bucket}.s3.${awsExports.aws_user_files_s3_bucket_region}.amazonaws.com/protected/${creds.identityId}/${file.name}`
         newUserInput.image = url
-
+        props.updateUserNavbar({ image: url })
         console.log(url)
       }
       if (currentPosition) {
@@ -43,7 +43,7 @@ function ProfileEdit(props) {
 
       await API.graphql({ query: updateUser, variables: { input: newUserInput } })
       props.handleUpdateProfile(url, currentPosition, description);
-      props.updateUserNavbar({ image: url })
+      
 
     } catch (err) {
       console.log('error: ', err)

@@ -751,6 +751,36 @@ export const createPostsRating = /* GraphQL */ `
     $condition: ModelPostsRatingConditionInput
   ) {
     createPostsRating(input: $input, condition: $condition) {
+      user {
+        id
+        email
+        emailVerified
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        postsRating {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       postID
       stars
       id
@@ -767,6 +797,36 @@ export const updatePostsRating = /* GraphQL */ `
     $condition: ModelPostsRatingConditionInput
   ) {
     updatePostsRating(input: $input, condition: $condition) {
+      user {
+        id
+        email
+        emailVerified
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        postsRating {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       postID
       stars
       id
@@ -783,6 +843,36 @@ export const deletePostsRating = /* GraphQL */ `
     $condition: ModelPostsRatingConditionInput
   ) {
     deletePostsRating(input: $input, condition: $condition) {
+      user {
+        id
+        email
+        emailVerified
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        postsRating {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       postID
       stars
       id

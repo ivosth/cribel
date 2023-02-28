@@ -85,7 +85,7 @@ type postsRating
       { allow: owner }
     ]
   ) {
-
+  user : User! @belongsTo
   postID: ID!
   stars: Float!
 

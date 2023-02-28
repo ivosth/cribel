@@ -1,26 +1,13 @@
 import {
-    Tabs, Tab, TabList, TabPanels, TabPanel,
-    Flex, Button, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, HStack, Image, SimpleGrid, Show
+    Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, Show
 } from "@chakra-ui/react";
 import { getChannel } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { useParams, Link as RouterLink } from "react-router-dom";
-import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp, MdHeadset, MdLocationOn, MdEmail } from "react-icons/md";
+import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp, } from "react-icons/md";
 import PostCard from "../components/PostCard";
-import { BsFillBriefcaseFill } from "react-icons/bs";
-import { RiUserStarLine } from "react-icons/ri";
-import { BsStarFill } from "react-icons/bs";
-import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar, MdOutlineDataSaverOn } from "react-icons/md";
 import ChannelInfo from "../components/ChannelInfo";
-
-function formatDate(awsDate) {
-    const dateobj = new Date(awsDate);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date = dateobj.toLocaleDateString(navigator.language, options);
-
-    return (date);
-}
 
 
 

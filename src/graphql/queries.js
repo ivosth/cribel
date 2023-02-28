@@ -376,6 +376,36 @@ export const listChannels = /* GraphQL */ `
 export const getPostsRating = /* GraphQL */ `
   query GetPostsRating($id: ID!) {
     getPostsRating(id: $id) {
+      user {
+        id
+        email
+        emailVerified
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        postsRating {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       postID
       stars
       id
@@ -394,6 +424,21 @@ export const listPostsRatings = /* GraphQL */ `
   ) {
     listPostsRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        user {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
         postID
         stars
         id

@@ -98,7 +98,7 @@ function Navbar({ user }) {
           <Hide below="md">
             <LinkBox as={RouterLink} to="/">
               <Box fontSize="xl" fontWeight="bold">
-                <IconCribel marginRight="0.5rem" boxSize="4rem"/>
+                <IconCribel marginRight="0.5rem" boxSize="4rem" />
                 <Hide below="lg">
                   <LinkOverlay marginRight="0.8rem" fontSize={["1.1rem", "1.1rem", "1.1rem", "1.1rem", "1.6rem"]}>Cribel</LinkOverlay>
                 </Hide>
@@ -161,17 +161,31 @@ function Navbar({ user }) {
                 transition="all 0.3s"
                 _focus={{ boxShadow: 'none' }}>
                 <HStack>
-                    <Avatar bg="teal.500" size={'sm'} src={user.image} />
+                  <Avatar bg="teal.500" size={'sm'} src={user.image} />
 
                   <VStack
                     display={{ base: 'none', md: 'flex' }}
-                    alignItems="flex-start"
+                    alignItems="center"
                     spacing="1px"
                     ml="2"
                   >
 
-                    <Text fontSize="sm"> {`${user.givenName} ${user.familyName}` || "Nombre Apellido"} </Text>
-                    <Text fontSize="xs"> {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} </Text>
+                    <Text fontSize="sm" mt="0.25rem"> {`${user.givenName} ${user.familyName}` || "Nombre Apellido"} </Text>
+
+                    <Box
+                      px="0.50rem"
+                      marginRight="0.5rem"
+                      bg="gray.600"
+                      color="gray.100"
+                      fontSize="0.8rem" //Más pequeño con xs
+                      fontWeight="700"
+                      textAlign={"center"}
+                      rounded="md"
+                    >
+                      <Text fontSize="xs"> {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} </Text>
+                    </Box>
+
+
                   </VStack>
 
                   <Box display={{ base: 'none', md: 'flex' }}>
@@ -215,7 +229,7 @@ function Navbar({ user }) {
                   }}
                 >
                   <RouterLink to="/about">
-                  <Text> <Icon as={MdHelpOutline} /> About </Text>
+                    <Text> <Icon as={MdHelpOutline} /> About </Text>
                   </RouterLink>
                 </MenuItem>
                 <MenuDivider />

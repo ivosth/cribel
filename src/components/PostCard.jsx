@@ -21,6 +21,18 @@ function formatDate(awsDate) {
   return (date + ' ' + time);
 }
 
+function computeRating(ratings) {
+  if (!ratings || ratings.length < 5) return 'N/A';
+  else {
+    let sum = 0;
+    for (let i = 0; i < ratings.length; i++) {
+      sum += ratings[i];
+    }
+    return String(sum / ratings.length);
+  }
+}
+
+
 function PostCard({ post }) {
   const [like, setLike] = useBoolean();
   const navigate = useNavigate();
@@ -169,10 +181,11 @@ function PostCard({ post }) {
               size={25}
               style={{ marginTop: "6px" }}
             />
-            <Text pl="0.3rem" marginRight="1.5rem"> {post.ranking || 'X.X'}  </Text>
+
+            <Text pl="0.3rem" marginRight="1.5rem"> {computeRating(post.ratings)} </Text>
 
             <FaRegEye size="22px" />
-            <Text pl="0.3rem"> {/*views*/}123 </Text>
+            {post.ratings ? <Text pl="0.3rem"> {post.ratings.length} </Text> : <Text pl="0.3rem"> 0 </Text>}
           </Flex>
         </Flex>
       </Box>
