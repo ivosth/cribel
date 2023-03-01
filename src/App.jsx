@@ -25,7 +25,7 @@ import Profile from './pages/Profile';
 function App() {
   const [userAttributes, setUserAttributes] = useState(null);
 
-  const updateUserNavbar = (newAttributes) => {
+  const updateUserAttributes = (newAttributes) => {
     setUserAttributes({ ...userAttributes, ...newAttributes });
   };
 
@@ -130,9 +130,9 @@ function App() {
           <Route path="channels" element={<ChannelList />} />
           <Route path="posts" element={<PostList />} />
         </Route>
-        <Route path="/settings" element={<Settings updateUserNavbar={updateUserNavbar}/>}>
-          <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserNavbar}/>} />
-          <Route path="channels" element={<SettingsChannel user={userAttributes}/>} />
+        <Route path="/settings" element={<Settings updateUserNavbar={updateUserAttributes}/>}>
+          <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes}/>} />
+          <Route path="channels" element={<SettingsChannel user={userAttributes} updateChannelTopics={updateUserAttributes}/>} />
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>
         <Route path="/channel/:id" element={<Channel />} />

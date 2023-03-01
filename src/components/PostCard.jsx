@@ -4,14 +4,14 @@ import {
   Box,
   Text,
   Link,
-  Image,
   Avatar,
   useBoolean,
   useColorModeValue
 } from "@chakra-ui/react";
-import { FaHeart, FaRegHeart, FaRegEye } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
 import { Rating } from "react-simple-star-rating";
 import { useNavigate } from 'react-router-dom';
+import { Prose } from '@nikolovlazar/chakra-ui-prose';
 
 function formatDate(awsDate) {
   const dateobj = new Date(awsDate);
@@ -22,11 +22,11 @@ function formatDate(awsDate) {
 }
 
 function computeRating(ratings) {
-  if (!ratings || ratings.length < 5) return 'N/A';
+  if (ratings.length < 2) return 'N/A';
   else {
     let sum = 0;
     for (let i = 0; i < ratings.length; i++) {
-      sum += ratings[i];
+      sum += ratings[i].stars;
     }
     return String(sum / ratings.length);
   }
@@ -58,7 +58,7 @@ function PostCard({ post }) {
         shadow="lg"
         bg="white"
         maxW="2xl"
-        minW="50%" //Tocar aquí si se quiere hacer la tarjeta más grande en pantallas grandes
+        minW="100%" //Tocar aquí si se quiere hacer la tarjeta más grande en pantallas grandes
         _dark={{
           bg: "gray.800"
         }}
@@ -123,15 +123,10 @@ function PostCard({ post }) {
           >
             {post.name}
           </Text>
-          <Text
-            mt={2}
-            color="gray.600"
-            _dark={{
-              color: "gray.300"
-            }}
-          >
-            {post.content}
-          </Text>
+
+          <Prose mt={2}>
+            <div dangerouslySetInnerHTML={{__html: post.content}}></div>
+          </Prose>
         </Box>
 
         <Flex justifyContent="space-between" alignItems="center" mt={4}>
@@ -182,10 +177,10 @@ function PostCard({ post }) {
               style={{ marginTop: "6px" }}
             />
 
-            <Text pl="0.3rem" marginRight="1.5rem"> {computeRating(post.ratings)} </Text>
+            <Text pl="0.3rem" marginRight="1.5rem"> {computeRating(post.ratings.items)} </Text>
 
             <FaRegEye size="22px" />
-            {post.ratings ? <Text pl="0.3rem"> {post.ratings.length} </Text> : <Text pl="0.3rem"> 0 </Text>}
+            <Text pl="0.3rem"> {post.ratings.items.length} </Text>
           </Flex>
         </Flex>
       </Box>

@@ -13,26 +13,29 @@ Quill.register("modules/emoji", Emoji);
 //https://stackoverflow.com/questions/55321607/how-to-set-a-character-length-in-react-quill
 //https://github.com/zenoamaro/react-quill/issues/501
 
-function RichEditor() {
-    const toolbarOptions = [
-        ["bold", "italic", "underline", "link", { list: "bullet" }, "clean"]
-      ];
+function RichEditor(props) {
+  let editorRef;
+  const toolbarOptions = [
+      ["bold", "italic", "underline", "link", { list: "bullet" }, "clean"]
+    ];
 
-    return (
-        <ReactQuill
-          theme="bubble"
-          className="my-editor"
-          modules={{
-            toolbar: {
-              container: toolbarOptions
-            },
-            "emoji-toolbar": true,
-            "emoji-textarea": true,
-            "emoji-shortname": false
-          }}
-          
-        />
-    );
+  return (
+      <ReactQuill
+        theme="bubble"
+        onChange={props.saveContent}
+        className="my-editor"
+        ref={editorRef}
+        modules={{
+          toolbar: {
+            container: toolbarOptions
+          },
+          "emoji-toolbar": true,
+          "emoji-textarea": true,
+          "emoji-shortname": false
+        }}
+        
+      />
+  );
 }
 
 export default RichEditor;

@@ -14,15 +14,14 @@ export const getUser = /* GraphQL */ `
       group
       currentPosition
       description
-      postsRating {
+      ratings {
         items {
-          postID
-          stars
           id
+          stars
           createdAt
           updatedAt
-          userPostsRatingId
-          owner
+          userRatingsId
+          postRatingsId
         }
         nextToken
       }
@@ -32,7 +31,6 @@ export const getUser = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -99,7 +97,7 @@ export const listUsers = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -139,7 +137,7 @@ export const getPost = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -193,7 +191,17 @@ export const getPost = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
-      ratings
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       userPostsId
@@ -238,7 +246,9 @@ export const listPosts = /* GraphQL */ `
           updatedAt
           userOwnedChannelsId
         }
-        ratings
+        ratings {
+          nextToken
+        }
         createdAt
         updatedAt
         userPostsId
@@ -265,7 +275,7 @@ export const getChannel = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -314,7 +324,6 @@ export const getChannel = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -373,9 +382,10 @@ export const listChannels = /* GraphQL */ `
     }
   }
 `;
-export const getPostsRating = /* GraphQL */ `
-  query GetPostsRating($id: ID!) {
-    getPostsRating(id: $id) {
+export const getRating = /* GraphQL */ `
+  query GetRating($id: ID!) {
+    getRating(id: $id) {
+      id
       user {
         id
         email
@@ -387,7 +397,7 @@ export const getPostsRating = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -406,24 +416,61 @@ export const getPostsRating = /* GraphQL */ `
         updatedAt
         owner
       }
-      postID
+      post {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          description
+          image
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        ratings {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
       stars
-      id
       createdAt
       updatedAt
-      userPostsRatingId
-      owner
+      userRatingsId
+      postRatingsId
     }
   }
 `;
-export const listPostsRatings = /* GraphQL */ `
-  query ListPostsRatings(
-    $filter: ModelPostsRatingFilterInput
+export const listRatings = /* GraphQL */ `
+  query ListRatings(
+    $filter: ModelRatingFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPostsRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
         user {
           id
           email
@@ -439,13 +486,21 @@ export const listPostsRatings = /* GraphQL */ `
           updatedAt
           owner
         }
-        postID
+        post {
+          id
+          name
+          topic
+          content
+          createdAt
+          updatedAt
+          userPostsId
+          channelPostsId
+        }
         stars
-        id
         createdAt
         updatedAt
-        userPostsRatingId
-        owner
+        userRatingsId
+        postRatingsId
       }
       nextToken
     }
@@ -468,7 +523,7 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -592,7 +647,7 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {

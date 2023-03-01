@@ -15,7 +15,6 @@ import {
 import awsExports from '../aws-exports'
 import { Storage, Auth, API } from 'aws-amplify'
 import { updateUser } from "../graphql/mutations";
-import { useState } from "react";
 
 function ProfileEdit(props) {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -65,7 +64,7 @@ function ProfileEdit(props) {
 
           <ModalBody>
             <form
-              id="new-note"
+              id="edit-profile"
               onSubmit={(event) => {
                 event.preventDefault();              
                 updateProfile(event.target[0].files[0] || null, event.target[1].value || null, event.target[2].value || null)
@@ -90,7 +89,7 @@ function ProfileEdit(props) {
           </ModalBody>
 
           <ModalFooter>
-            <Button type="submit" mr={3} form="new-note">
+            <Button type="submit" mr={3} form="edit-profile">
               Submit
             </Button>
             <Button colorScheme="blue" onClick={onClose}>

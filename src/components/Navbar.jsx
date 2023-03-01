@@ -128,7 +128,9 @@ function Navbar({ user }) {
                 {user.subscriptions.items.map(channel => (
                   <RouterLink to={`/channel/${channel.channelID}`} key={channel.channelID}>
                     <MenuItem>
-                      <Avatar size="sm" name={channel.channel.name} src="https://intellipaat.com/blog/wp-content/uploads/2020/04/postimage-2.jpg" mr="0.75rem" />
+                      <Avatar size="sm" name={channel.channel.name} mr="0.75rem" 
+                        src={channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"} 
+                      />
                       <Text> {channel.channel.name} </Text>
                     </MenuItem>
                   </RouterLink>

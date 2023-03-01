@@ -6,7 +6,9 @@ import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 import { MdPostAdd, MdOutlineLibraryAdd } from "react-icons/md";
 import { BiMessageAdd } from "react-icons/bi";
 import { Link as RouterLink } from "react-router-dom";
-
+import ChannelNewPost from './../components/ChannelNewPost';
+import ChannelEditInfo from './../components/ChannelEditInfo';
+import ChannelEditParticipants from './../components/ChannelEditParticipants';
 
 function SettingsChannel({ user }) {
     const bg = useColorModeValue("gray.100", "gray.600");
@@ -16,7 +18,7 @@ function SettingsChannel({ user }) {
     return (
         <>
             <Center>
-                <Button leftIcon={<MdOutlineLibraryAdd />}colorScheme='teal' size='lg' fontSize="140%">Create new channel</Button>
+                <Button leftIcon={<MdOutlineLibraryAdd />} colorScheme='teal' size='lg' fontSize="140%">Create new channel</Button>
             </Center>
             <Flex display={{ base: "inline", xl: "flex" }} >
 
@@ -65,7 +67,7 @@ function SettingsChannel({ user }) {
                                                 fontWeight="hairline"
                                             >
                                                 <RouterLink to={`/channel/${channel.id}`}>
-                                                    <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem">{channel.name}</Text>
+                                                    <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem" mt="0.25rem">{channel.name}</Text>
                                                 </RouterLink>
 
 
@@ -75,24 +77,10 @@ function SettingsChannel({ user }) {
                                                     }}
                                                 >
                                                     <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
-                                                        <Button colorScheme="purple" variant="solid">
-                                                            <Flex fontSize="lg" align="center" >
-                                                                <Icon as={MdPostAdd} size="1.5rem" />
-                                                                <Hide below='md'>
-                                                                    <Text ml="0.3rem" fontSize="md" >New Post</Text>
-                                                                </Hide>
-                                                            </Flex>
-                                                        </Button>
-                                                        <IconButton
-                                                            colorScheme="blue"
-                                                            icon={<AiOutlineUsergroupAdd />}
-                                                            aria-label="Up"
-                                                        />
-                                                        <IconButton
-                                                            colorScheme="green"
-                                                            icon={<AiFillEdit />}
-                                                            aria-label="Edit"
-                                                        />
+                                                        <ChannelNewPost userID={user.id} channelID={channel.id} topics={channel.topics} />
+                                                        <ChannelEditParticipants channelID={channel.id}/>
+                                                        <ChannelEditInfo channelID={channel.id} topics={channel.topics} />
+
                                                         <IconButton
                                                             colorScheme="red"
                                                             variant="outline"
@@ -160,7 +148,7 @@ function SettingsChannel({ user }) {
                                                 fontWeight="hairline"
                                             >
                                                 <RouterLink to={`/channel/${channel.channelID}`}>
-                                                    <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem">{channel.channel.name}</Text>
+                                                    <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem" mt="0.25rem">{channel.channel.name}</Text>
                                                 </RouterLink>
 
 
@@ -169,31 +157,8 @@ function SettingsChannel({ user }) {
                                                         md: "end",
                                                     }}
                                                 >
-                                                    <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing={3}>
-                                                        <Button colorScheme="purple" variant="solid">
-                                                            <Flex fontSize="lg" align="center" >
-                                                                <Icon as={MdPostAdd} size="1.5rem" />
-                                                                <Hide below='md'>
-                                                                    <Text ml="0.3rem" fontSize="md" >New Post</Text>
-                                                                </Hide>
-                                                            </Flex>
-                                                        </Button>
-                                                        <IconButton
-                                                            colorScheme="blue"
-                                                            icon={<AiOutlineUsergroupAdd />}
-                                                            aria-label="Up"
-                                                        />
-                                                        <IconButton
-                                                            colorScheme="green"
-                                                            icon={<AiFillEdit />}
-                                                            aria-label="Edit"
-                                                        />
-                                                        <IconButton
-                                                            colorScheme="red"
-                                                            variant="outline"
-                                                            icon={<BsFillTrashFill />}
-                                                            aria-label="Delete"
-                                                        />
+                                                    <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
+                                                        <ChannelNewPost userID={user.id} channelID={channel.channelID} topics={channel.channel.topics} />
                                                     </ButtonGroup>
                                                 </Flex>
                                             </SimpleGrid>

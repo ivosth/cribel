@@ -1,10 +1,11 @@
 import {
-    Flex, Box, Icon, Text, Spacer, Image, SimpleGrid
+    Flex, Box, Icon, Text, Spacer, Image, SimpleGrid, Wrap
 } from "@chakra-ui/react";
 import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
 import { MdPeopleOutline, MdStar } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
+import { Prose } from "@nikolovlazar/chakra-ui-prose";
 
 function formatDate(awsDate) {
     const dateobj = new Date(awsDate);
@@ -17,23 +18,24 @@ function formatDate(awsDate) {
 
 function computeRating(posts) {
     //console.log("posts", posts)
-    if(posts.length === 0) return 'N/A';
-    else{
-        let rating = 0;
-        let count = 0;
-        posts.map((post) => {
-            if (post.ratings) {
-                let sum = 0;
-                for (let i = 0; i < post.ratings.length; i++) {
-                    sum += post.ratings[i];
-                }
-                rating += sum / post.ratings.length;
-                count++;
+
+    let rating = 0;
+    let count = 0;
+    posts.forEach((post) => {
+        if (post.ratings.items.length !== 0){
+            let sum = 0;
+            for (let i = 0; i < post.ratings.items.length; i++) {
+                sum += post.ratings.items[i].stars;
             }
-        });
-        if(count === 0) return 'N/A';
-        else return String((rating / count));
-    }
+            rating += sum / post.ratings.items.length;
+            count++;
+        }
+        
+    });
+
+    if(count < 2) return 'N/A';
+    else return String((rating / count).toFixed(1));
+    
 }
 
 
@@ -65,8 +67,7 @@ function ChannelInfo({ channel }) {
                         h={56}
                         fit="cover"
                         objectPosition="center"
-                        src="https://imageio.forbes.com/specials-images/imageserve/5f1a62d942a6387efb759310/What-Can-3D-Printing-Be-Used-For--Here-Are-10-Amazing-Examples/960x0.jpg?format=jpg&width=960"
-                        alt="avatar"
+                        src={channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}
                     />
 
                     <Flex alignItems="center" px={6} py={3}
@@ -84,9 +85,9 @@ function ChannelInfo({ channel }) {
                         <Spacer />
                     </Flex>
 
-                    <Box py={4} px={6}>
+                    <Box py={4} px={6} >
 
-                        <SimpleGrid minChildWidth='6rem' spacingX='0.1rem' spacingY='0.4rem'>
+                        <Wrap justify='center'>
                             {channel.topics.map(topic =>
                                 <Box
                                     key={topic}
@@ -99,11 +100,13 @@ function ChannelInfo({ channel }) {
                                     fontWeight="700"
                                     textAlign={"center"}
                                     rounded="md"
+
+
                                 >
-                                    <Text fontSize={[8, 10, 12, 12]}> {topic} </Text>
+                                    <Text> {topic} </Text>
                                 </Box>
                             )}
-                        </SimpleGrid>
+                        </Wrap>
 
                         <Flex
                             alignItems="center"
@@ -152,15 +155,10 @@ function ChannelInfo({ channel }) {
                         </Flex>
 
 
-                        <Text as="h1"
-                            fontSize="1.05rem"
-                            color="gray.800"
-                            _dark={{
-                                color: "white",
-                            }}
-                        >
-                            {channel.description}
-                        </Text>
+                        <Prose my={2} fontSize="2rem">
+                            <div dangerouslySetInnerHTML={{__html: channel.description}}></div>
+                        </Prose>
+                            
 
                         <Text align="right"
                             fontSize="sm"

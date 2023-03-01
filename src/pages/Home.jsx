@@ -1,12 +1,11 @@
 import {
     Flex, Box, Image, Stack, Text, Button
 } from "@chakra-ui/react";
-import RichEditor from "../components/RichEditor";
 
 export const Home = () => {
     return (
         <>
-        <RichEditor />
+        
         <Flex
             direction={{
                 base: "column",

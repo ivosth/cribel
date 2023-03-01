@@ -43,7 +43,7 @@ type User
   group: Group @default(value: "admin")
   currentPosition: String 
   description: String
-  postsRating: [postsRating] @hasMany
+  ratings: [Rating] @hasMany
   posts: [Post] @hasMany
   ownedChannels: [Channel] @hasMany
   subscriptions: [Channel] @manyToMany(relationName: "SubscriptionsSubscribers")
@@ -62,7 +62,7 @@ type Post @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   owner: User! @belongsTo #(fields: ["userID"]) # field to be used for storing the relationship information
   content: String!
   channel: Channel! @belongsTo
-  ratings: [Float] #@default(value: "0.0") #The value parameter must be formatted as a string regardless of the corresponding field type
+  ratings: [Rating] @hasMany#@default(value: "0.0") #The value parameter must be formatted as a string regardless of the corresponding field type
   # https://github.com/trek10inc/graphql-default-value-transformer
 }
 
@@ -78,15 +78,9 @@ type Channel @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   posts: [Post] @hasMany
 }
 
-type postsRating
-  @model 
-  @auth(
-    rules: [
-      { allow: owner }
-    ]
-  ) {
-  user : User! @belongsTo
-  postID: ID!
+type Rating @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
+  id: ID!
+  user: User! @belongsTo
+  post: Post! @belongsTo
   stars: Float!
-
 }

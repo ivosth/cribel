@@ -4,7 +4,9 @@ import {
     withDefaultProps
   } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
-  
+import { withProse } from '@nikolovlazar/chakra-ui-prose';
+
+
   const CustomTheme = extendTheme({
       colors: {
         blue: {
@@ -41,6 +43,30 @@ import { mode } from "@chakra-ui/theme-tools";
       }*/
     },
     withDefaultColorScheme({ colorScheme: "blue" }),
+    withProse({
+      baseStyle: {
+        a: {
+          color: "blue.300",
+          fontSize: "md",
+          _hover: {
+            textDecoration: "underline",
+          },
+        },
+        p: {
+          padding: "0",
+          margin: "0",
+          fontSize: "md"
+        },
+        li: {
+          padding: "0",
+          margin: "0",
+          fontSize: "md"
+        },
+        ul: {
+          my: "0.5rem",
+        }
+      }
+    })
     /*withDefaultProps({
         defaultProps: {
             focusBorderColor: 'blue.900'

@@ -17,15 +17,14 @@ export const createUser = /* GraphQL */ `
       group
       currentPosition
       description
-      postsRating {
+      ratings {
         items {
-          postID
-          stars
           id
+          stars
           createdAt
           updatedAt
-          userPostsRatingId
-          owner
+          userRatingsId
+          postRatingsId
         }
         nextToken
       }
@@ -35,7 +34,6 @@ export const createUser = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -100,15 +98,14 @@ export const updateUser = /* GraphQL */ `
       group
       currentPosition
       description
-      postsRating {
+      ratings {
         items {
-          postID
-          stars
           id
+          stars
           createdAt
           updatedAt
-          userPostsRatingId
-          owner
+          userRatingsId
+          postRatingsId
         }
         nextToken
       }
@@ -118,7 +115,6 @@ export const updateUser = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -183,15 +179,14 @@ export const deleteUser = /* GraphQL */ `
       group
       currentPosition
       description
-      postsRating {
+      ratings {
         items {
-          postID
-          stars
           id
+          stars
           createdAt
           updatedAt
-          userPostsRatingId
-          owner
+          userRatingsId
+          postRatingsId
         }
         nextToken
       }
@@ -201,7 +196,6 @@ export const deleteUser = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -270,7 +264,7 @@ export const createPost = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -324,7 +318,17 @@ export const createPost = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
-      ratings
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       userPostsId
@@ -352,7 +356,7 @@ export const updatePost = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -406,7 +410,17 @@ export const updatePost = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
-      ratings
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       userPostsId
@@ -434,7 +448,7 @@ export const deletePost = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -488,7 +502,17 @@ export const deletePost = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
-      ratings
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       userPostsId
@@ -516,7 +540,7 @@ export const createChannel = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -565,7 +589,6 @@ export const createChannel = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -599,7 +622,7 @@ export const updateChannel = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -648,7 +671,6 @@ export const updateChannel = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -682,7 +704,7 @@ export const deleteChannel = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -731,7 +753,6 @@ export const deleteChannel = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -745,12 +766,13 @@ export const deleteChannel = /* GraphQL */ `
     }
   }
 `;
-export const createPostsRating = /* GraphQL */ `
-  mutation CreatePostsRating(
-    $input: CreatePostsRatingInput!
-    $condition: ModelPostsRatingConditionInput
+export const createRating = /* GraphQL */ `
+  mutation CreateRating(
+    $input: CreateRatingInput!
+    $condition: ModelRatingConditionInput
   ) {
-    createPostsRating(input: $input, condition: $condition) {
+    createRating(input: $input, condition: $condition) {
+      id
       user {
         id
         email
@@ -762,7 +784,7 @@ export const createPostsRating = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -781,22 +803,59 @@ export const createPostsRating = /* GraphQL */ `
         updatedAt
         owner
       }
-      postID
+      post {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          description
+          image
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        ratings {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
       stars
-      id
       createdAt
       updatedAt
-      userPostsRatingId
-      owner
+      userRatingsId
+      postRatingsId
     }
   }
 `;
-export const updatePostsRating = /* GraphQL */ `
-  mutation UpdatePostsRating(
-    $input: UpdatePostsRatingInput!
-    $condition: ModelPostsRatingConditionInput
+export const updateRating = /* GraphQL */ `
+  mutation UpdateRating(
+    $input: UpdateRatingInput!
+    $condition: ModelRatingConditionInput
   ) {
-    updatePostsRating(input: $input, condition: $condition) {
+    updateRating(input: $input, condition: $condition) {
+      id
       user {
         id
         email
@@ -808,7 +867,7 @@ export const updatePostsRating = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -827,22 +886,59 @@ export const updatePostsRating = /* GraphQL */ `
         updatedAt
         owner
       }
-      postID
+      post {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          description
+          image
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        ratings {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
       stars
-      id
       createdAt
       updatedAt
-      userPostsRatingId
-      owner
+      userRatingsId
+      postRatingsId
     }
   }
 `;
-export const deletePostsRating = /* GraphQL */ `
-  mutation DeletePostsRating(
-    $input: DeletePostsRatingInput!
-    $condition: ModelPostsRatingConditionInput
+export const deleteRating = /* GraphQL */ `
+  mutation DeleteRating(
+    $input: DeleteRatingInput!
+    $condition: ModelRatingConditionInput
   ) {
-    deletePostsRating(input: $input, condition: $condition) {
+    deleteRating(input: $input, condition: $condition) {
+      id
       user {
         id
         email
@@ -854,7 +950,7 @@ export const deletePostsRating = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -873,13 +969,49 @@ export const deletePostsRating = /* GraphQL */ `
         updatedAt
         owner
       }
-      postID
+      post {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          description
+          image
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        ratings {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
       stars
-      id
       createdAt
       updatedAt
-      userPostsRatingId
-      owner
+      userRatingsId
+      postRatingsId
     }
   }
 `;
@@ -903,7 +1035,7 @@ export const createSubscriptionsSubscribers = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -982,7 +1114,7 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -1061,7 +1193,7 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -1140,7 +1272,7 @@ export const createUsersParticipantChannels = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -1219,7 +1351,7 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -1298,7 +1430,7 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {

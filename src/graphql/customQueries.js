@@ -11,15 +11,11 @@ export const getUser = /* GraphQL */ `
       group
       currentPosition
       description
-      postsRating {
+      ratings {
         items {
-          postID
           stars
-          id
-          createdAt
-          updatedAt
-          userPostsRatingId
-          owner
+          userRatingsId
+          postRatingsId
         }
         nextToken
       }
@@ -29,7 +25,6 @@ export const getUser = /* GraphQL */ `
           name
           topic
           content
-          ratings
           createdAt
           updatedAt
           userPostsId
@@ -74,6 +69,7 @@ export const getUser = /* GraphQL */ `
           owner
           channel {
             name
+            topics
           }
         }
         nextToken
@@ -148,7 +144,7 @@ export const getChannel = /* GraphQL */ `
         group
         currentPosition
         description
-        postsRating {
+        ratings {
           nextToken
         }
         posts {
@@ -201,7 +197,13 @@ export const getChannel = /* GraphQL */ `
           name
           topic
           content
-          ratings
+          ratings {
+            items {
+              postRatingsId
+              userRatingsId
+              stars
+            }
+          }
           createdAt
           updatedAt
           userPostsId
@@ -244,6 +246,8 @@ export const listChannels = /* GraphQL */ `
           updatedAt
           image
           owner
+          familyName
+          givenName
         }
         subscribers {
           items {
@@ -268,11 +272,73 @@ export const listChannels = /* GraphQL */ `
             id
             name
             content
+            ratings {
+              items {
+                postRatingsId
+                userRatingsId
+                stars
+              }
+            }
           }
         }
         createdAt
         updatedAt
         userOwnedChannelsId
+      }
+      nextToken
+    }
+  }
+`;
+
+
+export const listPosts = /* GraphQL */ `
+  query ListPosts(
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          description
+          image
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        ratings {
+          items {
+            postRatingsId
+            userRatingsId
+            stars
+          }
+        }
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
       }
       nextToken
     }
@@ -297,7 +363,7 @@ export const listUsersWithFilters = /* GraphQL */ `
           image
           role
           group
-          postsRating {
+          ratings {
             nextToken
           }
           posts {
