@@ -38,7 +38,6 @@ function Explore() {
 
     return (
         <Box
-            bg={useColorModeValue("gray.100", "gray.600")}
             py="2rem"
             fontFamily="monospace"
             justifyContent="center"

@@ -43,6 +43,7 @@ export const getUser = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -161,6 +162,7 @@ export const getPost = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -240,6 +242,7 @@ export const listPosts = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -264,6 +267,7 @@ export const getChannel = /* GraphQL */ `
       id
       name
       topics
+      disabled
       owner {
         id
         email
@@ -348,6 +352,7 @@ export const listChannels = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -440,6 +445,7 @@ export const getRating = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -546,6 +552,7 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -616,6 +623,7 @@ export const listSubscriptionsSubscribers = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -670,6 +678,7 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -740,6 +749,7 @@ export const listUsersParticipantChannels = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt

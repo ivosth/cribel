@@ -70,15 +70,7 @@ function Channel() {
         <Box
             py="2rem"
             fontFamily="monospace"
-            borderWidth="1px"
-            boxShadow="md"
             justifyContent="center"
-            _light={{
-                bg: "gray.100",
-            }}
-            _dark={{
-                bg: "gray.600",
-            }}
         >
             {/****** HEADER WITH FILTERS *************/}
             <Text fontSize="3xl" fontWeight="bold" textAlign="center" mb="1rem">

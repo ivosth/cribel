@@ -46,6 +46,7 @@ export const createUser = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -127,6 +128,7 @@ export const updateUser = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -208,6 +210,7 @@ export const deleteUser = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -288,6 +291,7 @@ export const createPost = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -380,6 +384,7 @@ export const updatePost = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -472,6 +477,7 @@ export const deletePost = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -529,6 +535,7 @@ export const createChannel = /* GraphQL */ `
       id
       name
       topics
+      disabled
       owner {
         id
         email
@@ -611,6 +618,7 @@ export const updateChannel = /* GraphQL */ `
       id
       name
       topics
+      disabled
       owner {
         id
         email
@@ -693,6 +701,7 @@ export const deleteChannel = /* GraphQL */ `
       id
       name
       topics
+      disabled
       owner {
         id
         email
@@ -827,6 +836,7 @@ export const createRating = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -910,6 +920,7 @@ export const updateRating = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -993,6 +1004,7 @@ export const deleteRating = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
           image
           createdAt
@@ -1058,6 +1070,7 @@ export const createSubscriptionsSubscribers = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -1137,6 +1150,7 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -1216,6 +1230,7 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -1295,6 +1310,7 @@ export const createUsersParticipantChannels = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -1374,6 +1390,7 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
@@ -1453,6 +1470,7 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email

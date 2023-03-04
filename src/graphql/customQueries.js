@@ -398,6 +398,7 @@ export const getUserChannels = /* GraphQL */ `
           name
           topics
           userOwnedChannelsId
+          disabled
         }
         nextToken
       }
@@ -409,6 +410,7 @@ export const getUserChannels = /* GraphQL */ `
           channel {
             name
             topics
+            disabled
           }
         }
         nextToken

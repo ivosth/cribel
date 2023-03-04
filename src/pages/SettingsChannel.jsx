@@ -12,7 +12,8 @@ import ChannelEditParticipants from './../components/ChannelEditParticipants';
 import { getUserChannels } from './../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-
+import ChannelNewChannel from './../components/ChannelNewChannel';
+import ChannelStatus from './../components/ChannelStatus';
 
 function SettingsChannel({ userID }) {
     const bg = useColorModeValue("gray.100", "gray.600");
@@ -44,9 +45,7 @@ function SettingsChannel({ userID }) {
 
     return (
         <>
-            <Center>
-                <Button leftIcon={<MdOutlineLibraryAdd />} colorScheme='teal' size='lg' fontSize="140%">Create new channel</Button>
-            </Center>
+            <ChannelNewChannel userID={userID} />
             <Flex display={{ base: "inline", xl: "flex" }} >
 
                 <Flex
@@ -107,13 +106,7 @@ function SettingsChannel({ userID }) {
                                                         <ChannelNewPost userID={userID} channelID={channel.id} topics={channel.topics} />
                                                         <ChannelEditParticipants channelID={channel.id}/>
                                                         <ChannelEditInfo channelID={channel.id} topics={channel.topics} />
-
-                                                        <IconButton
-                                                            colorScheme="red"
-                                                            variant="outline"
-                                                            icon={<BsFillTrashFill />}
-                                                            aria-label="Delete"
-                                                        />
+                                                        <ChannelStatus channelID={channel.id} disabled={channel.disabled}/>
                                                     </ButtonGroup>
                                                 </Flex>
                                             </SimpleGrid>
@@ -184,9 +177,13 @@ function SettingsChannel({ userID }) {
                                                         md: "end",
                                                     }}
                                                 >
-                                                    <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
-                                                        <ChannelNewPost userID={userID} channelID={channel.channelID} topics={channel.channel.topics} />
-                                                    </ButtonGroup>
+                                                    {channel.channel.disabled ?
+                                                        <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md'}} mr="1rem" mt="0.25rem">Channel disabled by owner</Text>
+                                                        :
+                                                        <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
+                                                            <ChannelNewPost userID={userID} channelID={channel.channelID} topics={channel.channel.topics} />
+                                                        </ButtonGroup>
+                                                    }
                                                 </Flex>
                                             </SimpleGrid>
                                         </Flex>
