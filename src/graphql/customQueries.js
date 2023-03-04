@@ -386,3 +386,33 @@ export const listUsersWithFilters = /* GraphQL */ `
       }
     }
   `;
+
+
+
+export const getUserChannels = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      ownedChannels {
+        items {
+          id
+          name
+          topics
+          userOwnedChannelsId
+        }
+        nextToken
+      }
+      participantChannels {
+        items {
+          id
+          channelID
+          owner
+          channel {
+            name
+            topics
+          }
+        }
+        nextToken
+      }
+    }
+  }
+`;

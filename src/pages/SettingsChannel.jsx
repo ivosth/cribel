@@ -1,5 +1,5 @@
 import {
-    Flex, useColorModeValue, Icon, Text, Stack, Button, SimpleGrid, ButtonGroup, IconButton, Box, Hide, Center
+    Flex, useColorModeValue, Icon, Text, Stack, Button, SimpleGrid, ButtonGroup, IconButton, Box, Hide, Center, CircularProgress
 } from "@chakra-ui/react";
 import { AiTwotoneLock, AiFillEdit, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
@@ -9,11 +9,38 @@ import { Link as RouterLink } from "react-router-dom";
 import ChannelNewPost from './../components/ChannelNewPost';
 import ChannelEditInfo from './../components/ChannelEditInfo';
 import ChannelEditParticipants from './../components/ChannelEditParticipants';
+import { getUserChannels } from './../graphql/customQueries';
+import { API } from 'aws-amplify';
+import { useState, useEffect } from 'react';
 
-function SettingsChannel({ user }) {
+
+function SettingsChannel({ userID }) {
     const bg = useColorModeValue("gray.100", "gray.600");
     const bg2 = useColorModeValue("gray.50", "gray.800");
 
+    const [loading, setLoading] = useState(true);
+    const [userChannels, setUserChannels] = useState([]);
+
+    const obtainUserChannels = async() => {
+        setLoading(true);
+        const allUserChannels = await API.graphql({ query: getUserChannels, variables: { id: userID } });
+        setLoading(false);
+        console.log(allUserChannels.data.getUser)
+        setUserChannels(allUserChannels.data.getUser);
+      };
+    
+    useEffect(() => {
+        obtainUserChannels();
+    }, []);
+
+
+    if (loading) {
+        return (
+            <div className="centerLoading">
+            <CircularProgress isIndeterminate size="25rem" />
+            </div>
+        )
+    }
 
     return (
         <>
@@ -42,8 +69,8 @@ function SettingsChannel({ user }) {
 
                         >
 
-                            {user.ownedChannels.items.length > 0 ?
-                                user.ownedChannels.items.map(channel => {
+                            {userChannels.ownedChannels.items.length > 0 ?
+                                userChannels.ownedChannels.items.map(channel => {
                                     return (
                                         <Flex
                                             direction={{
@@ -77,7 +104,7 @@ function SettingsChannel({ user }) {
                                                     }}
                                                 >
                                                     <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
-                                                        <ChannelNewPost userID={user.id} channelID={channel.id} topics={channel.topics} />
+                                                        <ChannelNewPost userID={userID} channelID={channel.id} topics={channel.topics} />
                                                         <ChannelEditParticipants channelID={channel.id}/>
                                                         <ChannelEditInfo channelID={channel.id} topics={channel.topics} />
 
@@ -123,8 +150,8 @@ function SettingsChannel({ user }) {
                         >
 
 
-                            {user.participantChannels.items.length > 0 ?
-                                user.participantChannels.items.map(channel => {
+                            {userChannels.participantChannels.items.length > 0 ?
+                                userChannels.participantChannels.items.map(channel => {
                                     return (
                                         <Flex
                                             direction={{
@@ -158,7 +185,7 @@ function SettingsChannel({ user }) {
                                                     }}
                                                 >
                                                     <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
-                                                        <ChannelNewPost userID={user.id} channelID={channel.channelID} topics={channel.channel.topics} />
+                                                        <ChannelNewPost userID={userID} channelID={channel.channelID} topics={channel.channel.topics} />
                                                     </ButtonGroup>
                                                 </Flex>
                                             </SimpleGrid>

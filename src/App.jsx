@@ -132,7 +132,7 @@ function App() {
         </Route>
         <Route path="/settings" element={<Settings updateUserNavbar={updateUserAttributes}/>}>
           <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes}/>} />
-          <Route path="channels" element={<SettingsChannel user={userAttributes} updateChannelTopics={updateUserAttributes}/>} />
+          <Route path="channels" element={<SettingsChannel userID={userAttributes.id} updateChannelTopics={updateUserAttributes}/>} />
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>
         <Route path="/channel/:id" element={<Channel />} />

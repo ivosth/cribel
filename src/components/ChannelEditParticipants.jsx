@@ -19,43 +19,101 @@ import {
     Icon
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify'
-import { updateChannel } from "../graphql/mutations";
-import { getChannel } from "../graphql/customQueries";
+import { deleteUsersParticipantChannels, createUsersParticipantChannels } from "../graphql/mutations";
+import { getChannel, listUsersWithFilters } from "../graphql/customQueries";
 import { useState } from "react";
-import { HiOutlineUserRemove, HiUserGroup , HiOutlineUserPlus} from "react-icons/hi";
-
+import { HiOutlineUserRemove, HiUserGroup } from "react-icons/hi";
+import { HiOutlineUserPlus } from "react-icons/hi2";
 
 function ChannelEditParticipants(props) {
     const { isOpen, onClose, onOpen } = useDisclosure();
     const [channel, setChannel] = useState({})
+    const [searchUsers, setSearchUsers] = useState(null)
 
     function handleClick() {
         fectchChannel();
         onOpen();
     }
 
+    function handleClose() {
+        setSearchUsers(null)
+        onClose();
+    }
+
     async function fectchChannel() {
         try {
             const channel = await API.graphql({ query: getChannel, variables: { id: props.channelID } })
             setChannel(channel.data.getChannel)
+            //console.log(channel.data.getChannel)
         } catch (err) {
             console.log('error: ', err)
         }
     }
 
 
-    async function editParticipantsChannel() {
+    async function eliminateParticipant(id) {
         try {
-            const editParticipantsChannelInput = {
+            await API.graphql({ query: deleteUsersParticipantChannels, variables: { input: { id: id } } })
+            // Update channel.participants react state without refetching
+            const newParticipants = channel.participants.items.filter((participant) => participant.id != id)
+            setChannel({ ...channel, participants: { items: newParticipants } })
+        } catch (err) {
+            console.log('error: ', err)
+        }
+    }
 
+    async function searchNewParticipant(givenName, familyName) {
+        try {
+            const filterExpression = {};
+            if (givenName) {
+                filterExpression.givenName = { beginsWith: givenName.charAt(0).toUpperCase() + givenName.slice(1) }
             }
-            await API.graphql({ query: updateChannel, variables: { input: editParticipantsChannelInput } })
+            if (familyName) {
+                filterExpression.familyName = { beginsWith: familyName.charAt(0).toUpperCase() + familyName.slice(1) }
+            }
+            // only proffesors and technicians can be added as participants
+            filterExpression.or = [
+                { role: { eq: "professor" } },
+                { role: { eq: "technical" } }
+            ];
+
+            const users = await API.graphql({ query: listUsersWithFilters, variables: { filter: filterExpression } })
+            // Don't show users that are already participants
+            const newUsers = users.data.listUsers.items.filter((user) => {
+                return !channel.participants.items.some((participant) => participant.userID == user.id)
+            })
+            setSearchUsers(newUsers)
 
         } catch (err) {
             console.log('error: ', err)
         }
-
     }
+
+    async function addParticipant(userID, givenName, familyName) {
+        try {
+            const newParticipant = {
+                channelID: props.channelID,
+                userID: userID
+            }
+            const result = await API.graphql({ query: createUsersParticipantChannels, variables: { input: newParticipant } })
+            
+            // Update channel.participants react state without refetching adding givenName and FamilyName
+            newParticipant.id = result.data.createUsersParticipantChannels.id
+            newParticipant.user = {}
+            newParticipant.user.familyName = familyName
+            newParticipant.user.givenName = givenName
+            const newParticipants = [...channel.participants.items, newParticipant]
+            console.log("channel.participants.items: ", channel.participants.items)
+            console.log("newParticipants: ", newParticipants)
+            setChannel({ ...channel, participants: { items: newParticipants } })
+            setSearchUsers(null)
+        } catch (err) {
+            console.log('error: ', err)
+        }
+    }
+
+    
+
 
     return (
         <>
@@ -74,18 +132,7 @@ function ChannelEditParticipants(props) {
                     </ModalHeader>
 
                     <ModalBody>
-                        <form
-                            id="edit-channel-participants"
-                            onSubmit={(event) => {
-                                event.preventDefault();
-                                //console.log(event.target[0].value, event.target[1].value)
-                                //console.log(content)
-                                //editParticipantsChannel()
-
-
-                                onClose();
-                            }}
-                        >
+                        
                             <Text fontSize="xl" fontWeight="bold">PARTICIPANTS</Text>
                             <Text fontSize="lg" fontWeight="bold">Current participants</Text>
                             {channel.participants != undefined ? channel.participants.items.map((participant) => {
@@ -97,19 +144,19 @@ function ChannelEditParticipants(props) {
                                             mx="0.5rem"
                                             colorScheme="red"
                                             icon={<HiOutlineUserRemove />}
+                                            onClick={ () => eliminateParticipant(participant.id)}
                                         />
                                     </Flex>
                                 );
                             }) : null}
 
-
-
-                        </form>
+                        
                         <form
                             id="search-user"
                             onSubmit={(event) => {
                                 event.preventDefault();
-                                console.log(event.target[0].value, event.target[1].value)
+
+                                searchNewParticipant(event.target[0].value, event.target[1].value)
                             }}
                         >
                             <Text fontSize="lg" fontWeight="bold" mt="1rem">Search user to add as participant</Text>
@@ -123,17 +170,31 @@ function ChannelEditParticipants(props) {
                                 <FormLabel>Family name</FormLabel>
                                 <Input />
                             </FormControl>
-                            <Button type="submit" mt="0.5rem" ml="0.5rem" form="search-user">
+                            <Button type="submit" my="0.5rem" ml="0.5rem" form="search-user">
                                 Search
                             </Button>
+                            
+                            {searchUsers != null && searchUsers.length >0 ? searchUsers.map((user) => {
+                                return (
+                                    <Flex key={user.id} shadow="lg" rounded="lg" p="0.25rem" my="0.25rem" _light={{ bg: "gray.50" }} _dark={{ bg: "gray.800" }}>
+                                        <Text mx="0.5rem" mt="0.25rem">{user.givenName} {user.familyName}</Text>
+                                        <Spacer />
+                                        <IconButton
+                                            mx="0.5rem"
+                                            colorScheme="green"
+                                            icon={<HiOutlineUserPlus />}
+                                            onClick={ () => addParticipant(user.id, user.givenName, user.familyName)}
+                                        />
+                                    </Flex>
+                                );
+                            }) : null}
+
                         </form>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button type="submit" mr={3} form="edit-channel-participants">
-                            Submit
-                        </Button>
-                        <Button colorScheme="blue" onClick={onClose}>
+                        
+                        <Button colorScheme="blue" onClick={handleClose}>
                             Close
                         </Button>
                     </ModalFooter>
