@@ -26,6 +26,7 @@ function App() {
   const [userAttributes, setUserAttributes] = useState(null);
 
   const updateUserAttributes = (newAttributes) => {
+    console.log("Updating user attributes: ", newAttributes);
     setUserAttributes({ ...userAttributes, ...newAttributes });
   };
 
@@ -127,15 +128,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />}>
-          <Route path="channels" element={<ChannelList />} />
+          <Route path="channels" element={<ChannelList userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items} updateChannelsNavbar={updateUserAttributes} />} />
           <Route path="posts" element={<PostList />} />
         </Route>
         <Route path="/settings" element={<Settings updateUserNavbar={updateUserAttributes}/>}>
           <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes}/>} />
-          <Route path="channels" element={<SettingsChannel userID={userAttributes.id} updateChannelTopics={updateUserAttributes}/>} />
+          <Route path="channels" element={<SettingsChannel userID={userAttributes.id} />} />
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>
-        <Route path="/channel/:id" element={<Channel />} />
+        <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items} updateChannelsNavbar={updateUserAttributes} />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/posts" element={<PostList />} />
         <Route path="/about" element={<About />} />

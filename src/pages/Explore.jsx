@@ -53,8 +53,8 @@ function Explore() {
                             <Spacer/>
                             <Flex  alignItems={"center"} justifyContent={"space-between"}>
                                 <NavLink icon={MdOutlineUpdate} link={"channels"}>{"new"}</NavLink>
-                                <NavLink icon={MdOutlineTrendingUp} link={"channels"}>{"trending"}</NavLink>
-                                <NavLink icon={MdOutlineArrowUpward} link={"channels"}>{"top"}</NavLink>
+                                <NavLink icon={MdOutlineTrendingUp} link={"channels/trending"}>{"trending"}</NavLink>
+                                <NavLink icon={MdOutlineArrowUpward} link={"channels/top"}>{"top"}</NavLink>
                             </Flex>
                             <Spacer/>
                         </Flex>
@@ -64,8 +64,8 @@ function Explore() {
                             <Spacer/>
                             <Flex alignItems={"center"} justifyContent={"space-between"}>
                                 <NavLink icon={MdOutlineUpdate} link={"posts"}>{"new"}</NavLink>
-                                <NavLink icon={MdOutlineTrendingUp} link={"posts"}>{"trending"}</NavLink>
-                                <NavLink icon={MdOutlineArrowUpward} link={"posts"}>{"top"}</NavLink>
+                                <NavLink icon={MdOutlineTrendingUp} link={"posts/trending"}>{"trending"}</NavLink>
+                                <NavLink icon={MdOutlineArrowUpward} link={"posts/top"}>{"top"}</NavLink>
                             </Flex>
                             <Spacer/>
                         </Flex>

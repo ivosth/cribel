@@ -55,6 +55,7 @@ export const getUser = /* GraphQL */ `
           owner
           channel {
             name
+            image
           }
         }
         nextToken

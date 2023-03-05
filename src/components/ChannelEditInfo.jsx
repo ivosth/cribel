@@ -30,21 +30,41 @@ import { useState } from "react";
 function ChannelEditPost(props) {
     const { isOpen, onClose, onOpen } = useDisclosure();
     const [content, setContent] = useState("")
+    const [channelTopics, setChannelTopics] = useState([])
+
 
     function saveContent(content) {
         setContent(content)
     }
 
+    function handleClick() {
+        fetchChannelTopics();
+        onOpen();
+    }
+
+    async function fetchChannelTopics() {
+        try {         
+            const topics = await API.graphql({ query: `query getChannelTopics {
+                getChannel(id: "${props.channelID}") {
+                    topics
+                }
+            }` })
+            setChannelTopics(topics.data.getChannel.topics)
+
+        } catch (err) {
+            console.log('error: ', err)
+        }
+    }
 
     async function editInfoChannel(extraTopics, file, description) {
         try {
             const editInfoChannelInput = {}
 
             // extraTopics contains the topics to add
-            // props.topics contains the current topics
+            // channelTopics contains the current topics
             if (extraTopics !== "") {
                 const newTopics = extraTopics.split(",").map((topic) => topic.trim());
-                const topics = [...props.topics, ...newTopics];
+                const topics = [...channelTopics, ...newTopics];
 
                 editInfoChannelInput.topics = topics
             }
@@ -77,7 +97,7 @@ function ChannelEditPost(props) {
                 colorScheme="green"
                 icon={<AiFillEdit />}
                 aria-label="Edit"
-                onClick={onOpen}
+                onClick={handleClick}
             />
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
@@ -101,7 +121,7 @@ function ChannelEditPost(props) {
                         >
                             <Text fontSize="md" fontWeight="bold" >Current Topics</Text>
                             <Wrap>
-                                {props.topics.map((topic) => {
+                                {channelTopics.map((topic) => {
                                     return(
                                         <Box
                                         key={topic}

@@ -31,7 +31,7 @@ function ChannelEditParticipants(props) {
     const [searchUsers, setSearchUsers] = useState(null)
 
     function handleClick() {
-        fectchChannel();
+        fetchChannel();
         onOpen();
     }
 
@@ -40,7 +40,7 @@ function ChannelEditParticipants(props) {
         onClose();
     }
 
-    async function fectchChannel() {
+    async function fetchChannel() {
         try {
             const channel = await API.graphql({ query: getChannel, variables: { id: props.channelID } })
             setChannel(channel.data.getChannel)

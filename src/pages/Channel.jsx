@@ -1,5 +1,5 @@
 import {
-    Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, Show
+    Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, Show, Button
 } from "@chakra-ui/react";
 import { getChannel } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
@@ -8,8 +8,8 @@ import { useParams, Link as RouterLink } from "react-router-dom";
 import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp, } from "react-icons/md";
 import PostCard from "../components/PostCard";
 import ChannelInfo from "../components/ChannelInfo";
-
-
+import { RiChatFollowUpLine, RiChatDeleteLine } from "react-icons/ri";
+import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers } from "../graphql/mutations";
 
 const NavLink = ({ icon, link, children }) => (
     <Link
@@ -38,12 +38,41 @@ const NavLink = ({ icon, link, children }) => (
     </Link>
 );
 
-function Channel() {
+function Channel(props) {
 
     let { id } = useParams();
 
     const [loading, setLoading] = useState(true);
     const [channel, setChannel] = useState([]);
+    const [subscribed, setSubscribed] = useState(null);
+
+    function isSubscribed() {
+        //console.log("props.subscriptions: ", props.subscriptions)
+        return props.subscriptions.some(sub => sub.channelID === id)
+    }
+
+    async function handlSubscription() {
+        try {
+            let newSubscriptions = {};
+            newSubscriptions.items = props.subscriptions;
+            if (subscribed) {
+                const subscriptionID = props.subscriptions.find(sub => sub.channelID === id).id;
+                await API.graphql({ query: deleteSubscriptionsSubscribers, variables: { input: { id: subscriptionID } } });
+                newSubscriptions.items = newSubscriptions.items.filter(sub => sub.channelID !== id);
+
+            } else {
+                const res = await API.graphql({ query: createSubscriptionsSubscribers, variables: { input: { channelID: id, userID: props.userID } } });
+                const channelInfo = { name: channel.name, image: channel.image };
+                newSubscriptions.items.push({ channel: channelInfo, id: res.data.createSubscriptionsSubscribers.id, userID: props.userID, channelID: id });
+                
+            }
+            setSubscribed(!subscribed);
+            props.updateChannelsNavbar({ subscriptions: newSubscriptions })
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
 
 
     const obtainChannel = async () => {
@@ -56,6 +85,7 @@ function Channel() {
 
     useEffect(() => {
         obtainChannel();
+        setSubscribed(isSubscribed());
     }, [id]);
 
     if (loading) {
@@ -73,16 +103,29 @@ function Channel() {
             justifyContent="center"
         >
             {/****** HEADER WITH FILTERS *************/}
-            <Text fontSize="3xl" fontWeight="bold" textAlign="center" mb="1rem">
-                {channel.name}
-            </Text>
-            <Flex alignItems={"center"} justifyContent={"space-between"}>
+            <Flex alignItems={"center"} justifyContent={"center"} mx="2%">
                 <Spacer />
-                <Flex alignItems={"center"} justifyContent={"space-between"}>
-                    <NavLink icon={MdOutlineUpdate} link={"posts"}>{"new"}</NavLink>
-                    <NavLink icon={MdOutlineTrendingUp} link={"posts"}>{"trending"}</NavLink>
-                    <NavLink icon={MdOutlineArrowUpward} link={"posts"}>{"top"}</NavLink>
-                </Flex>
+                <Box w="10%" display={{ base: 'none', lg: 'block' }}/>
+                <Box>
+                    <Text fontSize="3xl" fontWeight="bold" textAlign="center" mb="1rem">
+                        {channel.name}
+                    </Text>
+                    <Flex alignItems={"center"} justifyContent={"space-between"}>
+                        <Spacer />
+                        <Flex alignItems={"center"} justifyContent={"space-between"}>
+                            <NavLink icon={MdOutlineUpdate} link={"new"}>{"new"}</NavLink>
+                            <NavLink icon={MdOutlineTrendingUp} link={"trending"}>{"trending"}</NavLink>
+                            <NavLink icon={MdOutlineArrowUpward} link={"top"}>{"top"}</NavLink>
+                        </Flex>
+                        <Spacer />
+                    </Flex>
+                </Box>
+                <Box w="3%" display={{ base: 'none', lg: 'block' }}/>
+                <Button size="lg" onClick={handlSubscription}
+                    leftIcon={subscribed ? <RiChatDeleteLine size="2rem"/> : <RiChatFollowUpLine size="2rem"/>}
+                >
+                    <Text display={{ base: 'none', lg: 'block' }}> {subscribed ? "Unsubscribe" : "Subscribe"}</Text>
+                </Button>
                 <Spacer />
             </Flex>
 

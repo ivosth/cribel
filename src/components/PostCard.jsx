@@ -44,7 +44,6 @@ function PostCard({ post }) {
 
   return (
     <Flex
-      bg={useColorModeValue("gray.100", "gray.600")}
       pt={50}
       w="full"
       alignItems="center"
