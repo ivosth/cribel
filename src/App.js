@@ -7,6 +7,8 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import ChannelList from './components/ChannelList';
 import PostList from './components/PostList';
 import Navbar from './components/Navbar'
+import Explore from './pages/Explore'
+import Channel from './pages/Channel';
 import { createUser } from "./graphql/mutations";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
@@ -101,15 +103,17 @@ function App() {
   ) : (
     <> {/*<UserContext.Provider value={{ userAttributes }}>*/}
       <Navbar email={userAttributes.email} />
-      <div className="content">        
         <Routes>
           <Route path="/" element={<div>MainPage</div>}/>
-          <Route path="/channels" element={<ChannelList />}/>
+          <Route path="/explore" element={<Explore/>}>
+            <Route path="channels" element={<ChannelList />}/>
+            <Route path="posts" element={<PostList />}/>
+          </Route>
+          <Route path="/channel/:id" element={<Channel />}/>
           <Route path="/posts" element={<PostList />}/>
           <Route path="/about" element={<div><p>Navigation Test Page</p> <button onClick={()=> {navigate("/channels");}}>Change to Channels</button></div>}/>
           <Route path = "*" element = {<div>Page not found</div>}/>
         </Routes>
-      </div>
     {/*</UserContext.Provider>*/} </> 
   )
 };

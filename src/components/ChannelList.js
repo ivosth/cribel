@@ -1,10 +1,8 @@
 import { listChannels } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, CircularProgress} from "@mui/material";
-
-
-
+import { Box, Card, CardHeader, CardBody, Text, CircularProgress } from "@chakra-ui/react";
+import ChannelCard from './ChannelCard';
 
 function formatDate(awsDate){
   const dateobj = new Date(awsDate);
@@ -34,37 +32,49 @@ function ChannelList() {
   if (loading) {
     return (
       <div className="centerLoading">
-        <CircularProgress size="25rem" />
+        <CircularProgress isIndeterminate size="25rem" />
       </div>
     )
   }
   
 
   return (
-      <div>
+      /*<>
         {channels.map(channel => (
           <div className="center" key={channel.id}>
+            <Box p="1.5rem" minW="40%" maxW="sm">
+              <Card boxShadow="lg" border="1px" borderColor="gray.200" >
+                <CardHeader>
+                  <Text pt="2" fontSize="lg">
+                    <b>Channel ID:</b> {channel.id} <br/>
+                    <b>Name/Title:</b> {channel.name} <b>&emsp;&emsp;Creator:</b> {channel.owner.email}
+                  </Text>
+                </CardHeader>
 
-            <Card sx={{ boxShadow: 3, width: '50rem', margin: '1rem'}}>
-              <CardContent sx={{ margin: '-0.25rem -0.30rem -0.5rem 0.25rem' }}>
-                <Typography component="div" variant="h5"> 
-                  <b>Channel ID:</b> {channel.id} <br/>
-                  <b>Name/Title:</b> {channel.name} <b>Creator:</b> {channel.owner.email}
-                </Typography>
-                <Typography component="div" variant="subtitle1" color="text.secondary">
-                  <b>description:</b> {channel.description} <br/>
-                  <b>description formated:</b> <div className="htmlFormatted" dangerouslySetInnerHTML={{__html: channel.description}}></div>
-                  <b>subscribers:</b> {channel.subscribers.items.map(subscriber => <li key={subscriber.user.id}> {subscriber.user.email} </li>)}
-                  <b>topics:</b> {channel.topics.map(topic => <li key={topic}> {topic} </li>)}
-                  <b>createdAt:</b> {formatDate(channel.createdAt)} <b>updatedAt:</b> {formatDate(channel.updatedAt)}
-                </Typography>
-              </CardContent>
-            </Card>
-
+                <CardBody>
+                    <Box>
+                      <Text pt="2" fontSize="lg">
+                        <b>description:</b> {channel.description} <br/>
+                        <b>description formated:</b> <div className="htmlFormatted" dangerouslySetInnerHTML={{__html: channel.description}}></div>
+                        <b>subscribers:</b> {channel.subscribers.items.map(subscriber => <li key={subscriber.user.id}> {subscriber.user.email} </li>)}
+                        <b>participants:</b> {channel.participants.items.map(participant => <li key={participant.user.id}> {participant.user.email} </li>)}
+                        <b>topics:</b> {channel.topics.map(topic => <li key={topic}> {topic} </li>)}
+                        <b>createdAt:</b> {formatDate(channel.createdAt)} <b>&emsp;&emsp;updatedAt:</b> {formatDate(channel.updatedAt)}
+                      </Text>
+                    </Box>
+                </CardBody>
+              </Card>
+            </Box>
           </div>
-        ))
-      }
-      </div>
+        ))}
+      </>*/
+      <>
+      {channels.map(channel => (
+        <div key={channel.id}>
+          <ChannelCard channel={channel} />
+        </div>
+      ))}
+    </>
   );
 }
 

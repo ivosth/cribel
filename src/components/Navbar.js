@@ -1,40 +1,69 @@
-import { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
-import {Link} from "react-router-dom"
+import {
+  Box,
+  Flex,
+  Avatar,
+  HStack,
+  VStack,
+  Link,
+  IconButton,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useDisclosure,
+  useColorModeValue,
+  Stack,
+  Icon,
+  LinkOverlay,
+  LinkBox,
+  Text,
+  Hide,
+  useColorMode,
+  MenuDivider,
+  Image,
+  MenuGroup
+} from "@chakra-ui/react";
+import { MdConnectWithoutContact, MdHelpOutline, MdOutlineLocalPostOffice, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
+import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsHouseDoor } from 'react-icons/bs';
+import { FiBell, FiChevronDown } from 'react-icons/fi';
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import SearchBar from "./SearchBar";
+import { channels } from "./Static.js";
 
-const pages = ["channels", "about", "posts"];
 
-function Navbar({ email }) {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const openNavMenuHandler = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const openUserMenuHandler = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+const NavLink = ({ icon, link, children }) => (
+  <Link
+    fontSize="lg"
+    as={RouterLink}
+    to={link}
+    px={2}
+    py={1}
+    rounded={"md"}
+    _hover={{
+      bg: useColorModeValue("blue.100", "blue.600"),
+    }}
+  //_focus={{ boxShadow: "none" }}
+  >
 
-  const closeNavMenuHandler = () => {
-    setAnchorElNav(null);
-  };
+    {/*children.toUpperCase()*/}
 
-  const closeUserMenuHandler = () => {
-    setAnchorElUser(null);
-  };
+    <Flex align="center" >
+      <Icon as={icon} />
+      <Hide below='md'>
+        <Text marginLeft="0.5rem">
+          {children.charAt(0).toUpperCase() + children.slice(1)}
+        </Text>
+      </Hide>
+
+    </Flex>
+  </Link>
+);
+
+
+function Navbar({ id, role, username, profilePic }) {
 
   const onSignOutHandler = async () => {
     try {
@@ -44,128 +73,183 @@ function Navbar({ email }) {
     }
   };
 
+  //const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
+  const navigate = useNavigate();
 
   return (
-    <AppBar position = "sticky" color="inherit" >
-      <Container maxWidth="x2">
-        <Toolbar disableGutters>
-          <ConnectWithoutContactIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography variant="h6" noWrap component="a" href="/"
-            sx={{mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none"
-            }}
-          >
-            SERVERLESS APP
-          </Typography>
+    <Box
+      bg={useColorModeValue("white", "gray.900")}
+      px={3}
+      fontFamily="monospace"
+      borderWidth="1px"
+      boxShadow="md"
+    >
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton size="large" color="inherit" onClick={openNavMenuHandler}>
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left"
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={closeNavMenuHandler}
-              sx={{
-                display: { xs: "block", md: "none" }
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={closeNavMenuHandler}>
-                  <Typography textAlign="center" sx={{ textTransform: 'uppercase' }}>
-                    <Link style={{textDecoration: "None", color:"black"}} to={`${page}`}>
-                      {page}
-                    </Link>
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <ConnectWithoutContactIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography variant="h5" noWrap component="a" href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none"
-            }}
-          >
-            SERVERLESS APP
-          </Typography>
-          <Box bgcolor="inherit" sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link key={page} style={{textDecoration: "None", color:"black"}} to={`${page}`}>
-                <Button
-                    onClick={closeNavMenuHandler}
-                    sx={{
-                        color: "black",
-                        display: "block",
-                        "&:hover": { background: "#D3D3D3" }
-                        /*textTransform: 'capitalize'*/
-                    }}
+      {/**************** LOGO AND HOME ************************/}
+      <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+        {/*<IconButton
+          size={"md"}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label={"Open Menu"}
+          display={{ md: "none" }}
+          onClick={isOpen ? onClose : onOpen}
+        />*/}
+        <HStack alignItems={"center"}>
+          <Hide below="md">
+            <LinkBox>
+              <Box fontSize="xl" fontWeight="bold">
+                <Icon as={MdConnectWithoutContact} marginRight="0.5rem" />
+                <LinkOverlay as={RouterLink} to="/">Cribel</LinkOverlay>
+              </Box>
+            </LinkBox>
+          </Hide>
+          <NavLink icon={BsHouseDoor} link={"posts"}>{"home"}</NavLink>
+        </HStack>
+
+
+        {/************ CHANNELS AND SEARCH *******************/}
+        <Flex align="center" px="0.4rem">
+          <Menu autoSelect={false}>
+            <MenuButton>
+              <Flex fontSize="lg" align="center" >
+                <Icon as={MdScreenSearchDesktop} />
+                <Hide below='md'>
+                  <Text ml="0.5rem"> Channels </Text>
+                </Hide>
+                <Icon as={FiChevronDown} ml="0.2rem" mr="0.7rem" />
+              </Flex>
+            </MenuButton>
+
+            <MenuList maxH='20rem' sx={{ overflowY: "scroll" }}>
+              <MenuGroup title='Your followed channels'>
+                <MenuDivider />
+                {channels.map((channel, id) => (
+                  <Link href={`/channel/${channel.id}`}>
+                    <MenuItem key={id}>
+                      <Avatar size="sm" name={channel.name} src={channel.image} mr="0.75rem" />
+                      <Text> {channel.name} </Text>
+                    </MenuItem>
+                  </Link>
+                ))}
+              </MenuGroup>
+
+            </MenuList>
+          </Menu>
+          <SearchBar />
+        </Flex>
+
+
+        {/************ EXPLORE, NOTIFICATION AND PROFILE *************/}
+        <HStack>
+          {/************ EXPLORE AND NOTIFICATION *************/}
+          <NavLink icon={MdManageSearch} link={"explore"}>{"explore"}</NavLink>
+          <IconButton
+            size="lg"
+            variant="ghost"
+            color={useColorModeValue("gray.600", "gray.200")}
+            aria-label="open menu"
+            icon={<FiBell />}
+          />
+
+          {/********** PROFILE *************/}
+          <Flex alignItems={'center'}>
+            <Menu autoSelect={false}>
+              <MenuButton
+                py={2}
+                transition="all 0.3s"
+                _focus={{ boxShadow: 'none' }}>
+                <HStack>
+                  {profilePic != null ?
+                    <Avatar size={'sm'} src={profilePic} />
+                    :
+                    <Avatar size={'sm'} bg="grey" />
+                  }
+
+                  <VStack
+                    display={{ base: 'none', md: 'flex' }}
+                    alignItems="flex-start"
+                    spacing="1px"
+                    ml="2"
+                  >
+                    {username != null ?
+                      <Text fontSize="sm"> {username} </Text>
+                      :
+                      <Text fontSize="sm"> Nombre Apellido </Text>
+                    }
+                    {role != null ?
+                      <Text fontSize="xs"> {role} </Text>
+                      :
+                      <Text fontSize="xs"> Role </Text>
+                    }
+
+                  </VStack>
+
+                  <Box display={{ base: 'none', md: 'flex' }}>
+                    <FiChevronDown />
+                  </Box>
+                </HStack>
+              </MenuButton>
+
+              <MenuList minW="8.5rem" rounded="md" fontSize="md">
+                <MenuItem
+                  onClick={toggleColorMode}
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
                 >
-                    {page}
-                </Button>
-              </Link>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0, display: {sm: 'flex', md: 'flex' } }}>
-            <Typography variant="h6" sx={{mr: '1rem', display: {xs: 'none', sm: 'flex', md: 'flex'}}} > {email} </Typography>
-            <Tooltip title="Open settings">
-              <IconButton onClick={openUserMenuHandler} sx={{ p: 0 }}>
-                <Avatar />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={closeUserMenuHandler}
-            >
-              
-            <Link style={{textDecoration: "None", color:"black"}} to={"/settings"}>
-                <MenuItem onClick={closeUserMenuHandler}>
-                    <Typography textAlign="center">Settings</Typography>
+                  {colorMode === 'light' ?
+                    <Text fontWeight='normal'> <Icon as={BsMoon} /> Dark</Text>
+                    :
+                    <Text fontWeight='normal'> <Icon as={BsSun} /> Light</Text>
+                  }
                 </MenuItem>
-            </Link>
-
-                <MenuItem onClick={onSignOutHandler}>
-                    <Typography textAlign="center">Logout</Typography>
+                <MenuItem
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                /*
+                _active={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                }}
+                _expanded={{
+                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
+                }}*/
+                >
+                  <Text> <Icon as={BsGear} /> Settings</Text>
                 </MenuItem>
-              
+                <MenuItem
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                >
+                  <Text> <Icon as={MdHelpOutline} /> About </Text>
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem onClick={onSignOutHandler}
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                >
+                  <Text> <Icon as={BsBoxArrowRight} /> Logout</Text>
+                </MenuItem>
+              </MenuList>
             </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+          </Flex>
+
+
+        </HStack>
+      </Flex>
+
+
+      {/*isOpen ? (
+        <Box pb={4} display={{ md: "none" }}>
+          <Stack as={"nav"} spacing={4}>
+            <NavLink icon={BsHouseDoor} link={"posts"}>{"home"}</NavLink>
+          </Stack>
+        </Box>
+      ) : null*/}
+    </Box>
   );
 }
 export default Navbar;
