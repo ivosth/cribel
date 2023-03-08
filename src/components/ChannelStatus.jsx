@@ -25,7 +25,7 @@ function ChannelStatus(props) {
         try {
             const updateChannelInput = {}
             updateChannelInput.id = props.channelID
-            updateChannelInput.disabled = !props.disabled
+            updateChannelInput.disabled = !disabled
             await API.graphql({ query: updateChannel, variables: { input: updateChannelInput } })
             setDisabled(!disabled)
 
@@ -65,8 +65,8 @@ function ChannelStatus(props) {
                             }}
                         >
                             <FormControl>
-                                <FormLabel>Are you sure to {props.disabled ? "activate" : "deactivate"} this channel? <br/>
-                                            {props.disabled ? "Participants will be able to post on the channel again." 
+                                <FormLabel>Are you sure to {disabled ? "activate" : "deactivate"} this channel? <br/>
+                                            {disabled ? "Participants will be able to post on the channel again." 
                                             : "Participants will no longer be able to post but users will still be able to view the channel and the posts."}
                                 </FormLabel>
                             </FormControl>

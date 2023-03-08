@@ -144,7 +144,7 @@ function Channel(props) {
                     {/*************** POSTS CARDS  ***************/}
                     {channel.posts.items.map(post => (
                         <div key={post.id}>
-                            <PostCard post={post} />
+                            <PostCard post={post} userID={props.userID} />
                         </div>
                     ))}
                 </Box>

@@ -200,6 +200,7 @@ export const getChannel = /* GraphQL */ `
           content
           ratings {
             items {
+              id
               postRatingsId
               userRatingsId
               stars
