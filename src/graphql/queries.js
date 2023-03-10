@@ -7,6 +7,7 @@ export const getUser = /* GraphQL */ `
       id
       email
       emailVerified
+      disabled
       givenName
       familyName
       image
@@ -91,6 +92,7 @@ export const listUsers = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -131,6 +133,7 @@ export const getPost = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -167,6 +170,7 @@ export const getPost = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -226,6 +230,7 @@ export const listPosts = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -272,6 +277,7 @@ export const getChannel = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -357,6 +363,7 @@ export const listChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -395,6 +402,7 @@ export const getRating = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -429,6 +437,7 @@ export const getRating = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -481,6 +490,7 @@ export const listRatings = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -522,6 +532,7 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -557,6 +568,7 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -608,6 +620,7 @@ export const listSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -648,6 +661,7 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -683,6 +697,7 @@ export const getUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -734,6 +749,7 @@ export const listUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image

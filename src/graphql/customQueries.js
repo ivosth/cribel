@@ -360,6 +360,7 @@ export const listUsersWithFilters = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image

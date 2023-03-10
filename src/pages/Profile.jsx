@@ -178,8 +178,8 @@ function Profile() {
 
                                     {profile.participantChannels.items.length > 0 ?
                                         profile.participantChannels.items.map(channel => (
-                                            <RouterLink to={`/channel/${channel.channelID}`}>
-                                                <Text key={channel.channelID} as="h2" px={2} fontSize="sm" >
+                                            <RouterLink to={`/channel/${channel.channelID}`} key={channel.channelID}>
+                                                <Text as="h2" px={2} fontSize="sm" >
                                                     {channel.channel.name}
                                                 </Text>
                                             </RouterLink>

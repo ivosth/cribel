@@ -27,7 +27,7 @@ function SearchBar() {
 
   return (
     <Flex >
-      <AutoComplete selectOnFocus /*openOnFocus*/ >
+      <AutoComplete selectOnFocus openOnFocus >
         {({ isOpen }) => (
           <>
             <InputGroup>

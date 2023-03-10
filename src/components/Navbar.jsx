@@ -98,10 +98,12 @@ function Navbar({ user }) {
           <Hide below="md">
             <LinkBox as={RouterLink} to="/">
               <Box fontSize="xl" fontWeight="bold">
-                <IconCribel marginRight="0.5rem" boxSize="4rem" />
-                <Hide below="lg">
-                  <LinkOverlay marginRight="0.8rem" fontSize={["1.1rem", "1.1rem", "1.1rem", "1.1rem", "1.6rem"]}>Cribel</LinkOverlay>
-                </Hide>
+                <Flex>
+                  <IconCribel marginRight="0.5rem" boxSize="4rem" />
+                  <Hide below="lg">
+                    <Text marginRight="0.8rem" mt="0.75rem" fontSize={["1.1rem", "1.1rem", "1.1rem", "1.1rem", "1.6rem"]}>Cribel</Text>
+                  </Hide>
+                </Flex>
               </Box>
             </LinkBox>
           </Hide>
@@ -128,8 +130,8 @@ function Navbar({ user }) {
                 {user.subscriptions.items.map(channel => (
                   <RouterLink to={`/channel/${channel.channelID}`} key={channel.channelID}>
                     <MenuItem>
-                      <Avatar size="sm" name={channel.channel.name} mr="0.75rem" 
-                        src={channel.channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"} 
+                      <Avatar size="sm" name={channel.channel.name} mr="0.75rem"
+                        src={channel.channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}
                       />
                       <Text> {channel.channel.name} </Text>
                     </MenuItem>

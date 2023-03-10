@@ -50,6 +50,7 @@ function App() {
         console.log({ user });
         if (!user.data.getUser) {
           try {
+            currentUserAttributes.disabled = false;
             const newUser = await API.graphql({
               query: createUser,
               variables: { input: currentUserAttributes }
@@ -113,7 +114,7 @@ function App() {
 
     obtainUser();
     onAuthEventListener();
-  }, userAttributes);
+  }, []);
 
 
 
@@ -128,7 +129,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />}>
-          <Route path="channels" element={<ChannelList userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items} updateChannelsNavbar={updateUserAttributes} />} />
+          <Route path="channels" element={<ChannelList userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
           <Route path="posts" element={<PostList />} />
         </Route>
         <Route path="/settings" element={<Settings updateUserNavbar={updateUserAttributes}/>}>
@@ -136,7 +137,7 @@ function App() {
           <Route path="channels" element={<SettingsChannel userID={userAttributes.id} />} />
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>
-        <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items} updateChannelsNavbar={updateUserAttributes} />} />
+        <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/posts" element={<PostList />} />
         <Route path="/about" element={<About />} />

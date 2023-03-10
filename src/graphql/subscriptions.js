@@ -7,6 +7,7 @@ export const onCreateUser = /* GraphQL */ `
       id
       email
       emailVerified
+      disabled
       givenName
       familyName
       image
@@ -86,6 +87,7 @@ export const onUpdateUser = /* GraphQL */ `
       id
       email
       emailVerified
+      disabled
       givenName
       familyName
       image
@@ -165,6 +167,7 @@ export const onDeleteUser = /* GraphQL */ `
       id
       email
       emailVerified
+      disabled
       givenName
       familyName
       image
@@ -248,6 +251,7 @@ export const onCreatePost = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -284,6 +288,7 @@ export const onCreatePost = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -338,6 +343,7 @@ export const onUpdatePost = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -374,6 +380,7 @@ export const onUpdatePost = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -428,6 +435,7 @@ export const onDeletePost = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -464,6 +472,7 @@ export const onDeletePost = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -519,6 +528,7 @@ export const onCreateChannel = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -599,6 +609,7 @@ export const onUpdateChannel = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -679,6 +690,7 @@ export const onDeleteChannel = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -756,6 +768,7 @@ export const onCreateRating = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -790,6 +803,7 @@ export const onCreateRating = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -837,6 +851,7 @@ export const onUpdateRating = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -871,6 +886,7 @@ export const onUpdateRating = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -918,6 +934,7 @@ export const onDeleteRating = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -952,6 +969,7 @@ export const onDeleteRating = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1001,6 +1019,7 @@ export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1036,6 +1055,7 @@ export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1078,6 +1098,7 @@ export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1113,6 +1134,7 @@ export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1155,6 +1177,7 @@ export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1190,6 +1213,7 @@ export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1232,6 +1256,7 @@ export const onCreateUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1267,6 +1292,7 @@ export const onCreateUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1309,6 +1335,7 @@ export const onUpdateUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1344,6 +1371,7 @@ export const onUpdateUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1386,6 +1414,7 @@ export const onDeleteUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1421,6 +1450,7 @@ export const onDeleteUsersParticipantChannels = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image

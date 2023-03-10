@@ -36,6 +36,7 @@ type User
   id: ID!
   email: AWSEmail!
   emailVerified: Boolean!
+  disabled: Boolean! @default(value: "false")
   givenName: String!
   familyName: String!
   image: String
