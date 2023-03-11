@@ -5,9 +5,6 @@ import {
     ModalHeader,
     ModalCloseButton,
     ModalBody,
-    FormControl,
-    FormLabel,
-    Input,
     ModalFooter,
     Button,
     useDisclosure,
@@ -22,6 +19,7 @@ import {
 import { API } from 'aws-amplify'
 import { FaUserTag } from "react-icons/fa";
 import { useState } from "react";
+import { updateUser } from "../graphql/mutations";
 
 function UserEditRole(props) {
     const { isOpen, onClose, onOpen } = useDisclosure();
@@ -54,11 +52,31 @@ function UserEditRole(props) {
     async function updateUserRol() {
         try {
 
+            let oldGroup
+            if (role === "student" || role === "graduated" || role === "Student" || role === "Graduated") {
+                oldGroup = "viewer"
+            } else if (role === "technical" || role === "professor" ||role === "Technical" || role === "Professor") {
+                oldGroup = "admin"
+            }
 
-            console.log(roleButton)
+            let newGroup
+            if (roleButton === "student" || roleButton === "graduated" || roleButton === "Student" || roleButton === "Graduated") {
+                newGroup = "viewer"
+            } else if (roleButton === "technical" || roleButton === "professor" || roleButton === "Technical" || roleButton === "Professor") {
+                newGroup = "admin"
+            }
+            
+            
+            await API.graphql({ query: updateUser, variables: { input: { id: props.user.id, role: roleButton.charAt(0).toLowerCase() + roleButton.slice(1) } } })
+
+
+            if(oldGroup !== newGroup){
+                await API.graphql({ query: `mutation changeUserGroup { changeUserGroup(id: "${props.user.id}", group: ${newGroup}) }` })
+            }
+            
             setRole(roleButton);
             setRoleButton(null);
-
+            setRoleBg({ [roleButton]: 'transparent' });
             props.updateUsersList(props.user.id, roleButton.charAt(0).toLowerCase() + roleButton.slice(1))
 
         } catch (err) {

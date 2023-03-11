@@ -1,6 +1,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const changeUserGroup = /* GraphQL */ `
+  mutation ChangeUserGroup($id: ID!, $group: Group!) {
+    changeUserGroup(id: $id, group: $group)
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!

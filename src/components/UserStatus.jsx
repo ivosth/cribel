@@ -25,6 +25,8 @@ function UserStatus(props) {
 
     async function changeStatus() {
         try {
+
+            await API.graphql({ query: `mutation changeUserStatus { changeUserStatus(id: "${props.userID}", disable: ${!disabled}) }` })
             setDisabled(!disabled)
 
         } catch (err) {

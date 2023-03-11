@@ -127,7 +127,7 @@ function SettingsAdvanced() {
         })
 
         setLoading(false);
-        console.log(usersWithFilters.data.listUsers.items)
+        //console.log(usersWithFilters.data.listUsers.items)
         setUsers(usersWithFilters.data.listUsers.items);
     };
 
@@ -144,7 +144,7 @@ function SettingsAdvanced() {
                     id="search-users"
                     onSubmit={(event) => {
                         event.preventDefault();
-                        console.log(nameLetter, lastNameLetter, role);
+                        //console.log(nameLetter, lastNameLetter, role);
                         setSearchParams({ name: nameLetter, lastName: lastNameLetter, role: role });
 
                         obtainListUsersWithFilters();
@@ -288,7 +288,7 @@ function SettingsAdvanced() {
                                                 >
                                                     <Box>
                                                         <RouterLink to={`/profile/${user.id}`}>
-                                                            <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} mx="1rem">
+                                                            <Text mt="0.25rem" fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} mx="1rem">
                                                                 {`${user.givenName} ${user.familyName}` || "Nombre Apellido"}
                                                             </Text>
                                                         </RouterLink>
@@ -334,7 +334,7 @@ function SettingsAdvanced() {
 
                                                         <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing={3} alignItems='center'>
                                                             <UserEditRole user={user} updateUsersList={updateUsersList}/>
-                                                            <UserStatus disabled={user.disabled}/>
+                                                            <UserStatus userID={user.id} disabled={user.disabled}/>
                                                         </ButtonGroup>
                                                     </Flex>
                                                 </SimpleGrid>

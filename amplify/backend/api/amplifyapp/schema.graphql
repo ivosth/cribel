@@ -86,3 +86,9 @@ type Rating @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   post: Post! @belongsTo
   stars: Float!
 }
+
+
+type Mutation {
+  changeUserGroup(id: ID!, group: Group!): String @function(name: "changeUserGroup-${env}"),
+  changeUserStatus(id: ID!, disable: Boolean!): String @function(name: "changeUserStatus-${env}")
+}

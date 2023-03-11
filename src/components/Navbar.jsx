@@ -6,31 +6,25 @@ import {
   VStack,
   Link,
   IconButton,
-  Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  useDisclosure,
   useColorModeValue,
-  Stack,
   Icon,
-  LinkOverlay,
   LinkBox,
   Text,
   Hide,
   useColorMode,
   MenuDivider,
-  Image,
   MenuGroup
 } from "@chakra-ui/react";
-import { MdConnectWithoutContact, MdHelpOutline, MdOutlineLocalPostOffice, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
-import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsHouseDoor } from 'react-icons/bs';
+import { MdHelpOutline, MdOutlineCastForEducation, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
+import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsHouseDoor, BsPersonSquare, BsTools } from 'react-icons/bs';
 import { FiBell, FiChevronDown } from 'react-icons/fi';
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import SearchBar from "./SearchBar";
-import { channels } from "./Static";
 import IconCribel from "./IconCribel";
 
 
@@ -205,11 +199,11 @@ function Navbar({ user }) {
                     bg: useColorModeValue("blue.50", "blue.700")
                   }}
                 >
-                  {colorMode === 'light' ?
-                    <Text fontWeight='normal'> <Icon as={BsMoon} /> Dark</Text>
-                    :
-                    <Text fontWeight='normal'> <Icon as={BsSun} /> Light</Text>
-                  }
+                  <Flex>
+                    <Icon as={colorMode === 'light' ? BsMoon : BsSun} mt="0.25rem" />
+                    <Text ml="0.5rem"> {colorMode === 'light' ? 'Dark' : 'Light'} </Text>
+                  </Flex>
+
                 </MenuItem>
                 <MenuItem
                   _hover={{
@@ -224,16 +218,62 @@ function Navbar({ user }) {
                 }}*/
                 >
                   <RouterLink to="/settings">
-                    <Text> <Icon as={BsGear} /> Settings</Text>
+                    <Flex>
+                      <Icon as={BsGear} mt="0.25rem" /> 
+                      <Text ml="0.5rem"> Settings </Text>
+                    </Flex>
                   </RouterLink>
                 </MenuItem>
+
+                <MenuItem
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                >
+                  <RouterLink to="/settings/profile">
+                    <Flex ml="0.5rem">
+                      <Icon as={BsPersonSquare} mt="0.25rem" /> 
+                      <Text ml="0.5rem"> Profile </Text>
+                    </Flex>
+                  </RouterLink>
+                </MenuItem>
+
+                <MenuItem
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                >
+                  <RouterLink to="/settings/channels">
+                    <Flex ml="0.5rem">
+                      <Icon as={MdOutlineCastForEducation} mt="0.25rem" /> 
+                      <Text ml="0.5rem"> Channels </Text>
+                    </Flex>
+                  </RouterLink>
+                </MenuItem>
+
+                <MenuItem
+                  _hover={{
+                    bg: useColorModeValue("blue.50", "blue.700")
+                  }}
+                >
+                  <RouterLink to="/settings/advanced">
+                    <Flex ml="0.5rem">
+                      <Icon as={BsTools} mt="0.25rem" /> 
+                      <Text ml="0.5rem"> Advanced </Text>
+                    </Flex>
+                  </RouterLink>
+                </MenuItem>
+
                 <MenuItem
                   _hover={{
                     bg: useColorModeValue("blue.50", "blue.700")
                   }}
                 >
                   <RouterLink to="/about">
-                    <Text> <Icon as={MdHelpOutline} /> About </Text>
+                    <Flex>
+                      <Icon as={MdHelpOutline} mt="0.25rem" /> 
+                      <Text ml="0.5rem"> About </Text>
+                    </Flex>
                   </RouterLink>
                 </MenuItem>
                 <MenuDivider />
@@ -242,7 +282,10 @@ function Navbar({ user }) {
                     bg: useColorModeValue("blue.50", "blue.700")
                   }}
                 >
-                  <Text> <Icon as={BsBoxArrowRight} /> Logout</Text>
+                    <Flex>
+                      <Icon as={BsBoxArrowRight} mt="0.25rem" /> 
+                      <Text ml="0.5rem"> Logout </Text>
+                    </Flex>
                 </MenuItem>
               </MenuList>
             </Menu>

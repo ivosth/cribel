@@ -24,6 +24,7 @@ export const Home = () => {
                     pr={{
                         md: 20,
                     }}
+                    mt="2rem"
                 >
 
                     <Text as="h1" display="block" fontWeight="bold" lineHeight="shorter" mb={6}
@@ -56,22 +57,7 @@ export const Home = () => {
                         Tired of searching through several websites until you find quality content?<br></br>
                         In Cribel you will find recommendations of quality content to learn about any topic.
                     </Text>
-                    <Stack
-                        direction={{
-                            base: "column",
-                            sm: "row",
-                        }}
-                        mb={{
-                            base: 4,
-                            md: 8,
-                        }}
-                        spacing={2}
-                    >
-
-                        <Box display="inline-flex" rounded="md" shadow="md">
-                            <Button size="lg" rounded="md"> Sign up for free </Button>
-                        </Box>
-                    </Stack>
+                    
                 </Box>
                 <Box
                     w={{
