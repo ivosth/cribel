@@ -5,7 +5,7 @@ import { CircularProgress, Flex, Box, Spacer } from "@chakra-ui/react";
 import PostCard from './PostCard';
 
 
-function PostList() {
+function PostList(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   
@@ -37,7 +37,7 @@ function PostList() {
         <Box>
         {posts.map(post => (
           <div key={post.id}>
-            <PostCard post={post} />
+            <PostCard post={post} userID={props.userID} />
           </div>
         ))}
         </Box>

@@ -1,13 +1,10 @@
 import {
     Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, Show, Button
 } from "@chakra-ui/react";
-import { getChannel } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { useParams, Link as RouterLink } from "react-router-dom";
+import { useParams, Link as RouterLink, Outlet} from "react-router-dom";
 import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp, } from "react-icons/md";
-import PostCard from "../components/PostCard";
-import ChannelInfo from "../components/ChannelInfo";
 import { RiChatFollowUpLine, RiChatDeleteLine } from "react-icons/ri";
 import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers } from "../graphql/mutations";
 
@@ -46,11 +43,6 @@ function Channel(props) {
     const [channel, setChannel] = useState([]);
     const [subscribed, setSubscribed] = useState(null);
 
-    function isSubscribed() {
-        //console.log("props.subscriptions: ", props.subscriptions)
-        return props.subscriptions.some(sub => sub.channelID === id)
-    }
-
     async function handlSubscription() {
         try {
             let newSubscriptions = {};
@@ -75,15 +67,19 @@ function Channel(props) {
     }
 
 
-    const obtainChannel = async () => {
-        setLoading(true);
-        const channel = await API.graphql({ query: getChannel, variables: { id: id } });
-        setLoading(false);
-        console.log(channel.data.getChannel)
-        setChannel(channel.data.getChannel);
-    };
-
     useEffect(() => {
+        const obtainChannel = async () => {
+            setLoading(true);
+            const channel = await API.graphql({ query: `query GetChannel($id: ID!) { getChannel(id: $id) { id name image topics } }`, variables: { id: id } });
+            setLoading(false);
+            //console.log(channel.data.getChannel)
+            setChannel(channel.data.getChannel);
+        };
+        function isSubscribed() {
+            //console.log("props.subscriptions: ", props.subscriptions)
+            return props.subscriptions.some(sub => sub.channelID === id)
+        }
+
         obtainChannel();
         setSubscribed(isSubscribed());
     }, [id]);
@@ -129,37 +125,7 @@ function Channel(props) {
                 <Spacer />
             </Flex>
 
-            {/****** POSTS CARDS AND INFO CHANNEL *************/}
-            <Flex mx="2%">
-                <Hide below='xl'> <Box w='100%' /> </Hide>
-                <Show below='lg'> <Spacer /> </Show>
-
-                <Box maxW="2xl" minW="50%">
-
-                    {/****** INFO CHANNEL FOR SMALL SCREENS *************/}
-                    <Box p='4' maxW="2xl" minW="50%" display={{ lg: 'none' }}>
-                        <ChannelInfo channel={channel} />
-                    </Box>
-
-                    {/*************** POSTS CARDS  ***************/}
-                    {channel.posts.items.map(post => (
-                        <div key={post.id}>
-                            <PostCard post={post} userID={props.userID} />
-                        </div>
-                    ))}
-                </Box>
-
-                <Hide below='xl'> <Box w='5%' /> </Hide>
-                <Spacer />
-
-                {/****** INFO CHANNEL FOR BIGGER SCREENS *************/}
-                <Hide below='lg'>
-                    <Box p='4' w="30%" minW="25%">
-                        <ChannelInfo channel={channel} />
-                    </Box>
-                </Hide >
-
-            </Flex >
+            <Outlet />
         </Box >
     );
 }

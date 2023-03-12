@@ -40,7 +40,10 @@ function ChannelNewPost(props) {
                 topic: topic,
                 content: content,
                 channelPostsId: props.channelID,
-                userPostsId: props.userID
+                userPostsId: props.userID,
+                avgRating: 0.0,
+                typePostsByDate: "PostsByDate",
+                typePostsByRating: "PostsByRating",
             }
             await API.graphql({ query: createPost, variables: { input: newPostInput } })
 

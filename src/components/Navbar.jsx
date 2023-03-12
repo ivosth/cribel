@@ -122,7 +122,7 @@ function Navbar({ user }) {
               <MenuGroup title='Your followed channels'>
                 <MenuDivider />
                 {user.subscriptions.items.map(channel => (
-                  <RouterLink to={`/channel/${channel.channelID}`} key={channel.channelID}>
+                  <RouterLink to={`/channel/${channel.channelID}/new`} key={channel.channelID}>
                     <MenuItem>
                       <Avatar size="sm" name={channel.channel.name} mr="0.75rem"
                         src={channel.channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}

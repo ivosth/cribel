@@ -15,33 +15,31 @@ function formatDate(awsDate) {
     return (date);
 }
 
+function ChannelInfo({ channel, posts }) {
 
-function computeRating(posts) {
-    //console.log("posts", posts)
 
-    let rating = 0;
-    let count = 0;
-    posts.forEach((post) => {
-        if (post.ratings.items.length !== 0){
-            let sum = 0;
-            for (let i = 0; i < post.ratings.items.length; i++) {
-                sum += post.ratings.items[i].stars;
-            }
-            rating += sum / post.ratings.items.length;
-            count++;
-        }
-        
-    });
-
-    if(count < 2) return 'N/A';
-    else return String((rating / count).toFixed(1));
+    function computeRating() {
+        //console.log("posts", posts)
     
-}
+        let rating = 0;
+        let count = 0;
+        posts.forEach((post) => {
+            if (post.ratings.items.length !== 0){
+                let sum = 0;
+                for (let i = 0; i < post.ratings.items.length; i++) {
+                    sum += post.ratings.items[i].stars;
+                }
+                rating += sum / post.ratings.items.length;
+                count++;
+            }
+            
+        });
+    
+        if(count < 2) return 'N/A';
+        else return String((rating / count).toFixed(1));
+        
+    }
 
-
-
-
-function ChannelInfo({ channel }) {
 
     return (
 
@@ -146,7 +144,7 @@ function ChannelInfo({ channel }) {
                                         : <Text pl="0.3rem" marginRight="1.5rem"> N/A </Text>
                         */}
                                     <Text as="h2" px={2} fontSize="md" fontWeight="bold">
-                                        {computeRating(channel.posts.items)}
+                                        {computeRating()}
                                     </Text>
                                     <Spacer />
                                 </Flex>

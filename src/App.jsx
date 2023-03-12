@@ -1,6 +1,6 @@
 import './App.css';
 import '@aws-amplify/ui-react/styles.css';
-import { /*createContext,*/ useState, useEffect, useRef } from "react";
+import { /*createContext,*/ useState, useEffect } from "react";
 import { API, Auth, Hub } from "aws-amplify";
 import { Authenticator } from '@aws-amplify/ui-react';
 //import PostList from './components/PostList';
@@ -20,6 +20,7 @@ import SettingsAdvanced from './pages/SettingsAdvanced';
 import About from './pages/About';
 import Error from './pages/Error';
 import Profile from './pages/Profile';
+import ChannelNew from './pages/ChannelNew';
 //const UserContext = createContext(null);
 
 function App() {
@@ -44,8 +45,8 @@ function App() {
 
         console.log({ currentUserAttributes });
 
-        {/* Check if user exists in database */}
-        {/* If not, create user in database */}
+        /* Check if user exists in database */
+        /* If not, create user in database */
         const user = await API.graphql({ query: getUser, variables: { id: currentUserAttributes.id } });
         console.log({ user });
         if (!user.data.getUser) {
@@ -63,7 +64,7 @@ function App() {
           }
 
         } else {
-          {/* If user exists, update currentUserAttributes with user information from database */}
+          /* If user exists, update currentUserAttributes with user information from database */
           const newCurrentUserAttribute = {
             ...currentUserAttributes,
             group: user.data.getUser.group || null,
@@ -130,14 +131,18 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />}>
           <Route path="channels" element={<ChannelList userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
-          <Route path="posts" element={<PostList />} />
+          <Route path="posts" element={<PostList userID={userAttributes.id} />} />
         </Route>
         <Route path="/settings" element={<Settings updateUserNavbar={updateUserAttributes}/>}>
           <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes}/>} />
           <Route path="channels" element={<SettingsChannel userID={userAttributes.id} />} />
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>
-        <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
+        <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} >
+          <Route path="new" element={<ChannelNew userID={userAttributes.id} /> } />
+          <Route path="trending" element={<div>Hola </div>} />
+          <Route path="top" element={<div>Hola </div>} />
+        </Route>
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/posts" element={<PostList />} />
         <Route path="/about" element={<About />} />

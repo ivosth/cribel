@@ -49,6 +49,7 @@ function PostCard({ post, userID }) {
     //console.log(post)
     
     try{
+      //console.log("ratingValue", ratingValue)
       if (ratingValue === 0) {
         // If the user has not rated the post, create a new rating
         const newRating = {
@@ -87,8 +88,13 @@ function PostCard({ post, userID }) {
         
         await API.graphql({ query: updateRating, variables: { input: updatedRating } });
 
-        const sum = parseFloat(averageRating) * views - initialRating + rate;
-        setAverageRating(String((sum / views).toFixed(2)));
+        if (averageRating === "N/A"){
+          setAverageRating("N/A");
+        }
+        else{
+          const sum = parseFloat(averageRating) * views - initialRating + rate;
+          setAverageRating(String((sum / views).toFixed(2)));
+        }
       }
 
       setRatingValue(rate);
@@ -141,7 +147,7 @@ function PostCard({ post, userID }) {
               <Link
                 px="0.50rem"
                 py={1}
-                onClick={() => navigate(`/channel/${post.channel.id}`)}
+                onClick={() => navigate(`/channel/${post.channel.id}/new`)}
                 bg="blue.600"
                 color="blue.100"
                 fontSize="0.8rem" //Más pequeño con xs

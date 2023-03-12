@@ -4,13 +4,12 @@ import {
   Avatar,
   VStack,
   Button,
-  Icon,
   Text,
   Hide,
   Spacer,
   Wrap
 } from "@chakra-ui/react";
-import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar, MdOutlineDataSaverOn } from "react-icons/md";
+import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar} from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from "react-router-dom";
 import { Prose } from "@nikolovlazar/chakra-ui-prose";
@@ -45,10 +44,6 @@ function ChannelCard(props) {
   const navigate = useNavigate();
   const [subscribed, setSubscribed] = useState(null);
 
-  function isSubscribed() {
-    //console.log("props.subscriptions: ", props.subscriptions)
-    return props.subscriptions.some(sub => sub.channelID === props.channel.id)
-  }
 
   async function handlSubscription() {
     try {
@@ -74,8 +69,13 @@ function ChannelCard(props) {
   }
 
   useEffect(() => {
+    function isSubscribed() {
+      //console.log("props.subscriptions: ", props.subscriptions)
+      return props.subscriptions.some(sub => sub.channelID === props.channel.id)
+    }
+    
     setSubscribed(isSubscribed());
-  }, []);
+  }, [props.subscriptions, props.channel.id]);
 
   return (
     <Box
@@ -97,10 +97,10 @@ function ChannelCard(props) {
           ml="2"
           display={{ md: 'flex' }}
         >
-          {/*<Text onClick={() => navigate(`/channel/${props.channel.id}`)} 
+          {/*<Text onClick={() => navigate(`/channel/${props.channel.id}/new`)} 
               as="b" fontSize={[16, 20, 20, 25]} align="center"> {props.channel.name} </Text>*/}
           <Button colorScheme='facebook' mb="0.3rem"
-            onClick={() => navigate(`/channel/${props.channel.id}`)}
+            onClick={() => navigate(`/channel/${props.channel.id}/new`)}
             fontSize={[13, 18, 18, 23]}
           >
             {props.channel.name}

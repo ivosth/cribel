@@ -32,6 +32,9 @@ export const getUser = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -45,8 +48,11 @@ export const getUser = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -72,6 +78,17 @@ export const getUser = /* GraphQL */ `
           createdAt
           updatedAt
           owner
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          message
+          typeUserNotificationsByDate
+          createdAt
+          updatedAt
+          userNotificationsId
         }
         nextToken
       }
@@ -115,6 +132,9 @@ export const listUsers = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -156,6 +176,9 @@ export const getPost = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -166,6 +189,7 @@ export const getPost = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
@@ -193,10 +217,16 @@ export const getPost = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
+      avgRating
       ratings {
         items {
           id
@@ -208,6 +238,8 @@ export const getPost = /* GraphQL */ `
         }
         nextToken
       }
+      typePostsByDate
+      typePostsByRating
       createdAt
       updatedAt
       userPostsId
@@ -248,15 +280,155 @@ export const listPosts = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
         }
+        avgRating
         ratings {
           nextToken
         }
+        typePostsByDate
+        typePostsByRating
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByDate = /* GraphQL */ `
+  query PostsByDate(
+    $typePostsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDate(
+      typePostsByDate: $typePostsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        avgRating
+        ratings {
+          nextToken
+        }
+        typePostsByDate
+        typePostsByRating
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByRating = /* GraphQL */ `
+  query PostsByRating(
+    $typePostsByRating: String!
+    $avgRating: ModelFloatKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByRating(
+      typePostsByRating: $typePostsByRating
+      avgRating: $avgRating
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        avgRating
+        ratings {
+          nextToken
+        }
+        typePostsByDate
+        typePostsByRating
         createdAt
         updatedAt
         userPostsId
@@ -273,6 +445,7 @@ export const getChannel = /* GraphQL */ `
       name
       topics
       disabled
+      avgRating
       owner {
         id
         email
@@ -298,6 +471,9 @@ export const getChannel = /* GraphQL */ `
           nextToken
         }
         participantChannels {
+          nextToken
+        }
+        notifications {
           nextToken
         }
         createdAt
@@ -334,6 +510,9 @@ export const getChannel = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -341,7 +520,20 @@ export const getChannel = /* GraphQL */ `
         }
         nextToken
       }
+      typeChannelsByDate
+      typeChannelsByRating
       createdAt
+      notifications {
+        items {
+          id
+          message
+          typeChannelNotificationsByDate
+          createdAt
+          updatedAt
+          channelNotificationsId
+        }
+        nextToken
+      }
       updatedAt
       userOwnedChannelsId
     }
@@ -359,6 +551,7 @@ export const listChannels = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
@@ -386,7 +579,138 @@ export const listChannels = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      nextToken
+    }
+  }
+`;
+export const channelsByDate = /* GraphQL */ `
+  query ChannelsByDate(
+    $typeChannelsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelChannelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    channelsByDate(
+      typeChannelsByDate: $typeChannelsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      nextToken
+    }
+  }
+`;
+export const channelsByRating = /* GraphQL */ `
+  query ChannelsByRating(
+    $typeChannelsByRating: String!
+    $avgRating: ModelFloatKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelChannelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    channelsByRating(
+      typeChannelsByRating: $typeChannelsByRating
+      avgRating: $avgRating
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
@@ -425,6 +749,9 @@ export const getRating = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -455,15 +782,21 @@ export const getRating = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
         }
+        avgRating
         ratings {
           nextToken
         }
+        typePostsByDate
+        typePostsByRating
         createdAt
         updatedAt
         userPostsId
@@ -507,6 +840,9 @@ export const listRatings = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -517,6 +853,270 @@ export const listRatings = /* GraphQL */ `
         updatedAt
         userRatingsId
         postRatingsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getChannelNotification = /* GraphQL */ `
+  query GetChannelNotification($id: ID!) {
+    getChannelNotification(id: $id) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      message
+      typeChannelNotificationsByDate
+      createdAt
+      updatedAt
+      channelNotificationsId
+    }
+  }
+`;
+export const listChannelNotifications = /* GraphQL */ `
+  query ListChannelNotifications(
+    $filter: ModelChannelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listChannelNotifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        message
+        typeChannelNotificationsByDate
+        createdAt
+        updatedAt
+        channelNotificationsId
+      }
+      nextToken
+    }
+  }
+`;
+export const channelNotificationsByDate = /* GraphQL */ `
+  query ChannelNotificationsByDate(
+    $typeChannelNotificationsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelChannelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    channelNotificationsByDate(
+      typeChannelNotificationsByDate: $typeChannelNotificationsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        message
+        typeChannelNotificationsByDate
+        createdAt
+        updatedAt
+        channelNotificationsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserNotification = /* GraphQL */ `
+  query GetUserNotification($id: ID!) {
+    getUserNotification(id: $id) {
+      id
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      message
+      typeUserNotificationsByDate
+      createdAt
+      updatedAt
+      userNotificationsId
+    }
+  }
+`;
+export const listUserNotifications = /* GraphQL */ `
+  query ListUserNotifications(
+    $filter: ModelUserNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserNotifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        user {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        message
+        typeUserNotificationsByDate
+        createdAt
+        updatedAt
+        userNotificationsId
+      }
+      nextToken
+    }
+  }
+`;
+export const userNotificationsByDate = /* GraphQL */ `
+  query UserNotificationsByDate(
+    $typeUserNotificationsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userNotificationsByDate(
+      typeUserNotificationsByDate: $typeUserNotificationsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        user {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        message
+        typeUserNotificationsByDate
+        createdAt
+        updatedAt
+        userNotificationsId
       }
       nextToken
     }
@@ -555,6 +1155,9 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -564,6 +1167,7 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
@@ -591,7 +1195,12 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
@@ -637,8 +1246,11 @@ export const listSubscriptionsSubscribers = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -684,6 +1296,9 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -693,6 +1308,7 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
@@ -720,7 +1336,12 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
@@ -766,8 +1387,11 @@ export const listUsersParticipantChannels = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId

@@ -47,7 +47,7 @@ function SearchBar() {
                   fontSize="lg"
                   key={id}
                   as={RouterLink}
-                  to={'channel/' + channel.id}
+                  to={'channel/' + channel.id + "/new"}
                   rounded={"xl"}
                   _hover={{
                     bg: "blue.100",

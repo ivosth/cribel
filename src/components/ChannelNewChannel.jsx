@@ -12,11 +12,6 @@ import {
     Button,
     useDisclosure,
     Center,
-    Flex,
-    Icon,
-    Hide,
-    Text,
-    Select
 } from "@chakra-ui/react";
 import { createChannel } from "../graphql/mutations";
 import { MdOutlineLibraryAdd } from "react-icons/md";
@@ -34,19 +29,24 @@ function ChannelNewChannel(props) {
     }
     
 
-    async function newChannel(title, topics, file, content) {
+    async function newChannel(title, topics, file) {
         try {
 
-            const newChannelInput = {}
+            const newChannelInput = {
+                avgRating: 0.0,
+                typeChannelsByDate: "ChannelsByDate",
+                typeChannelsByRating: "ChannelsByRating",
+                disabled: false,
+                name: title,
+                userOwnedChannelsId: props.userID,
+            }
 
             const topicsList = topics.split(",").map((topic) => topic.trim());
             newChannelInput.topics = topicsList
-            newChannelInput.name = title 
 
             if (content) {
                 newChannelInput.content = content
             }
-            newChannelInput.userOwnedChannelsId = props.userID
             //console.log("newChannelInput 1:", newChannelInput)
 
             if (file) {
@@ -103,7 +103,7 @@ function ChannelNewChannel(props) {
                                 <FormLabel>Topic (if more than one add comma) <br/>BE CAREFUL, added topics cannot be deleted </FormLabel>
                                 <Input />
                             </FormControl>
-                            <FormControl isRequired mt="1rem">
+                            <FormControl mt="1rem">
                                 <FormLabel>Image</FormLabel>
                                 <Input type="file" accept="image/png, image/jpeg" />
                             </FormControl>

@@ -13,6 +13,7 @@ export const getUser = /* GraphQL */ `
       description
       ratings {
         items {
+          id
           stars
           userRatingsId
           postRatingsId
@@ -192,35 +193,84 @@ export const getChannel = /* GraphQL */ `
       }
       description
       image
-      posts {
-        items {
-          id
-          name
-          topic
-          content
-          ratings {
-            items {
-              id
-              postRatingsId
-              userRatingsId
-              stars
-            }
-          }
-          createdAt
-          updatedAt
-          userPostsId
-          channelPostsId
-          owner {
-            familyName
-            givenName
-            image
-          }
-        }
-        nextToken
-      }
       createdAt
       updatedAt
       userOwnedChannelsId
+    }
+  }
+`;
+
+
+
+export const postsByDate = /* GraphQL */ `
+  query PostsByDate(
+    $typePostsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDate(
+      typePostsByDate: $typePostsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        avgRating
+        ratings {
+          items {
+            id
+            postRatingsId
+            userRatingsId
+            stars
+          }
+        }
+        typePostsByDate
+        typePostsByRating
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
+      nextToken
     }
   }
 `;
@@ -276,6 +326,7 @@ export const listChannels = /* GraphQL */ `
             content
             ratings {
               items {
+                id
                 postRatingsId
                 userRatingsId
                 stars
@@ -332,6 +383,7 @@ export const listPosts = /* GraphQL */ `
         }
         ratings {
           items {
+            id
             postRatingsId
             userRatingsId
             stars
