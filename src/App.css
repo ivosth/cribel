@@ -40,3 +40,12 @@
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 }
+
+.my-editor .ql-editor{
+  border: 1px solid #cccccc8c; 
+  border-radius: 5px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-family: monospace;
+  font-size: 16px;
+}

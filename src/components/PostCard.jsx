@@ -4,14 +4,14 @@ import {
   Box,
   Text,
   Link,
-  Image,
-  Button,
+  Avatar,
   useBoolean,
   useColorModeValue
 } from "@chakra-ui/react";
-import { FaHeart, FaRegHeart, FaRegEye } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
 import { Rating } from "react-simple-star-rating";
 import { useNavigate } from 'react-router-dom';
+import { Prose } from '@nikolovlazar/chakra-ui-prose';
 
 function formatDate(awsDate) {
   const dateobj = new Date(awsDate);
@@ -20,6 +20,18 @@ function formatDate(awsDate) {
 
   return (date + ' ' + time);
 }
+
+function computeRating(ratings) {
+  if (ratings.length < 2) return 'N/A';
+  else {
+    let sum = 0;
+    for (let i = 0; i < ratings.length; i++) {
+      sum += ratings[i].stars;
+    }
+    return String(sum / ratings.length);
+  }
+}
+
 
 function PostCard({ post }) {
   const [like, setLike] = useBoolean();
@@ -32,7 +44,6 @@ function PostCard({ post }) {
 
   return (
     <Flex
-      bg={useColorModeValue("gray.100", "gray.600")}
       pt={50}
       w="full"
       alignItems="center"
@@ -46,7 +57,7 @@ function PostCard({ post }) {
         shadow="lg"
         bg="white"
         maxW="2xl"
-        minW="50%" //Tocar aquí si se quiere hacer la tarjeta más grande en pantallas grandes
+        minW="100%" //Tocar aquí si se quiere hacer la tarjeta más grande en pantallas grandes
         _dark={{
           bg: "gray.800"
         }}
@@ -54,22 +65,22 @@ function PostCard({ post }) {
         <Flex justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
             {post.hasOwnProperty("channel") ?
-                          <Link
-                          px="0.50rem"
-                          py={1}
-                          onClick={() => navigate(`/channel/${post.channel.id}`)}
-                          bg="blue.600"
-                          color="blue.100"
-                          fontSize="0.8rem" //Más pequeño con xs
-                          fontWeight="700"
-                          textAlign={"center"}
-                          rounded="md"
-                          _hover={{
-                            bg: "blue.500"
-                          }}
-                        >
-                          {post.channel.name}
-                        </Link>
+              <Link
+                px="0.50rem"
+                py={1}
+                onClick={() => navigate(`/channel/${post.channel.id}`)}
+                bg="blue.600"
+                color="blue.100"
+                fontSize="0.8rem" //Más pequeño con xs
+                fontWeight="700"
+                textAlign={"center"}
+                rounded="md"
+                _hover={{
+                  bg: "blue.500"
+                }}
+              >
+                {post.channel.name}
+              </Link>
               :
               <></>
             }
@@ -84,22 +95,20 @@ function PostCard({ post }) {
               {formatDate(post.createdAt)}
             </Text>
           </Flex>
-          <Link
+          <Box
+            key={post.topic}
             px="0.50rem"
             py={1}
-
+            marginRight="0.5rem"
             bg="gray.600"
             color="gray.100"
             fontSize="0.8rem" //Más pequeño con xs
             fontWeight="700"
             textAlign={"center"}
             rounded="md"
-            _hover={{
-              bg: "gray.500"
-            }}
           >
-            {post.topic}
-          </Link>
+            <Text fontSize={[8, 10, 12, 12]}> {post.topic} </Text>
+          </Box>
         </Flex>
 
         <Box mt={2}>
@@ -113,28 +122,21 @@ function PostCard({ post }) {
           >
             {post.name}
           </Text>
-          <Text
-            mt={2}
-            color="gray.600"
-            _dark={{
-              color: "gray.300"
-            }}
-          >
-            {post.content}
-          </Text>
+
+          <Prose mt={2}>
+            <div dangerouslySetInnerHTML={{__html: post.content}}></div>
+          </Prose>
         </Box>
 
         <Flex justifyContent="space-between" alignItems="center" mt={4}>
           <Flex alignItems="center">
-            <Image
-              w={10}
-              h={10}
-              rounded="full"
-              fit="cover"
-              src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80"
-              alt="avatar"
+            <Avatar
+              size="sm"
+              bg="teal.500"
+              src={post.owner.image}
             />
             <Link
+              onClick={() => navigate(`/profile/${post.userPostsId}`)}
               color="gray.700"
               pl="1rem"
               _dark={{
@@ -147,8 +149,7 @@ function PostCard({ post }) {
                 sm: "block"
               }}
             >
-              {/*post.owner.email*/}
-              estoeselemail@hola.com
+              {`${post.owner.givenName} ${post.owner.familyName}` || "Nombre Apellido"}
             </Link>
           </Flex>
 
@@ -174,10 +175,11 @@ function PostCard({ post }) {
               size={25}
               style={{ marginTop: "6px" }}
             />
-            <Text pl="0.3rem" marginRight="1.5rem"> {/*views*/}4.5 </Text>
+
+            <Text pl="0.3rem" marginRight="1.5rem"> {computeRating(post.ratings.items)} </Text>
 
             <FaRegEye size="22px" />
-            <Text pl="0.3rem"> {/*views*/}123 </Text>
+            <Text pl="0.3rem"> {post.ratings.items.length} </Text>
           </Flex>
         </Flex>
       </Box>

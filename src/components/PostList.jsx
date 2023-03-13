@@ -1,7 +1,7 @@
-import { listPosts } from '../graphql/queries';
+import { listPosts } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { CircularProgress } from "@chakra-ui/react";
+import { CircularProgress, Flex, Box, Spacer } from "@chakra-ui/react";
 import PostCard from './PostCard';
 
 
@@ -32,11 +32,17 @@ function PostList() {
 
   return (
     <>
-      {posts.map(post => (
-        <div key={post.id}>
-          <PostCard post={post} />
-        </div>
-      ))}
+      <Flex justify="center" align="center" >
+        <Spacer />
+        <Box>
+        {posts.map(post => (
+          <div key={post.id}>
+            <PostCard post={post} />
+          </div>
+        ))}
+        </Box>
+        <Spacer />
+      </Flex> 
     </>
   );
 

@@ -36,9 +36,14 @@ type User
   id: ID!
   email: AWSEmail!
   emailVerified: Boolean!
-  photo: S3Object @hasOne
-  rol: Role @default(value: "student")
+  givenName: String!
+  familyName: String!
+  image: String
+  role: Role @default(value: "student")
   group: Group @default(value: "admin")
+  currentPosition: String 
+  description: String
+  ratings: [Rating] @hasMany
   posts: [Post] @hasMany
   ownedChannels: [Channel] @hasMany
   subscriptions: [Channel] @manyToMany(relationName: "SubscriptionsSubscribers")
@@ -49,12 +54,6 @@ type User
 
 }
 
-type S3Object @model(queries: null, mutations: null, subscriptions: null) @auth(rules: [{ allow: groups, groups: ["admin"] }]){
-  bucket: String!
-  region: String!
-  key: String!
-}
-
 type Post @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   id: ID!
   name: String!
@@ -63,7 +62,7 @@ type Post @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   owner: User! @belongsTo #(fields: ["userID"]) # field to be used for storing the relationship information
   content: String!
   channel: Channel! @belongsTo
-  ranking: Float @default(value: "0.0") #The value parameter must be formatted as a string regardless of the corresponding field type
+  ratings: [Rating] @hasMany #@default(value: "0.0") #The value parameter must be formatted as a string regardless of the corresponding field type
   # https://github.com/trek10inc/graphql-default-value-transformer
 }
 
@@ -71,9 +70,18 @@ type Channel @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   id: ID!
   name: String!
   topics: [String]!
+  disabled: Boolean! @default(value: "false")
   owner: User! @belongsTo
   subscribers: [User] @manyToMany(relationName: "SubscriptionsSubscribers")
   participants: [User] @manyToMany(relationName: "UsersParticipantChannels")
   description: String
+  image: String
   posts: [Post] @hasMany
+}
+
+type Rating @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
+  id: ID!
+  user: User! @belongsTo
+  post: Post! @belongsTo
+  stars: Float!
 }

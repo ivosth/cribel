@@ -20,7 +20,7 @@ import {
 } from "@choc-ui/chakra-autocomplete";
 import { MdOutlineSearch, MdOutlineYoutubeSearchedFor } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
-import { channels } from "./Static.js";
+import { channels } from "./Static";
 
 function SearchBar() {
 
@@ -45,6 +45,7 @@ function SearchBar() {
               {channels.map((channel, id) => (
                 <Link
                   fontSize="lg"
+                  key={id}
                   as={RouterLink}
                   to={'channel/' + channel.id}
                   rounded={"xl"}

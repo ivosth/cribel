@@ -30,8 +30,8 @@ import { FiBell, FiChevronDown } from 'react-icons/fi';
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import SearchBar from "./SearchBar";
-import { channels } from "./Static.js";
-
+import { channels } from "./Static";
+import IconCribel from "./IconCribel";
 
 
 const NavLink = ({ icon, link, children }) => (
@@ -39,7 +39,6 @@ const NavLink = ({ icon, link, children }) => (
     fontSize="lg"
     as={RouterLink}
     to={link}
-    px={2}
     py={1}
     rounded={"md"}
     _hover={{
@@ -63,7 +62,7 @@ const NavLink = ({ icon, link, children }) => (
 );
 
 
-function Navbar({ id, role, username, profilePic }) {
+function Navbar({ user }) {
 
   const onSignOutHandler = async () => {
     try {
@@ -97,10 +96,12 @@ function Navbar({ id, role, username, profilePic }) {
         />*/}
         <HStack alignItems={"center"}>
           <Hide below="md">
-            <LinkBox>
+            <LinkBox as={RouterLink} to="/">
               <Box fontSize="xl" fontWeight="bold">
-                <Icon as={MdConnectWithoutContact} marginRight="0.5rem" />
-                <LinkOverlay as={RouterLink} to="/">Cribel</LinkOverlay>
+                <IconCribel marginRight="0.5rem" boxSize="4rem" />
+                <Hide below="lg">
+                  <LinkOverlay marginRight="0.8rem" fontSize={["1.1rem", "1.1rem", "1.1rem", "1.1rem", "1.6rem"]}>Cribel</LinkOverlay>
+                </Hide>
               </Box>
             </LinkBox>
           </Hide>
@@ -115,7 +116,7 @@ function Navbar({ id, role, username, profilePic }) {
               <Flex fontSize="lg" align="center" >
                 <Icon as={MdScreenSearchDesktop} />
                 <Hide below='md'>
-                  <Text ml="0.5rem"> Channels </Text>
+                  <Text ml="0.5rem" onClick={() => console.log(user)}> Channels </Text>
                 </Hide>
                 <Icon as={FiChevronDown} ml="0.2rem" mr="0.7rem" />
               </Flex>
@@ -124,13 +125,15 @@ function Navbar({ id, role, username, profilePic }) {
             <MenuList maxH='20rem' sx={{ overflowY: "scroll" }}>
               <MenuGroup title='Your followed channels'>
                 <MenuDivider />
-                {channels.map((channel, id) => (
-                  <Link href={`/channel/${channel.id}`}>
-                    <MenuItem key={id}>
-                      <Avatar size="sm" name={channel.name} src={channel.image} mr="0.75rem" />
-                      <Text> {channel.name} </Text>
+                {user.subscriptions.items.map(channel => (
+                  <RouterLink to={`/channel/${channel.channelID}`} key={channel.channelID}>
+                    <MenuItem>
+                      <Avatar size="sm" name={channel.channel.name} mr="0.75rem" 
+                        src={channel.channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"} 
+                      />
+                      <Text> {channel.channel.name} </Text>
                     </MenuItem>
-                  </Link>
+                  </RouterLink>
                 ))}
               </MenuGroup>
 
@@ -160,28 +163,30 @@ function Navbar({ id, role, username, profilePic }) {
                 transition="all 0.3s"
                 _focus={{ boxShadow: 'none' }}>
                 <HStack>
-                  {profilePic != null ?
-                    <Avatar size={'sm'} src={profilePic} />
-                    :
-                    <Avatar size={'sm'} bg="grey" />
-                  }
+                  <Avatar bg="teal.500" size={'sm'} src={user.image} />
 
                   <VStack
                     display={{ base: 'none', md: 'flex' }}
-                    alignItems="flex-start"
+                    alignItems="center"
                     spacing="1px"
                     ml="2"
                   >
-                    {username != null ?
-                      <Text fontSize="sm"> {username} </Text>
-                      :
-                      <Text fontSize="sm"> Nombre Apellido </Text>
-                    }
-                    {role != null ?
-                      <Text fontSize="xs"> {role} </Text>
-                      :
-                      <Text fontSize="xs"> Role </Text>
-                    }
+
+                    <Text fontSize="sm" mt="0.25rem"> {`${user.givenName} ${user.familyName}` || "Nombre Apellido"} </Text>
+
+                    <Box
+                      px="0.50rem"
+                      marginRight="0.5rem"
+                      bg="gray.600"
+                      color="gray.100"
+                      fontSize="0.8rem" //Más pequeño con xs
+                      fontWeight="700"
+                      textAlign={"center"}
+                      rounded="md"
+                    >
+                      <Text fontSize="xs"> {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} </Text>
+                    </Box>
+
 
                   </VStack>
 
@@ -216,14 +221,18 @@ function Navbar({ id, role, username, profilePic }) {
                   bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
                 }}*/
                 >
-                  <Text> <Icon as={BsGear} /> Settings</Text>
+                  <RouterLink to="/settings">
+                    <Text> <Icon as={BsGear} /> Settings</Text>
+                  </RouterLink>
                 </MenuItem>
                 <MenuItem
                   _hover={{
                     bg: useColorModeValue("blue.50", "blue.700")
                   }}
                 >
-                  <Text> <Icon as={MdHelpOutline} /> About </Text>
+                  <RouterLink to="/about">
+                    <Text> <Icon as={MdHelpOutline} /> About </Text>
+                  </RouterLink>
                 </MenuItem>
                 <MenuDivider />
                 <MenuItem onClick={onSignOutHandler}

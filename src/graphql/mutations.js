@@ -10,23 +10,30 @@ export const createUser = /* GraphQL */ `
       id
       email
       emailVerified
-      photo {
-        bucket
-        region
-        key
-        id
-        createdAt
-        updatedAt
-      }
-      rol
+      givenName
+      familyName
+      image
+      role
       group
+      currentPosition
+      description
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       posts {
         items {
           id
           name
           topic
           content
-          ranking
           createdAt
           updatedAt
           userPostsId
@@ -39,7 +46,9 @@ export const createUser = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
+          image
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -70,7 +79,6 @@ export const createUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userPhotoId
       owner
     }
   }
@@ -84,23 +92,30 @@ export const updateUser = /* GraphQL */ `
       id
       email
       emailVerified
-      photo {
-        bucket
-        region
-        key
-        id
-        createdAt
-        updatedAt
-      }
-      rol
+      givenName
+      familyName
+      image
+      role
       group
+      currentPosition
+      description
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       posts {
         items {
           id
           name
           topic
           content
-          ranking
           createdAt
           updatedAt
           userPostsId
@@ -113,7 +128,9 @@ export const updateUser = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
+          image
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -144,7 +161,6 @@ export const updateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userPhotoId
       owner
     }
   }
@@ -158,23 +174,30 @@ export const deleteUser = /* GraphQL */ `
       id
       email
       emailVerified
-      photo {
-        bucket
-        region
-        key
-        id
-        createdAt
-        updatedAt
-      }
-      rol
+      givenName
+      familyName
+      image
+      role
       group
+      currentPosition
+      description
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       posts {
         items {
           id
           name
           topic
           content
-          ranking
           createdAt
           updatedAt
           userPostsId
@@ -187,7 +210,9 @@ export const deleteUser = /* GraphQL */ `
           id
           name
           topics
+          disabled
           description
+          image
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -218,7 +243,6 @@ export const deleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userPhotoId
       owner
     }
   }
@@ -236,16 +260,16 @@ export const createPost = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -260,7 +284,6 @@ export const createPost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       content
@@ -268,15 +291,20 @@ export const createPost = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -286,6 +314,7 @@ export const createPost = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -293,7 +322,17 @@ export const createPost = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
-      ranking
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       userPostsId
@@ -314,16 +353,16 @@ export const updatePost = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -338,7 +377,6 @@ export const updatePost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       content
@@ -346,15 +384,20 @@ export const updatePost = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -364,6 +407,7 @@ export const updatePost = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -371,7 +415,17 @@ export const updatePost = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
-      ranking
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       userPostsId
@@ -392,16 +446,16 @@ export const deletePost = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -416,7 +470,6 @@ export const deletePost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       content
@@ -424,15 +477,20 @@ export const deletePost = /* GraphQL */ `
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -442,6 +500,7 @@ export const deletePost = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -449,7 +508,17 @@ export const deletePost = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
-      ranking
+      ratings {
+        items {
+          id
+          stars
+          createdAt
+          updatedAt
+          userRatingsId
+          postRatingsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       userPostsId
@@ -466,20 +535,21 @@ export const createChannel = /* GraphQL */ `
       id
       name
       topics
+      disabled
       owner {
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -494,7 +564,6 @@ export const createChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       subscribers {
@@ -520,13 +589,13 @@ export const createChannel = /* GraphQL */ `
         nextToken
       }
       description
+      image
       posts {
         items {
           id
           name
           topic
           content
-          ranking
           createdAt
           updatedAt
           userPostsId
@@ -549,20 +618,21 @@ export const updateChannel = /* GraphQL */ `
       id
       name
       topics
+      disabled
       owner {
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -577,7 +647,6 @@ export const updateChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       subscribers {
@@ -603,13 +672,13 @@ export const updateChannel = /* GraphQL */ `
         nextToken
       }
       description
+      image
       posts {
         items {
           id
           name
           topic
           content
-          ranking
           createdAt
           updatedAt
           userPostsId
@@ -632,20 +701,21 @@ export const deleteChannel = /* GraphQL */ `
       id
       name
       topics
+      disabled
       owner {
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -660,7 +730,6 @@ export const deleteChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       subscribers {
@@ -686,13 +755,13 @@ export const deleteChannel = /* GraphQL */ `
         nextToken
       }
       description
+      image
       posts {
         items {
           id
           name
           topic
           content
-          ranking
           createdAt
           updatedAt
           userPostsId
@@ -703,6 +772,258 @@ export const deleteChannel = /* GraphQL */ `
       createdAt
       updatedAt
       userOwnedChannelsId
+    }
+  }
+`;
+export const createRating = /* GraphQL */ `
+  mutation CreateRating(
+    $input: CreateRatingInput!
+    $condition: ModelRatingConditionInput
+  ) {
+    createRating(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        email
+        emailVerified
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      post {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          disabled
+          description
+          image
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        ratings {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
+      stars
+      createdAt
+      updatedAt
+      userRatingsId
+      postRatingsId
+    }
+  }
+`;
+export const updateRating = /* GraphQL */ `
+  mutation UpdateRating(
+    $input: UpdateRatingInput!
+    $condition: ModelRatingConditionInput
+  ) {
+    updateRating(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        email
+        emailVerified
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      post {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          disabled
+          description
+          image
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        ratings {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
+      stars
+      createdAt
+      updatedAt
+      userRatingsId
+      postRatingsId
+    }
+  }
+`;
+export const deleteRating = /* GraphQL */ `
+  mutation DeleteRating(
+    $input: DeleteRatingInput!
+    $condition: ModelRatingConditionInput
+  ) {
+    deleteRating(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        email
+        emailVerified
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      post {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          disabled
+          description
+          image
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        ratings {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
+      stars
+      createdAt
+      updatedAt
+      userRatingsId
+      postRatingsId
     }
   }
 `;
@@ -719,16 +1040,16 @@ export const createSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -743,22 +1064,26 @@ export const createSubscriptionsSubscribers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       channel {
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -768,6 +1093,7 @@ export const createSubscriptionsSubscribers = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -794,16 +1120,16 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -818,22 +1144,26 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       channel {
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -843,6 +1173,7 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -869,16 +1200,16 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -893,22 +1224,26 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       channel {
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -918,6 +1253,7 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -944,16 +1280,16 @@ export const createUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -968,22 +1304,26 @@ export const createUsersParticipantChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       channel {
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -993,6 +1333,7 @@ export const createUsersParticipantChannels = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -1019,16 +1360,16 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -1043,22 +1384,26 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       channel {
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -1068,6 +1413,7 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }
@@ -1094,16 +1440,16 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
-        photo {
-          bucket
-          region
-          key
-          id
-          createdAt
-          updatedAt
-        }
-        rol
+        givenName
+        familyName
+        image
+        role
         group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
         posts {
           nextToken
         }
@@ -1118,22 +1464,26 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        userPhotoId
         owner
       }
       channel {
         id
         name
         topics
+        disabled
         owner {
           id
           email
           emailVerified
-          rol
+          givenName
+          familyName
+          image
+          role
           group
+          currentPosition
+          description
           createdAt
           updatedAt
-          userPhotoId
           owner
         }
         subscribers {
@@ -1143,6 +1493,7 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
           nextToken
         }
         description
+        image
         posts {
           nextToken
         }

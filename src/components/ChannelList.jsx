@@ -12,7 +12,7 @@ function formatDate(awsDate){
   return (date + ' ' + time);
 }
 
-function ChannelList() {
+function ChannelList(props) {
   const [loading, setLoading] = useState(true);
   const [channels, setChannels] = useState([]);
   
@@ -71,7 +71,7 @@ function ChannelList() {
       <>
       {channels.map(channel => (
         <div key={channel.id}>
-          <ChannelCard channel={channel} />
+          <ChannelCard channel={channel} userID={props.userID} subscriptions={props.subscriptions} updateChannelsNavbar={props.updateChannelsNavbar}/>
         </div>
       ))}
     </>
