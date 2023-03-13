@@ -20,7 +20,7 @@ import SettingsAdvanced from './pages/SettingsAdvanced';
 import About from './pages/About';
 import Error from './pages/Error';
 import Profile from './pages/Profile';
-import ChannelNew from './pages/ChannelNew';
+import ChannelPostsSorted from './pages/ChannelPostsSorted';
 //const UserContext = createContext(null);
 
 function App() {
@@ -139,12 +139,12 @@ function App() {
           <Route path="advanced" element={<SettingsAdvanced />} />
         </Route>
         <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} >
-          <Route path="new" element={<ChannelNew userID={userAttributes.id} /> } />
-          <Route path="trending" element={<div>Hola </div>} />
-          <Route path="top" element={<div>Hola </div>} />
+          <Route path="new" element={<ChannelPostsSorted userID={userAttributes.id} sort="new"/> } />
+          <Route path="trending" element={<div>trending </div>} />
+          <Route path="top" element={<ChannelPostsSorted userID={userAttributes.id} sort="top"/>} />
         </Route>
         <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/posts" element={<PostList />} />
+        <Route path="/posts" element={<PostList userID={userAttributes.id}/>} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />
       </Routes>

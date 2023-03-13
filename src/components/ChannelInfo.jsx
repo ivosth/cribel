@@ -6,6 +6,11 @@ import { BsStarFill } from "react-icons/bs";
 import { MdPeopleOutline, MdStar } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
 import { Prose } from "@nikolovlazar/chakra-ui-prose";
+import { API } from 'aws-amplify';
+import { updateChannel } from "../graphql/mutations";
+
+
+const minimumViews = 2;
 
 function formatDate(awsDate) {
     const dateobj = new Date(awsDate);
@@ -35,8 +40,18 @@ function ChannelInfo({ channel, posts }) {
             
         });
     
-        if(count < 2) return 'N/A';
-        else return String((rating / count).toFixed(1));
+        if(count < minimumViews) return 'N/A';
+        else{
+            const rate = (rating / count).toFixed(1)
+
+            const updatedChannel = {
+                id: channel.id,
+                avgRating: rate
+            }
+            API.graphql({ query: updateChannel, variables: { input: updatedChannel } });
+
+            return String(rate);
+        }
         
     }
 

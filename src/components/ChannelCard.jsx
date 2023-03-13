@@ -18,28 +18,6 @@ import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers } from "../graphql/mutations";
 
-function computeRating(posts) {
-  //console.log("posts", posts)
-
-  let rating = 0;
-  let count = 0;
-  posts.forEach((post) => {
-    if (post.ratings.items.length !== 0) {
-      let sum = 0;
-      for (let i = 0; i < post.ratings.items.length; i++) {
-        sum += post.ratings.items[i].stars;
-      }
-      rating += sum / post.ratings.items.length;
-      count++;
-    }
-
-  });
-
-  if (count < 2) return 'N/A';
-  else return String((rating / count).toFixed(1));
-
-}
-
 function ChannelCard(props) {
   const navigate = useNavigate();
   const [subscribed, setSubscribed] = useState(null);
@@ -131,7 +109,7 @@ function ChannelCard(props) {
         <Text fontSize="sm" ml="0.3rem" mr="1.1rem"> {props.channel.participants.items.length} </Text>
 
         <MdStar color="#fae20a" size="1.5rem" />
-        <Text fontSize="sm" ml="0.1rem" mr="1.1rem"> {computeRating(props.channel.posts.items)} </Text>
+        <Text fontSize="sm" ml="0.1rem" mr="1.1rem"> {props.channel.avgRating} </Text>
 
       </Flex>
       <Prose my="0.6rem">

@@ -1,7 +1,7 @@
 import {
     Flex, Box, Hide, Spacer, CircularProgress, Show
 } from "@chakra-ui/react";
-import { postsByDate, getChannel } from '../graphql/customQueries';
+import { postsByDate, postsByRating, getChannel } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { useParams, Link as RouterLink } from "react-router-dom";
@@ -9,7 +9,7 @@ import PostCard from "../components/PostCard";
 import ChannelInfo from "../components/ChannelInfo";
 
 
-function ChannelNew(props) {
+function ChannelPostsSorted(props) {
 
     let { id } = useParams();
 
@@ -22,12 +22,23 @@ function ChannelNew(props) {
         const obtainPostsChannel = async () => {
             try {
                 setLoading(true);
-
-                const postsChannel = await API.graphql({ query: postsByDate, 
-                    variables: { typePostsByDate: "PostsByDate", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } } });
+                let postsChannel;
+                switch (props.sort) {
+                    case "new":
+                        postsChannel = await API.graphql({ query: postsByDate, 
+                            variables: { typePostsByDate: "PostsByDate", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } } });
+                        setPosts(postsChannel.data.postsByDate);
+                    break;
+                    case "top":
+                        postsChannel = await API.graphql({ query: postsByRating, 
+                            variables: { typePostsByRating: "PostsByRating", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } } });
+                        setPosts(postsChannel.data.postsByRating);
+                    break;
+                }
+        
+                
                 const channelInfo  = await API.graphql({ query: getChannel, variables: { id: id } });
                 setChannel(channelInfo.data.getChannel);
-                setPosts(postsChannel.data.postsByDate);
 
                 //console.log(channelInfo.data.getChannel)
                 //console.log(postsChannel.data.postsByDate)
@@ -37,18 +48,9 @@ function ChannelNew(props) {
                 console.log('error: ', err)
             }
         };
-
-        const obtainChannel = async () => {
-            setLoading(true);
-            const channelInfo  = await API.graphql({ query: getChannel, variables: { id: id } });
-            //console.log(channelInfo.data.getChannel)
-            setChannel(channelInfo.data.getChannel);
-            setLoading(false);
-        };
-
         
         obtainPostsChannel();        
-    }, [id]);
+    }, [id, props.sort]);
 
     if (loading) {
         return (
@@ -95,4 +97,4 @@ function ChannelNew(props) {
     );
 }
 
-export default ChannelNew;
+export default ChannelPostsSorted;

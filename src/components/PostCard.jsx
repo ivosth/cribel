@@ -5,14 +5,13 @@ import {
   Text,
   Link,
   Avatar,
-  useBoolean,
 } from "@chakra-ui/react";
 import { FaRegEye } from "react-icons/fa";
 import { Rating } from "react-simple-star-rating";
 import { useNavigate } from 'react-router-dom';
 import { Prose } from '@nikolovlazar/chakra-ui-prose';
 import { API } from 'aws-amplify';
-import { createRating, updateRating } from '../graphql/mutations';
+import { createRating, updateRating, updatePost } from '../graphql/mutations';
 
 const minimumViews = 2;
 
@@ -39,7 +38,7 @@ function computeRating(ratings) {
 function PostCard({ post, userID }) {
   const [ratingValue, setRatingValue] = useState(0);
   const [views, setViews] = useState(post.ratings.items.length);
-  const [averageRating, setAverageRating] = useState(computeRating(post.ratings.items));
+  const [averageRating, setAverageRating] = useState(post.avgRating); //useState(computeRating(post.ratings.items));
   const [initialRating, setInitialRating] = useState(0);
 
   const navigate = useNavigate();
@@ -64,13 +63,27 @@ function PostCard({ post, userID }) {
           const sum = parseFloat(averageRating) * views + rate;
           setViews(views + 1);
           setAverageRating(String((sum / views).toFixed(2)));
+
+          const updatedPost = {
+            id: post.id,
+            avgRating: (sum / views).toFixed(2),
+          };
+          await API.graphql({ query: updatePost, variables: { input: updatedPost } });
+          
         }
         else if (views + 1 === minimumViews){
 
           let  newRatingsList = post.ratings.items;
           newRatingsList.push(newRating);
+          const rate = parseFloat(computeRating(newRatingsList)).toFixed(2)
           setViews(views + 1);
-          setAverageRating(parseFloat(computeRating(newRatingsList)).toFixed(2));
+          setAverageRating(rate);
+
+          const updatedPost = {
+            id: post.id,
+            avgRating: rate,
+          };
+          await API.graphql({ query: updatePost, variables: { input: updatedPost } });
         }
         else{
           setAverageRating("N/A");
@@ -88,12 +101,21 @@ function PostCard({ post, userID }) {
         
         await API.graphql({ query: updateRating, variables: { input: updatedRating } });
 
-        if (averageRating === "N/A"){
+        if (averageRating === "N/A" || averageRating === 0){
           setAverageRating("N/A");
         }
         else{
           const sum = parseFloat(averageRating) * views - initialRating + rate;
+          //console.log("averageRating", averageRating, "views", views, "initialRating", initialRating, "rate", rate, "sum", sum)
           setAverageRating(String((sum / views).toFixed(2)));
+          setInitialRating(rate)
+
+          const updatedPost = {
+            id: post.id,
+            avgRating: (sum / views).toFixed(2),
+          };
+          //console.log("updatedPost", updatedPost)
+          await API.graphql({ query: updatePost, variables: { input: updatedPost } });
         }
       }
 
@@ -257,7 +279,9 @@ function PostCard({ post, userID }) {
 
             />
 
-            <Text pl="0.3rem" marginRight="1.5rem"> {averageRating !== "N/A" ? parseFloat(averageRating).toFixed(2) : "N/A"} </Text>
+            <Text pl="0.3rem" marginRight="1.5rem"> 
+              {averageRating === "N/A" || averageRating === 0 ? "N/A" :  parseFloat(averageRating).toFixed(2)}
+            </Text>
 
             <FaRegEye size="22px" />
             <Text pl="0.3rem"> {views} </Text>
