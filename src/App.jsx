@@ -140,7 +140,7 @@ function App() {
         </Route>
         <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} >
           <Route path="new" element={<ChannelPostsSorted userID={userAttributes.id} sort="new"/> } />
-          <Route path="trending" element={<div>trending </div>} />
+          <Route path="trending" element={<ChannelPostsSorted userID={userAttributes.id} sort="trending"/>} />
           <Route path="top" element={<ChannelPostsSorted userID={userAttributes.id} sort="top"/>} />
         </Route>
         <Route path="/profile/:id" element={<Profile />} />

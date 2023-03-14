@@ -13,7 +13,7 @@ import { Prose } from '@nikolovlazar/chakra-ui-prose';
 import { API } from 'aws-amplify';
 import { createRating, updateRating, updatePost } from '../graphql/mutations';
 
-const minimumViews = 2;
+const minimumViews = 5;
 
 function formatDate(awsDate) {
   const dateobj = new Date(awsDate);

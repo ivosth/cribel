@@ -10,7 +10,7 @@ import { API } from 'aws-amplify';
 import { updateChannel } from "../graphql/mutations";
 
 
-const minimumViews = 2;
+const minimumViews = 5;
 
 function formatDate(awsDate) {
     const dateobj = new Date(awsDate);
