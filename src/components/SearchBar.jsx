@@ -1,15 +1,10 @@
 import {
   Flex,
-  FormControl,
-  FormHelperText,
-  FormLabel,
   Icon,
   InputGroup,
   InputRightElement,
   Avatar,
-  Text,
   Link,
-  useColorModeValue
 } from "@chakra-ui/react";
 import * as React from "react";
 import {
@@ -20,9 +15,33 @@ import {
 } from "@choc-ui/chakra-autocomplete";
 import { MdOutlineSearch, MdOutlineYoutubeSearchedFor } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
-import { channels } from "./Static";
+import { useState, useEffect } from "react";
+import { API } from 'aws-amplify';
+
 
 function SearchBar() {
+
+  const [channels, setChannels] = useState([]);
+  
+
+  const obtainChannels = async() => {
+    // Only get channel id, name and image
+    const allChannels = await API.graphql({query: `query ListChannels {
+      listChannels {
+        items {
+          id
+          name
+          image
+        }
+      }
+    }`});
+    setChannels(allChannels.data.listChannels.items);
+  };
+
+  useEffect(() => {
+    obtainChannels();
+  }, []);
+
 
 
   return (
@@ -44,7 +63,7 @@ function SearchBar() {
             <AutoCompleteList>
               {channels.map((channel, id) => (
                 <Link
-                  fontSize="lg"
+                  fontSize="md"
                   key={id}
                   as={RouterLink}
                   to={'channel/' + channel.id + "/new"}
@@ -62,7 +81,9 @@ function SearchBar() {
                     _focus={{ bg: "none" }}
                   >
 
-                    <Avatar size="sm" name={channel.name} src={channel.image} mr="0.75rem" />
+                    <Avatar size="sm" name={channel.name} mr="0.75rem" 
+                    src={channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}
+                    />
                     {channel.name}
 
                   </AutoCompleteItem>

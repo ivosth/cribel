@@ -17,6 +17,7 @@ import { RiChatDeleteLine, RiChatFollowUpLine} from "react-icons/ri";
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers } from "../graphql/mutations";
+import DOMPurify from 'dompurify';
 
 function ChannelCard(props) {
   const navigate = useNavigate();
@@ -94,26 +95,26 @@ function ChannelCard(props) {
           </Flex>
         </VStack>
         <Spacer />
-        <Button size="lg" onClick={handlSubscription}
+        <Button onClick={handlSubscription} size={["md", "md", "md", "md"]}
             leftIcon={subscribed ? <RiChatDeleteLine size="2rem"/> : <RiChatFollowUpLine size="2rem"/>}
         >
             <Text display={{ base: 'none', lg: 'block' }}> {subscribed ? "Unsubscribe" : "Subscribe"}</Text>
         </Button>
       </Flex>
-      <Flex alignItems="center">
+      <Flex alignItems="center" fontSize={["0.85rem", "0.9rem", "1rem", "1rem"]}>
         <Spacer />
         <MdPeopleOutline size="1.5rem" />
-        <Text fontSize="sm" ml="0.3rem" mr="1.1rem"> {props.channel.subscribers.items.length} </Text>
+        <Text ml="0.3rem" mr="1.1rem"> {props.channel.subscribers.items.length} </Text>
 
         <MdOutlinePersonAddAlt size="1.5rem" />
-        <Text fontSize="sm" ml="0.3rem" mr="1.1rem"> {props.channel.participants.items.length} </Text>
+        <Text ml="0.3rem" mr="1.1rem"> {props.channel.participants.items.length} </Text>
 
         <MdStar color="#fae20a" size="1.5rem" />
-        <Text fontSize="sm" ml="0.1rem" mr="1.1rem"> {props.channel.avgRating} </Text>
+        <Text ml="0.1rem" mr="1.1rem"> {props.channel.avgRating} </Text>
 
       </Flex>
-      <Prose my="0.6rem">
-          <div dangerouslySetInnerHTML={{__html: props.channel.description}}></div>
+      <Prose my="0.6rem" >
+          <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(props.channel.description)}}></div>
       </Prose>
       <Flex alignItems="center">
         <Spacer />
@@ -131,7 +132,7 @@ function ChannelCard(props) {
               textAlign={"center"}
               rounded="md"
             >
-              <Text fontSize={[10, 10, 12, 12]}> {topic} </Text>
+              <Text fontSize={[10, 11, 13, 13]}> {topic} </Text>
             </Box>
           )}
         </Wrap>

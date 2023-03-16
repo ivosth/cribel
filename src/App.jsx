@@ -21,6 +21,7 @@ import About from './pages/About';
 import Error from './pages/Error';
 import Profile from './pages/Profile';
 import ChannelPostsSorted from './pages/ChannelPostsSorted';
+import Feed from './pages/Feed';
 //const UserContext = createContext(null);
 
 function App() {
@@ -144,7 +145,7 @@ function App() {
           <Route path="top" element={<ChannelPostsSorted userID={userAttributes.id} sort="top"/>} />
         </Route>
         <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/posts" element={<PostList userID={userAttributes.id}/>} />
+        <Route path="/feed" element={<Feed userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />
       </Routes>

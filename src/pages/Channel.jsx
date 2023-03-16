@@ -10,7 +10,7 @@ import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers } from "
 
 const NavLink = ({ icon, link, children }) => (
     <Link
-        fontSize={{ base: '220%', sm: '220%', md: '200%', lg: '150%', xl: '140%' }}
+        fontSize={{ base: '170%', sm: '170%', md: '170%', lg: '150%', xl: '140%' }}
         as={RouterLink}
         to={link}
         px={2}
@@ -117,7 +117,7 @@ function Channel(props) {
                     </Flex>
                 </Box>
                 <Box w="3%" display={{ base: 'none', lg: 'block' }}/>
-                <Button size="lg" onClick={handlSubscription}
+                <Button ml="0.5rem" size={["md", "md", "lg", "lg"]} onClick={handlSubscription}
                     leftIcon={subscribed ? <RiChatDeleteLine size="2rem"/> : <RiChatFollowUpLine size="2rem"/>}
                 >
                     <Text display={{ base: 'none', lg: 'block' }}> {subscribed ? "Unsubscribe" : "Subscribe"}</Text>

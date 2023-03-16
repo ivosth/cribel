@@ -22,6 +22,7 @@ import {
 import { MdHelpOutline, MdOutlineCastForEducation, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
 import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsHouseDoor, BsPersonSquare, BsTools } from 'react-icons/bs';
 import { FiBell, FiChevronDown } from 'react-icons/fi';
+import { FaChalkboardTeacher } from 'react-icons/fa';
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import SearchBar from "./SearchBar";
@@ -33,7 +34,7 @@ const NavLink = ({ icon, link, children }) => (
     fontSize="lg"
     as={RouterLink}
     to={link}
-    py={1}
+    p={2}
     rounded={"md"}
     _hover={{
       bg: useColorModeValue("blue.100", "blue.600"),
@@ -94,14 +95,14 @@ function Navbar({ user }) {
               <Box fontSize="xl" fontWeight="bold">
                 <Flex>
                   <IconCribel marginRight="0.5rem" boxSize="4rem" />
-                  <Hide below="lg">
-                    <Text marginRight="0.8rem" mt="0.75rem" fontSize={["1.1rem", "1.1rem", "1.1rem", "1.1rem", "1.6rem"]}>Cribel</Text>
+                  <Hide below="xl">
+                    <Text marginRight="0.8rem" mt="0.75rem" fontSize="1.6rem">Cribel</Text>
                   </Hide>
                 </Flex>
               </Box>
             </LinkBox>
           </Hide>
-          <NavLink icon={BsHouseDoor} link={"posts"}>{"home"}</NavLink>
+          <NavLink icon={FaChalkboardTeacher} link={"feed"}>{"feed"}</NavLink>
         </HStack>
 
 
@@ -127,7 +128,7 @@ function Navbar({ user }) {
                       <Avatar size="sm" name={channel.channel.name} mr="0.75rem"
                         src={channel.channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}
                       />
-                      <Text> {channel.channel.name} </Text>
+                      <Text fontSize="md"> {channel.channel.name} </Text>
                     </MenuItem>
                   </RouterLink>
                 ))}
@@ -143,6 +144,8 @@ function Navbar({ user }) {
         <HStack>
           {/************ EXPLORE AND NOTIFICATION *************/}
           <NavLink icon={MdManageSearch} link={"explore"}>{"explore"}</NavLink>
+
+
           <IconButton
             size="lg"
             variant="ghost"
@@ -168,20 +171,28 @@ function Navbar({ user }) {
                     ml="2"
                   >
 
-                    <Text fontSize="sm" mt="0.25rem"> {`${user.givenName} ${user.familyName}` || "Nombre Apellido"} </Text>
+                    <Hide below='lg'>
+                      <Text mt="0.25rem" fontSize={["1.1rem", "1.1rem", "0.80rem", "sm", "0.85rem"]}> 
+                        {`${user.givenName} ${user.familyName}` || "Nombre Apellido"} 
+                      </Text>
+                    </Hide>
 
-                    <Box
-                      px="0.50rem"
-                      marginRight="0.5rem"
-                      bg="gray.600"
-                      color="gray.100"
-                      fontSize="0.8rem" //Más pequeño con xs
-                      fontWeight="700"
-                      textAlign={"center"}
-                      rounded="md"
-                    >
-                      <Text fontSize="xs"> {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} </Text>
-                    </Box>
+                    <Hide below='1025px'>
+                      <Box
+                        px="0.50rem"
+                        marginRight="0.5rem"
+                        bg="gray.600"
+                        color="gray.100"
+                        fontSize="0.8rem" //Más pequeño con xs
+                        fontWeight="700"
+                        textAlign={"center"}
+                        rounded="md"
+                      >
+                        <Text fontSize={["1.1rem", "1.1rem", "0.78rem", "0.80rem", "0.82rem"]}> 
+                          {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} 
+                        </Text>
+                      </Box>
+                    </Hide>
 
 
                   </VStack>

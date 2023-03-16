@@ -9,7 +9,7 @@ import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp } from "reac
 
 const NavLink = ({ icon, link, children }) => (
     <Link
-        fontSize={{ base: '220%', sm: '220%', md: '200%', lg: '150%', xl: '140%'}}
+        fontSize={{ base: '170%', sm: '170%', md: '170%', lg: '150%', xl: '140%' }}
         as={RouterLink}
         to={link}
         px={2}

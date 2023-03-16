@@ -8,7 +8,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Prose } from "@nikolovlazar/chakra-ui-prose";
 import { API } from 'aws-amplify';
 import { updateChannel } from "../graphql/mutations";
-
+import DOMPurify from 'dompurify';
 
 const minimumViews = 5;
 
@@ -169,7 +169,7 @@ function ChannelInfo({ channel, posts }) {
 
 
                         <Prose my={2} fontSize="2rem">
-                            <div dangerouslySetInnerHTML={{__html: channel.description}}></div>
+                            <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(channel.description)}}></div>
                         </Prose>
                             
 
