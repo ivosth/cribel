@@ -49,7 +49,7 @@ function ChannelEditPost(props) {
             setChannelTopics(topics.data.getChannel.topics)
 
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error fetching channels topics: ', err)
         }
     }
 
@@ -82,7 +82,7 @@ function ChannelEditPost(props) {
             await API.graphql({ query: updateChannel, variables: { input: editInfoChannelInput } })
 
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error updating channel info: ', err)
         }
 
     }

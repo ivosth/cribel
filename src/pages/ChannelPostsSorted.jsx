@@ -99,7 +99,7 @@ function ChannelPostsSorted(props) {
                 
                 setLoading(false);
             } catch (err) {
-                console.log('error: ', err)
+                console.error("Error obtaining posts and channel info: ", err);
             }
         };
         

@@ -101,6 +101,7 @@ type Rating @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
 type ChannelNotification @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   id: ID!
   channel: Channel! @belongsTo
+  type: String!
   message: String!
   typeChannelNotificationsByDate: String! @default(value: "ChannelNotificationsByDate") 
     @index(name: "channelNotificationsByDate", queryField: "channelNotificationsByDate", sortKeyFields: ["createdAt"])
@@ -111,7 +112,9 @@ type ChannelNotification @model @auth(rules: [{ allow: groups, groups: ["admin"]
 type UserNotification @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   id: ID!
   user: User! @belongsTo
+  type: String!
   message: String!
+  channel: ID!
   viewed: Boolean! @default(value: "false")
   typeUserNotificationsByDate: String! @default(value: "UserNotificationsByDate") 
     @index(name: "userNotificationsByDate", queryField: "userNotificationsByDate", sortKeyFields: ["createdAt"])

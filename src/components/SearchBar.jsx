@@ -26,16 +26,20 @@ function SearchBar() {
 
   const obtainChannels = async() => {
     // Only get channel id, name and image
-    const allChannels = await API.graphql({query: `query ListChannels {
-      listChannels {
-        items {
-          id
-          name
-          image
+    try {
+      const allChannels = await API.graphql({query: `query ListChannels {
+        listChannels {
+          items {
+            id
+            name
+            image
+          }
         }
-      }
-    }`});
-    setChannels(allChannels.data.listChannels.items);
+      }`});
+      setChannels(allChannels.data.listChannels.items);
+    } catch (error) {
+      console.error("Error on fetching channels for search bar: ", error);
+    }
   };
 
   useEffect(() => {

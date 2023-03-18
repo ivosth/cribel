@@ -79,7 +79,7 @@ function UserEditRole(props) {
             props.updateUsersList(props.user.id, roleButton.charAt(0).toLowerCase() + roleButton.slice(1))
 
         } catch (err) {
-            console.log('error: ', err)
+            console.error("Error on updating user role: ", err)
         }
 
     }

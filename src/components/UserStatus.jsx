@@ -30,7 +30,7 @@ function UserStatus(props) {
             setDisabled(!disabled)
 
         } catch (err) {
-            console.log('error: ', err)
+            console.error("Error changing user status: ", err)
         }
 
     }

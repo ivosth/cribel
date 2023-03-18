@@ -1,5 +1,5 @@
 import {
-    Flex, Box, Icon, Text, Spacer, Image, SimpleGrid, Avatar, CircularProgress
+    Flex, Box, Icon, Text, Spacer, Avatar, CircularProgress
 } from "@chakra-ui/react";
 import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
@@ -19,16 +19,19 @@ function Profile() {
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState([]);
 
-
-    const obtainProfile = async () => {
-        setLoading(true);
-        const profile = await API.graphql({ query: getProfile, variables: { id: id } });
-        setLoading(false);
-        console.log(profile.data.getUser)
-        setProfile(profile.data.getUser);
-    };
-
     useEffect(() => {
+        const obtainProfile = async () => {
+            try {
+                setLoading(true);
+                const profile = await API.graphql({ query: getProfile, variables: { id: id } });
+                setLoading(false);
+                console.log(profile.data.getUser)
+                setProfile(profile.data.getUser);
+            } catch (error) {
+                console.error("Error obtaining profile: ", error);
+            }
+        };
+
         obtainProfile();
     }, [id]);
 
@@ -105,12 +108,7 @@ function Profile() {
                             }}
                         >
                             {profile.description ||
-                            "No description provided. \
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus ex odio, et vulputate metus suscipit quis. \
-                            Vestibulum tincidunt eros at lacinia cursus. Vivamus nec elit ac ante faucibus egestas at a arcu. Phasellus sed \
-                            nunc consectetur, porta nulla id, blandit leo. Aenean feugiat euismod mauris, sed vehicula lorem dapibus vel. \
-                            Proin lacinia neque vitae ex porttitor, a commodo mauris ultrices. Nulla bibendum quam at massa pharetra porta \
-                            a et lorem. Cras erat ligula, suscipit sed aliquet sed, scelerisque in risus."}
+                            "No description provided"}
                         </Text>
                     </Box>
 

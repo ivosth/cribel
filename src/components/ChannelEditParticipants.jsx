@@ -13,10 +13,8 @@ import {
     useDisclosure,
     Flex,
     IconButton,
-    Hide,
     Text,
-    Spacer,
-    Icon
+    Spacer
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify'
 import { deleteUsersParticipantChannels, createUsersParticipantChannels } from "../graphql/mutations";
@@ -46,7 +44,7 @@ function ChannelEditParticipants(props) {
             setChannel(channel.data.getChannel)
             //console.log(channel.data.getChannel)
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error fetching channels editing participants: ', err)
         }
     }
 
@@ -55,10 +53,10 @@ function ChannelEditParticipants(props) {
         try {
             await API.graphql({ query: deleteUsersParticipantChannels, variables: { input: { id: id } } })
             // Update channel.participants react state without refetching
-            const newParticipants = channel.participants.items.filter((participant) => participant.id != id)
+            const newParticipants = channel.participants.items.filter((participant) => participant.id !== id)
             setChannel({ ...channel, participants: { items: newParticipants } })
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error eliminating participant: ', err)
         }
     }
 
@@ -80,13 +78,13 @@ function ChannelEditParticipants(props) {
             const users = await API.graphql({ query: listUsersWithFilters, variables: { filter: filterExpression } })
             // Don't show users that are already participants nor the owner of the channel
             const newUsers = users.data.listUsers.items.filter((user) => {
-                return !channel.participants.items.some((participant) => participant.userID == user.id) && user.id != channel.userOwnedChannelsId
+                return !channel.participants.items.some((participant) => participant.userID === user.id) && user.id !== channel.userOwnedChannelsId
             })
             
             setSearchUsers(newUsers)
 
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error searching new participant: ', err)
         }
     }
 
@@ -104,12 +102,12 @@ function ChannelEditParticipants(props) {
             newParticipant.user.familyName = familyName
             newParticipant.user.givenName = givenName
             const newParticipants = [...channel.participants.items, newParticipant]
-            console.log("channel.participants.items: ", channel.participants.items)
-            console.log("newParticipants: ", newParticipants)
+            //console.log("channel.participants.items: ", channel.participants.items)
+            //console.log("newParticipants: ", newParticipants)
             setChannel({ ...channel, participants: { items: newParticipants } })
             setSearchUsers(null)
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error adding participant: ', err)
         }
     }
 
@@ -136,7 +134,7 @@ function ChannelEditParticipants(props) {
                         
                             <Text fontSize="xl" fontWeight="bold">PARTICIPANTS</Text>
                             <Text fontSize="lg" fontWeight="bold">Current participants</Text>
-                            {channel.participants != undefined ? channel.participants.items.map((participant) => {
+                            {channel.participants !== undefined ? channel.participants.items.map((participant) => {
                                 return (
                                     <Flex key={participant.id} shadow="lg" rounded="lg" p="0.25rem" my="0.25rem" _light={{ bg: "gray.50" }} _dark={{ bg: "gray.800" }}>
                                         <Text mx="0.5rem" mt="0.25rem">{participant.user.givenName} {participant.user.familyName}</Text>
@@ -175,7 +173,7 @@ function ChannelEditParticipants(props) {
                                 Search
                             </Button>
                             
-                            {searchUsers != null && searchUsers.length >0 ? searchUsers.map((user) => {
+                            {searchUsers !== null && searchUsers.length >0 ? searchUsers.map((user) => {
                                 return (
                                     <Flex key={user.id} shadow="lg" rounded="lg" p="0.25rem" my="0.25rem" _light={{ bg: "gray.50" }} _dark={{ bg: "gray.800" }}>
                                         <Text mx="0.5rem" mt="0.25rem">{user.givenName} {user.familyName}</Text>

@@ -43,7 +43,7 @@ function ChannelCard(props) {
         props.updateChannelsNavbar({ subscriptions: newSubscriptions })
     }
     catch(err) {
-        console.log(err);
+        console.error("Error handling subscription in channel card: ", err);
     }
   }
 

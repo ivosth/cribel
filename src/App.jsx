@@ -22,15 +22,22 @@ import Error from './pages/Error';
 import Profile from './pages/Profile';
 import ChannelPostsSorted from './pages/ChannelPostsSorted';
 import Feed from './pages/Feed';
+import Notifications from './pages/Notifications';
 //const UserContext = createContext(null);
 
 function App() {
   const [userAttributes, setUserAttributes] = useState(null);
+  const [notifications, setNotifications] = useState(false);
 
   const updateUserAttributes = (newAttributes) => {
     console.log("Updating user attributes: ", newAttributes);
     setUserAttributes({ ...userAttributes, ...newAttributes });
   };
+
+  const updateIconNotifications = (state) => {
+    setNotifications(state);
+  };
+
 
   useEffect(() => {
     const obtainUser = async () => {
@@ -77,6 +84,7 @@ function App() {
             ownedChannels: user.data.getUser.ownedChannels || null,
             subscriptions: user.data.getUser.subscriptions || null,
             participantChannels: user.data.getUser.participantChannels || null,
+            createdAt: user.data.getUser.createdAt || null,
             /// Delete this
             givenName: user.data.getUser.givenName,
             familyName: user.data.getUser.familyName,
@@ -128,7 +136,7 @@ function App() {
     ]}/>
   ) : (
     <> {/*<UserContext.Provider value={{ userAttributes }}>*/}
-      <Navbar user={userAttributes} />
+      <Navbar user={userAttributes} notifications={notifications}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />}>
@@ -155,6 +163,7 @@ function App() {
         </Route>
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/feed" element={<Feed userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} />} />
+        <Route path="/notifications" element={<Notifications userID={userAttributes.id} userCreatedAt={userAttributes.createdAt} subscriptions={userAttributes.subscriptions.items || null} updateIconNotifications={updateIconNotifications}/>} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />
       </Routes>

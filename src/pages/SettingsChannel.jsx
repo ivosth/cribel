@@ -21,11 +21,15 @@ function SettingsChannel({ userID }) {
     useEffect(() => {
 
         const obtainUserChannels = async() => {
-            setLoading(true);
-            const allUserChannels = await API.graphql({ query: getUserChannels, variables: { id: userID } });
-            setLoading(false);
-            //console.log(allUserChannels.data.getUser)
-            setUserChannels(allUserChannels.data.getUser);
+            try {
+                setLoading(true);
+                const allUserChannels = await API.graphql({ query: getUserChannels, variables: { id: userID } });
+                setLoading(false);
+                //console.log(allUserChannels.data.getUser)
+                setUserChannels(allUserChannels.data.getUser);
+            } catch (error) {
+                console.error("Error obtaining user channels: ", error);
+            }
           };
 
         obtainUserChannels();

@@ -78,7 +78,7 @@ function PostList(props) {
         }
         setLoading(false);
       } catch (err) {
-        console.log('error: ', err)
+        console.error('Error obtaining list of posts sorted: ', err)
       }
     };
     

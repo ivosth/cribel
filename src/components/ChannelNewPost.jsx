@@ -18,7 +18,7 @@ import {
     Select
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify'
-import { createPost } from "../graphql/mutations";
+import { createPost, createChannelNotification } from "../graphql/mutations";
 import { MdPostAdd } from "react-icons/md";
 import RichEditor from "./RichEditor";
 import { useState } from "react";
@@ -47,8 +47,15 @@ function ChannelNewPost(props) {
             }
             await API.graphql({ query: createPost, variables: { input: newPostInput } })
 
+            const newChannelNotificationInput = {
+                message: "New post: " + title,
+                channelNotificationsId: props.channelID,
+                typeChannelNotificationsByDate: "ChannelNotificationsByDate",
+            }
+            await API.graphql({ query: createChannelNotification, variables: { input: newChannelNotificationInput } })
+
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error creating new post / new channel notification: ', err)
         }
 
     }

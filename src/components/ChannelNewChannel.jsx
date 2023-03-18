@@ -60,7 +60,7 @@ function ChannelNewChannel(props) {
             await API.graphql({ query: createChannel, variables: { input: newChannelInput } })
 
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error on creation of new channel: ', err)
         }
 
     }

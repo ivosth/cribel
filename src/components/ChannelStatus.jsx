@@ -30,7 +30,7 @@ function ChannelStatus(props) {
             setDisabled(!disabled)
 
         } catch (err) {
-            console.log('error: ', err)
+            console.error('Error changing status of channel: ', err)
         }
 
     }

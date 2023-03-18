@@ -97,7 +97,9 @@ export const createUser = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
+          channel
           viewed
           typeUserNotificationsByDate
           createdAt
@@ -198,7 +200,9 @@ export const updateUser = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
+          channel
           viewed
           typeUserNotificationsByDate
           createdAt
@@ -299,7 +303,9 @@ export const deleteUser = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
+          channel
           viewed
           typeUserNotificationsByDate
           createdAt
@@ -726,6 +732,7 @@ export const createChannel = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
           typeChannelNotificationsByDate
           createdAt
@@ -830,6 +837,7 @@ export const updateChannel = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
           typeChannelNotificationsByDate
           createdAt
@@ -934,6 +942,7 @@ export const deleteChannel = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
           typeChannelNotificationsByDate
           createdAt
@@ -1281,6 +1290,7 @@ export const createChannelNotification = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
+      type
       message
       typeChannelNotificationsByDate
       createdAt
@@ -1338,6 +1348,7 @@ export const updateChannelNotification = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
+      type
       message
       typeChannelNotificationsByDate
       createdAt
@@ -1395,6 +1406,7 @@ export const deleteChannelNotification = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
+      type
       message
       typeChannelNotificationsByDate
       createdAt
@@ -1444,7 +1456,9 @@ export const createUserNotification = /* GraphQL */ `
         updatedAt
         owner
       }
+      type
       message
+      channel
       viewed
       typeUserNotificationsByDate
       createdAt
@@ -1494,7 +1508,9 @@ export const updateUserNotification = /* GraphQL */ `
         updatedAt
         owner
       }
+      type
       message
+      channel
       viewed
       typeUserNotificationsByDate
       createdAt
@@ -1544,7 +1560,9 @@ export const deleteUserNotification = /* GraphQL */ `
         updatedAt
         owner
       }
+      type
       message
+      channel
       viewed
       typeUserNotificationsByDate
       createdAt

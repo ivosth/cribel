@@ -62,18 +62,23 @@ function Channel(props) {
             props.updateChannelsNavbar({ subscriptions: newSubscriptions })
         }
         catch(err) {
-            console.log(err);
+            console.error("Error subscribing to channel: ", err)
         }
     }
 
 
     useEffect(() => {
         const obtainChannel = async () => {
-            setLoading(true);
-            const channel = await API.graphql({ query: `query GetChannel($id: ID!) { getChannel(id: $id) { id name image topics } }`, variables: { id: id } });
-            setLoading(false);
-            //console.log(channel.data.getChannel)
-            setChannel(channel.data.getChannel);
+            try {
+                setLoading(true);
+                const channel = await API.graphql({ query: `query GetChannel($id: ID!) { getChannel(id: $id) { id name image topics } }`, variables: { id: id } });
+                setLoading(false);
+                //console.log(channel.data.getChannel)
+                setChannel(channel.data.getChannel);
+            }
+            catch (err) {
+                console.error("Error getting channel: ", err)
+            }
         };
         function isSubscribed() {
             //console.log("props.subscriptions: ", props.subscriptions)

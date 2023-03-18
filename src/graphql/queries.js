@@ -84,7 +84,9 @@ export const getUser = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
+          channel
           viewed
           typeUserNotificationsByDate
           createdAt
@@ -527,6 +529,7 @@ export const getChannel = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
           typeChannelNotificationsByDate
           createdAt
@@ -905,6 +908,7 @@ export const getChannelNotification = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
+      type
       message
       typeChannelNotificationsByDate
       createdAt
@@ -940,6 +944,7 @@ export const listChannelNotifications = /* GraphQL */ `
           updatedAt
           userOwnedChannelsId
         }
+        type
         message
         typeChannelNotificationsByDate
         createdAt
@@ -983,6 +988,7 @@ export const channelNotificationsByDate = /* GraphQL */ `
           updatedAt
           userOwnedChannelsId
         }
+        type
         message
         typeChannelNotificationsByDate
         createdAt
@@ -1031,7 +1037,9 @@ export const getUserNotification = /* GraphQL */ `
         updatedAt
         owner
       }
+      type
       message
+      channel
       viewed
       typeUserNotificationsByDate
       createdAt
@@ -1069,7 +1077,9 @@ export const listUserNotifications = /* GraphQL */ `
           updatedAt
           owner
         }
+        type
         message
+        channel
         viewed
         typeUserNotificationsByDate
         createdAt
@@ -1115,7 +1125,9 @@ export const userNotificationsByDate = /* GraphQL */ `
           updatedAt
           owner
         }
+        type
         message
+        channel
         viewed
         typeUserNotificationsByDate
         createdAt

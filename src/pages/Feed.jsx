@@ -15,6 +15,7 @@ function Feed(props) {
 
     const obtainListPosts = async() => {
       if (props.subscriptions.length > 0) {
+        try{
           setLoading(true);
   
           const filterSubscriptions = {or: []};
@@ -30,6 +31,9 @@ function Feed(props) {
   
           console.log(allPosts.data.postsByDate.items);
           setPosts(allPosts.data.postsByDate.items);
+        } catch (error) {
+          console.error("Error obtaining posts: ", error);
+        }
   
       }
       setLoading(false);

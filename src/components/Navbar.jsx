@@ -21,9 +21,10 @@ import {
 } from "@chakra-ui/react";
 import { MdHelpOutline, MdOutlineCastForEducation, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
 import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsPersonSquare, BsTools } from 'react-icons/bs';
-import { FiBell, FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown } from 'react-icons/fi';
+import { VscBell, VscBellDot } from 'react-icons/vsc';
 import { FaChalkboardTeacher } from 'react-icons/fa';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Auth, /* DataStore */ } from "aws-amplify";
 import SearchBar from "./SearchBar";
 import IconCribel from "./IconCribel";
@@ -56,7 +57,9 @@ const NavLink = ({ icon, link, children }) => (
 );
 
 
-function Navbar({ user }) {
+function Navbar({ user, notifications }) {
+
+  const navigate = useNavigate();
 
   const onSignOutHandler = async () => {
     try {
@@ -145,13 +148,14 @@ function Navbar({ user }) {
           {/************ EXPLORE AND NOTIFICATION *************/}
           <NavLink icon={MdManageSearch} link={"explore"}>{"explore"}</NavLink>
 
-
+                  {console.log(notifications)}
           <IconButton
             size="lg"
             variant="ghost"
             color={useColorModeValue("gray.600", "gray.200")}
             aria-label="open menu"
-            icon={<FiBell />}
+            icon={notifications ? <VscBellDot /> : <VscBell />}
+            onClick={() => navigate("/notifications")}
           />
 
           {/********** PROFILE *************/}
