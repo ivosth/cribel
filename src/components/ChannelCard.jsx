@@ -110,7 +110,7 @@ function ChannelCard(props) {
         <Text ml="0.3rem" mr="1.1rem"> {props.channel.participants.items.length} </Text>
 
         <MdStar color="#fae20a" size="1.5rem" />
-        <Text ml="0.1rem" mr="1.1rem"> {props.channel.avgRating} </Text>
+        <Text ml="0.1rem" mr="1.1rem"> {props.channel.avgRating === 0 ? "N/A" : props.channel.avgRating.toFixed(1)} </Text>
 
       </Flex>
       <Prose my="0.6rem" >

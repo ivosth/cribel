@@ -203,6 +203,181 @@ export const getChannel = /* GraphQL */ `
 
 
 
+
+export const channelsByDate = /* GraphQL */ `
+  query ChannelsByDate(
+    $typeChannelsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelChannelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    channelsByDate(
+      typeChannelsByDate: $typeChannelsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          items {
+            user {
+              id
+              email
+            }
+          }
+        }
+        participants {
+          items {
+            user {
+              id
+              email
+            }
+          }
+        }
+        description
+        image
+        posts {
+          items {
+            id
+            name
+            content
+            avgRating
+            ratings {
+              items {
+                id
+                postRatingsId
+                userRatingsId
+                stars
+              }
+            }
+          }
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      nextToken
+    }
+  }
+`;
+export const channelsByRating = /* GraphQL */ `
+  query ChannelsByRating(
+    $typeChannelsByRating: String!
+    $avgRating: ModelFloatKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelChannelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    channelsByRating(
+      typeChannelsByRating: $typeChannelsByRating
+      avgRating: $avgRating
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          items {
+            user {
+              id
+              email
+            }
+          }
+        }
+        participants {
+          items {
+            user {
+              id
+              email
+            }
+          }
+        }
+        description
+        image
+        posts {
+          items {
+            id
+            name
+            content
+            avgRating
+            ratings {
+              items {
+                id
+                postRatingsId
+                userRatingsId
+                stars
+              }
+            }
+          }
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      nextToken
+    }
+  }
+`;
+
+
 export const postsByDate = /* GraphQL */ `
   query PostsByDate(
     $typePostsByDate: String!

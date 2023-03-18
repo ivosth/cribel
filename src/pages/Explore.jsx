@@ -1,6 +1,6 @@
 import {
     Tabs, Tab, TabList, TabPanels, TabPanel,
-    Flex, Button, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer
+    Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer
 } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
@@ -52,7 +52,7 @@ function Explore() {
                         <Flex alignItems={"center"} justifyContent={"space-between"}>
                             <Spacer/>
                             <Flex  alignItems={"center"} justifyContent={"space-between"}>
-                                <NavLink icon={MdOutlineUpdate} link={"channels"}>{"new"}</NavLink>
+                                <NavLink icon={MdOutlineUpdate} link={"channels/new"}>{"new"}</NavLink>
                                 <NavLink icon={MdOutlineTrendingUp} link={"channels/trending"}>{"trending"}</NavLink>
                                 <NavLink icon={MdOutlineArrowUpward} link={"channels/top"}>{"top"}</NavLink>
                             </Flex>
@@ -63,7 +63,7 @@ function Explore() {
                         <Flex alignItems={"center"} justifyContent={"space-between"}>
                             <Spacer/>
                             <Flex alignItems={"center"} justifyContent={"space-between"}>
-                                <NavLink icon={MdOutlineUpdate} link={"posts"}>{"new"}</NavLink>
+                                <NavLink icon={MdOutlineUpdate} link={"posts/new"}>{"new"}</NavLink>
                                 <NavLink icon={MdOutlineTrendingUp} link={"posts/trending"}>{"trending"}</NavLink>
                                 <NavLink icon={MdOutlineArrowUpward} link={"posts/top"}>{"top"}</NavLink>
                             </Flex>

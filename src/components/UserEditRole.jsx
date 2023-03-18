@@ -14,7 +14,6 @@ import {
     Icon,
     Center,
     Box,
-    Wrap
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify'
 import { FaUserTag } from "react-icons/fa";
@@ -96,7 +95,7 @@ function UserEditRole(props) {
                 </Flex>
             </Button>
 
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} m={2}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>
@@ -136,7 +135,7 @@ function UserEditRole(props) {
 
                             <Text fontSize="lg" fontWeight="bold" ml="1rem" mb="0.5rem">Change to role: </Text>
                             <Center>
-                                <Wrap>
+                                <Flex>
                                     {roles.map((roleItem, id) => {
                                         return (
                                             <Box key={id}>
@@ -144,7 +143,7 @@ function UserEditRole(props) {
                                                     <Button
                                                         variant="outline"
                                                         colorScheme="teal"
-                                                        m="0.25rem"
+                                                        m="0.5rem"
                                                         value={roleItem}
                                                         onClick={handleRoleClick}
                                                         style={{
@@ -159,7 +158,7 @@ function UserEditRole(props) {
                                             </Box>
                                         );
                                     })}
-                                </Wrap>
+                                </Flex>
                             </Center>
                         </form>
                     </ModalBody>

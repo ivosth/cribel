@@ -98,6 +98,7 @@ export const createUser = /* GraphQL */ `
         items {
           id
           message
+          viewed
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -198,6 +199,7 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           message
+          viewed
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -298,6 +300,7 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           message
+          viewed
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -1442,6 +1445,7 @@ export const createUserNotification = /* GraphQL */ `
         owner
       }
       message
+      viewed
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1491,6 +1495,7 @@ export const updateUserNotification = /* GraphQL */ `
         owner
       }
       message
+      viewed
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1540,6 +1545,7 @@ export const deleteUserNotification = /* GraphQL */ `
         owner
       }
       message
+      viewed
       typeUserNotificationsByDate
       createdAt
       updatedAt

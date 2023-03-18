@@ -107,10 +107,12 @@ type ChannelNotification @model @auth(rules: [{ allow: groups, groups: ["admin"]
   createdAt: String!
 }
 
+
 type UserNotification @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   id: ID!
   user: User! @belongsTo
   message: String!
+  viewed: Boolean! @default(value: "false")
   typeUserNotificationsByDate: String! @default(value: "UserNotificationsByDate") 
     @index(name: "userNotificationsByDate", queryField: "userNotificationsByDate", sortKeyFields: ["createdAt"])
   createdAt: String!

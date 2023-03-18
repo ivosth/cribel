@@ -1,42 +1,43 @@
 import { postsByDate } from '../graphql/customQueries';
-import { API } from 'aws-amplify';
+import { API, /* DataStore */ } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { CircularProgress, Flex, Box, Spacer, Text } from "@chakra-ui/react";
 import PostCard from '../components/PostCard';
-
+//import { ChannelNotification } from '../models';
 
 function Feed(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   
-  
-  const obtainListPosts = async() => {
 
-    if (props.subscriptions.length > 0) {
-        setLoading(true);
-
-        const filterSubscriptions = {or: []};
-        props.subscriptions.forEach(subscription => {
-            filterSubscriptions.or.push({channelPostsId: {eq: subscription.channelID}});
-        });
-
-        const allPosts = await API.graphql({ query: postsByDate, variables: {
-            typePostsByDate: "PostsByDate", 
-            sortDirection: "DESC", 
-            filter: filterSubscriptions
-        }});
-
-        console.log(allPosts.data.postsByDate.items);
-        setPosts(allPosts.data.postsByDate.items);
-
-    }
-    setLoading(false);
-    
-  };
 
   useEffect(() => {
+
+    const obtainListPosts = async() => {
+      if (props.subscriptions.length > 0) {
+          setLoading(true);
+  
+          const filterSubscriptions = {or: []};
+          props.subscriptions.forEach(subscription => {
+              filterSubscriptions.or.push({channelPostsId: {eq: subscription.channelID}});
+          });
+  
+          const allPosts = await API.graphql({ query: postsByDate, variables: {
+              typePostsByDate: "PostsByDate", 
+              sortDirection: "DESC", 
+              filter: filterSubscriptions
+          }});
+  
+          console.log(allPosts.data.postsByDate.items);
+          setPosts(allPosts.data.postsByDate.items);
+  
+      }
+      setLoading(false);
+      
+    };
+    
     obtainListPosts();
-  }, []);
+  }, [props.subscriptions]);
 
   if (loading) {
     return (

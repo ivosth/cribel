@@ -2,8 +2,11 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($owner: String) {
-    onCreateUser(owner: $owner) {
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onCreateUser(filter: $filter, owner: $owner) {
       id
       email
       emailVerified
@@ -85,6 +88,7 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           message
+          viewed
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -99,8 +103,11 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($owner: String) {
-    onUpdateUser(owner: $owner) {
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
       id
       email
       emailVerified
@@ -182,6 +189,7 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           message
+          viewed
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -196,8 +204,11 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($owner: String) {
-    onDeleteUser(owner: $owner) {
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onDeleteUser(filter: $filter, owner: $owner) {
       id
       email
       emailVerified
@@ -279,6 +290,7 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           message
+          viewed
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -293,8 +305,8 @@ export const onDeleteUser = /* GraphQL */ `
   }
 `;
 export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost {
-    onCreatePost {
+  subscription OnCreatePost($filter: ModelSubscriptionPostFilterInput) {
+    onCreatePost(filter: $filter) {
       id
       name
       topic
@@ -397,8 +409,8 @@ export const onCreatePost = /* GraphQL */ `
   }
 `;
 export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost {
-    onUpdatePost {
+  subscription OnUpdatePost($filter: ModelSubscriptionPostFilterInput) {
+    onUpdatePost(filter: $filter) {
       id
       name
       topic
@@ -501,8 +513,8 @@ export const onUpdatePost = /* GraphQL */ `
   }
 `;
 export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost {
-    onDeletePost {
+  subscription OnDeletePost($filter: ModelSubscriptionPostFilterInput) {
+    onDeletePost(filter: $filter) {
       id
       name
       topic
@@ -605,8 +617,8 @@ export const onDeletePost = /* GraphQL */ `
   }
 `;
 export const onCreateChannel = /* GraphQL */ `
-  subscription OnCreateChannel {
-    onCreateChannel {
+  subscription OnCreateChannel($filter: ModelSubscriptionChannelFilterInput) {
+    onCreateChannel(filter: $filter) {
       id
       name
       topics
@@ -706,8 +718,8 @@ export const onCreateChannel = /* GraphQL */ `
   }
 `;
 export const onUpdateChannel = /* GraphQL */ `
-  subscription OnUpdateChannel {
-    onUpdateChannel {
+  subscription OnUpdateChannel($filter: ModelSubscriptionChannelFilterInput) {
+    onUpdateChannel(filter: $filter) {
       id
       name
       topics
@@ -807,8 +819,8 @@ export const onUpdateChannel = /* GraphQL */ `
   }
 `;
 export const onDeleteChannel = /* GraphQL */ `
-  subscription OnDeleteChannel {
-    onDeleteChannel {
+  subscription OnDeleteChannel($filter: ModelSubscriptionChannelFilterInput) {
+    onDeleteChannel(filter: $filter) {
       id
       name
       topics
@@ -908,8 +920,8 @@ export const onDeleteChannel = /* GraphQL */ `
   }
 `;
 export const onCreateRating = /* GraphQL */ `
-  subscription OnCreateRating {
-    onCreateRating {
+  subscription OnCreateRating($filter: ModelSubscriptionRatingFilterInput) {
+    onCreateRating(filter: $filter) {
       id
       user {
         id
@@ -1000,8 +1012,8 @@ export const onCreateRating = /* GraphQL */ `
   }
 `;
 export const onUpdateRating = /* GraphQL */ `
-  subscription OnUpdateRating {
-    onUpdateRating {
+  subscription OnUpdateRating($filter: ModelSubscriptionRatingFilterInput) {
+    onUpdateRating(filter: $filter) {
       id
       user {
         id
@@ -1092,8 +1104,8 @@ export const onUpdateRating = /* GraphQL */ `
   }
 `;
 export const onDeleteRating = /* GraphQL */ `
-  subscription OnDeleteRating {
-    onDeleteRating {
+  subscription OnDeleteRating($filter: ModelSubscriptionRatingFilterInput) {
+    onDeleteRating(filter: $filter) {
       id
       user {
         id
@@ -1184,8 +1196,10 @@ export const onDeleteRating = /* GraphQL */ `
   }
 `;
 export const onCreateChannelNotification = /* GraphQL */ `
-  subscription OnCreateChannelNotification {
-    onCreateChannelNotification {
+  subscription OnCreateChannelNotification(
+    $filter: ModelSubscriptionChannelNotificationFilterInput
+  ) {
+    onCreateChannelNotification(filter: $filter) {
       id
       channel {
         id
@@ -1238,8 +1252,10 @@ export const onCreateChannelNotification = /* GraphQL */ `
   }
 `;
 export const onUpdateChannelNotification = /* GraphQL */ `
-  subscription OnUpdateChannelNotification {
-    onUpdateChannelNotification {
+  subscription OnUpdateChannelNotification(
+    $filter: ModelSubscriptionChannelNotificationFilterInput
+  ) {
+    onUpdateChannelNotification(filter: $filter) {
       id
       channel {
         id
@@ -1292,8 +1308,10 @@ export const onUpdateChannelNotification = /* GraphQL */ `
   }
 `;
 export const onDeleteChannelNotification = /* GraphQL */ `
-  subscription OnDeleteChannelNotification {
-    onDeleteChannelNotification {
+  subscription OnDeleteChannelNotification(
+    $filter: ModelSubscriptionChannelNotificationFilterInput
+  ) {
+    onDeleteChannelNotification(filter: $filter) {
       id
       channel {
         id
@@ -1346,8 +1364,10 @@ export const onDeleteChannelNotification = /* GraphQL */ `
   }
 `;
 export const onCreateUserNotification = /* GraphQL */ `
-  subscription OnCreateUserNotification {
-    onCreateUserNotification {
+  subscription OnCreateUserNotification(
+    $filter: ModelSubscriptionUserNotificationFilterInput
+  ) {
+    onCreateUserNotification(filter: $filter) {
       id
       user {
         id
@@ -1384,6 +1404,7 @@ export const onCreateUserNotification = /* GraphQL */ `
         owner
       }
       message
+      viewed
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1392,8 +1413,10 @@ export const onCreateUserNotification = /* GraphQL */ `
   }
 `;
 export const onUpdateUserNotification = /* GraphQL */ `
-  subscription OnUpdateUserNotification {
-    onUpdateUserNotification {
+  subscription OnUpdateUserNotification(
+    $filter: ModelSubscriptionUserNotificationFilterInput
+  ) {
+    onUpdateUserNotification(filter: $filter) {
       id
       user {
         id
@@ -1430,6 +1453,7 @@ export const onUpdateUserNotification = /* GraphQL */ `
         owner
       }
       message
+      viewed
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1438,8 +1462,10 @@ export const onUpdateUserNotification = /* GraphQL */ `
   }
 `;
 export const onDeleteUserNotification = /* GraphQL */ `
-  subscription OnDeleteUserNotification {
-    onDeleteUserNotification {
+  subscription OnDeleteUserNotification(
+    $filter: ModelSubscriptionUserNotificationFilterInput
+  ) {
+    onDeleteUserNotification(filter: $filter) {
       id
       user {
         id
@@ -1476,6 +1502,7 @@ export const onDeleteUserNotification = /* GraphQL */ `
         owner
       }
       message
+      viewed
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1484,8 +1511,11 @@ export const onDeleteUserNotification = /* GraphQL */ `
   }
 `;
 export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
-  subscription OnCreateSubscriptionsSubscribers($owner: String) {
-    onCreateSubscriptionsSubscribers(owner: $owner) {
+  subscription OnCreateSubscriptionsSubscribers(
+    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
+    $owner: String
+  ) {
+    onCreateSubscriptionsSubscribers(filter: $filter, owner: $owner) {
       id
       userID
       channelID
@@ -1572,8 +1602,11 @@ export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
   }
 `;
 export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
-  subscription OnUpdateSubscriptionsSubscribers($owner: String) {
-    onUpdateSubscriptionsSubscribers(owner: $owner) {
+  subscription OnUpdateSubscriptionsSubscribers(
+    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
+    $owner: String
+  ) {
+    onUpdateSubscriptionsSubscribers(filter: $filter, owner: $owner) {
       id
       userID
       channelID
@@ -1660,8 +1693,11 @@ export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
   }
 `;
 export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
-  subscription OnDeleteSubscriptionsSubscribers($owner: String) {
-    onDeleteSubscriptionsSubscribers(owner: $owner) {
+  subscription OnDeleteSubscriptionsSubscribers(
+    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
+    $owner: String
+  ) {
+    onDeleteSubscriptionsSubscribers(filter: $filter, owner: $owner) {
       id
       userID
       channelID
@@ -1748,8 +1784,11 @@ export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
   }
 `;
 export const onCreateUsersParticipantChannels = /* GraphQL */ `
-  subscription OnCreateUsersParticipantChannels($owner: String) {
-    onCreateUsersParticipantChannels(owner: $owner) {
+  subscription OnCreateUsersParticipantChannels(
+    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
+    $owner: String
+  ) {
+    onCreateUsersParticipantChannels(filter: $filter, owner: $owner) {
       id
       userID
       channelID
@@ -1836,8 +1875,11 @@ export const onCreateUsersParticipantChannels = /* GraphQL */ `
   }
 `;
 export const onUpdateUsersParticipantChannels = /* GraphQL */ `
-  subscription OnUpdateUsersParticipantChannels($owner: String) {
-    onUpdateUsersParticipantChannels(owner: $owner) {
+  subscription OnUpdateUsersParticipantChannels(
+    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
+    $owner: String
+  ) {
+    onUpdateUsersParticipantChannels(filter: $filter, owner: $owner) {
       id
       userID
       channelID
@@ -1924,8 +1966,11 @@ export const onUpdateUsersParticipantChannels = /* GraphQL */ `
   }
 `;
 export const onDeleteUsersParticipantChannels = /* GraphQL */ `
-  subscription OnDeleteUsersParticipantChannels($owner: String) {
-    onDeleteUsersParticipantChannels(owner: $owner) {
+  subscription OnDeleteUsersParticipantChannels(
+    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
+    $owner: String
+  ) {
+    onDeleteUsersParticipantChannels(filter: $filter, owner: $owner) {
       id
       userID
       channelID

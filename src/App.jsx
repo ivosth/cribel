@@ -1,7 +1,7 @@
 import './App.css';
 import '@aws-amplify/ui-react/styles.css';
 import { /*createContext,*/ useState, useEffect } from "react";
-import { API, Auth, Hub } from "aws-amplify";
+import { API, Auth, Hub, /* DataStore */ } from "aws-amplify";
 import { Authenticator } from '@aws-amplify/ui-react';
 //import PostList from './components/PostList';
 import ChannelList from './components/ChannelList';
@@ -12,7 +12,7 @@ import Channel from './pages/Channel';
 import Home from './pages/Home';
 import { createUser } from "./graphql/mutations";
 import { getUser } from "./graphql/customQueries";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import Settings from './pages/Settings';
 import SettingsProfile from './pages/SettingsProfile';
 import SettingsChannel from './pages/SettingsChannel';
@@ -86,6 +86,7 @@ function App() {
           console.log(newCurrentUserAttribute);
         }
 
+        //await DataStore.start();
       } catch (err) {
         setUserAttributes(null);
         console.log(err);
@@ -131,8 +132,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />}>
-          <Route path="channels" element={<ChannelList userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
-          <Route path="posts" element={<PostList userID={userAttributes.id} />} />
+          <Route path="channels" element={<Outlet/>} >
+            <Route path="new" element={<ChannelList sort="new" userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} /> } />
+            <Route path="trending" element={<ChannelList sort="trending" userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
+            <Route path="top" element={<ChannelList sort="top" userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
+          </Route>
+          <Route path="posts" element={<Outlet/>} >
+            <Route path="new" element={<PostList userID={userAttributes.id} sort="new"/> } />
+            <Route path="trending" element={<PostList userID={userAttributes.id} sort="trending"/>} />
+            <Route path="top" element={<PostList userID={userAttributes.id} sort="top"/>} />
+          </Route>
         </Route>
         <Route path="/settings" element={<Settings updateUserNavbar={updateUserAttributes}/>}>
           <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes}/>} />

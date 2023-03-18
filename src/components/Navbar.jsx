@@ -20,14 +20,13 @@ import {
   MenuGroup
 } from "@chakra-ui/react";
 import { MdHelpOutline, MdOutlineCastForEducation, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
-import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsHouseDoor, BsPersonSquare, BsTools } from 'react-icons/bs';
+import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsPersonSquare, BsTools } from 'react-icons/bs';
 import { FiBell, FiChevronDown } from 'react-icons/fi';
 import { FaChalkboardTeacher } from 'react-icons/fa';
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { Link as RouterLink } from "react-router-dom";
+import { Auth, /* DataStore */ } from "aws-amplify";
 import SearchBar from "./SearchBar";
 import IconCribel from "./IconCribel";
-
 
 const NavLink = ({ icon, link, children }) => (
   <Link
@@ -61,6 +60,7 @@ function Navbar({ user }) {
 
   const onSignOutHandler = async () => {
     try {
+      //await DataStore.clear();
       await Auth.signOut();
     } catch (err) {
       console.error("Error signing out user", err);
@@ -69,7 +69,7 @@ function Navbar({ user }) {
 
   //const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const navigate = useNavigate();
+
 
   return (
     <Box

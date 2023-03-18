@@ -85,6 +85,7 @@ export const getUser = /* GraphQL */ `
         items {
           id
           message
+          viewed
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -1031,6 +1032,7 @@ export const getUserNotification = /* GraphQL */ `
         owner
       }
       message
+      viewed
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1068,6 +1070,7 @@ export const listUserNotifications = /* GraphQL */ `
           owner
         }
         message
+        viewed
         typeUserNotificationsByDate
         createdAt
         updatedAt
@@ -1113,6 +1116,7 @@ export const userNotificationsByDate = /* GraphQL */ `
           owner
         }
         message
+        viewed
         typeUserNotificationsByDate
         createdAt
         updatedAt
