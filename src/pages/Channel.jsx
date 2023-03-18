@@ -1,5 +1,5 @@
 import {
-    Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, Show, Button
+    Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer, CircularProgress, Button
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
@@ -82,7 +82,7 @@ function Channel(props) {
 
         obtainChannel();
         setSubscribed(isSubscribed());
-    }, [id]);
+    }, [id, props.subscriptions]);
 
     if (loading) {
         return (

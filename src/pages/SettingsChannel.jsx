@@ -1,10 +1,6 @@
 import {
-    Flex, useColorModeValue, Icon, Text, Stack, Button, SimpleGrid, ButtonGroup, IconButton, Box, Hide, Center, CircularProgress
+    Flex, useColorModeValue, Stack, SimpleGrid, ButtonGroup, Box, CircularProgress, Text
 } from "@chakra-ui/react";
-import { AiTwotoneLock, AiFillEdit, AiOutlineUsergroupAdd } from "react-icons/ai";
-import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
-import { MdPostAdd, MdOutlineLibraryAdd } from "react-icons/md";
-import { BiMessageAdd } from "react-icons/bi";
 import { Link as RouterLink } from "react-router-dom";
 import ChannelNewPost from './../components/ChannelNewPost';
 import ChannelEditInfo from './../components/ChannelEditInfo';
@@ -21,18 +17,19 @@ function SettingsChannel({ userID }) {
 
     const [loading, setLoading] = useState(true);
     const [userChannels, setUserChannels] = useState([]);
-
-    const obtainUserChannels = async() => {
-        setLoading(true);
-        const allUserChannels = await API.graphql({ query: getUserChannels, variables: { id: userID } });
-        setLoading(false);
-        //console.log(allUserChannels.data.getUser)
-        setUserChannels(allUserChannels.data.getUser);
-      };
     
     useEffect(() => {
+
+        const obtainUserChannels = async() => {
+            setLoading(true);
+            const allUserChannels = await API.graphql({ query: getUserChannels, variables: { id: userID } });
+            setLoading(false);
+            //console.log(allUserChannels.data.getUser)
+            setUserChannels(allUserChannels.data.getUser);
+          };
+
         obtainUserChannels();
-    }, []);
+    }, [userID]);
 
 
     if (loading) {

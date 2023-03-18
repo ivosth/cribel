@@ -1,6 +1,5 @@
 import {
-    Tabs, Tab, TabList, TabPanels, TabPanel,
-    Flex, Button, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer
+    Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer
 } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";

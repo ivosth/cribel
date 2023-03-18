@@ -1,34 +1,21 @@
 import {
     Flex,
     useColorModeValue,
-    Icon,
     Text,
     Stack,
     Button,
     SimpleGrid,
     ButtonGroup,
-    IconButton,
     Box,
-    Hide,
     Wrap,
-    WrapItem,
-    Select,
-    MenuItem,
     FormControl,
     FormLabel,
-    Input,
-    Spacer,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
+//import { useSearchParams } from "react-router-dom";
 import { listUsersWithFilters } from "../graphql/customQueries";
 import { API } from "aws-amplify";
 import { CircularProgress } from "@chakra-ui/react";
-import { AiTwotoneLock, AiFillEdit, AiOutlineUsergroupAdd } from "react-icons/ai";
-import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
-import { MdPeopleOutline, MdStar } from "react-icons/md";
-import { FaUserTag } from "react-icons/fa";
-import { BiMessageAdd } from "react-icons/bi";
 import { Link as RouterLink } from "react-router-dom";
 import UserStatus from './../components/UserStatus';
 import UserEditRole from "../components/UserEditRole";
@@ -48,10 +35,10 @@ function SettingsAdvanced() {
     const [role, setRole] = useState("All");
     const [roleBg, setRoleBg] = useState({ [role]: '#C0C0C0' });
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const searchRole = searchParams.get("role");
-    const searchName = searchParams.get("name");
-    const searchLastName = searchParams.get("lastName");
+    //const [searchParams, setSearchParams] = useSearchParams();
+    //const searchRole = searchParams.get("role");
+    //const searchName = searchParams.get("name");
+    //const searchLastName = searchParams.get("lastName");
 
     const handleNameClick = (event) => {
         const { value } = event.target;
@@ -145,7 +132,7 @@ function SettingsAdvanced() {
                     onSubmit={(event) => {
                         event.preventDefault();
                         //console.log(nameLetter, lastNameLetter, role);
-                        setSearchParams({ name: nameLetter, lastName: lastNameLetter, role: role });
+                        //setSearchParams({ name: nameLetter, lastName: lastNameLetter, role: role });
 
                         obtainListUsersWithFilters();
                     }}
