@@ -27,11 +27,7 @@ function Notifications(props) {
     useEffect(() => {
 
         async function newNotifications(allUserNotifications, allChannelNotifications) {
-            // loop throught channelNotifications and check if the date is greater than lastDate
-            // if it is, then add it to the list of new notifications
-            // if not, then break the loop
             let newNotifications = [];
-            // lastDate is the date of the last notification the user has seen minus 30 minutes
             let lastDate = props.userCreatedAt;
             
             //console.log(lastDate)
@@ -53,7 +49,7 @@ function Notifications(props) {
                                     message: allChannelNotifications.items[i].message,
                                     type: allChannelNotifications.items[i].type,
                                     userNotificationsId: props.userID,
-                                    channel: allChannelNotifications.items[i].id,
+                                    channel: allChannelNotifications.items[i].channelNotificationsId,
                                     typeUserNotificationsByDate: "UserNotificationsByDate",
                                     viewed: false
                                 }
@@ -70,16 +66,15 @@ function Notifications(props) {
 
 
             setUserNotifications(newNotifications);
-            if (newNotifications.length > 0) {
-                props.updateIconNotifications(true);
-            }
+            props.updateIconNotifications(false);
             console.log("newNotifications", newNotifications)
         }
 
         const obtainNotifications = async () => {
             try {
+                
                 if (props.subscriptions.length !== 0) {
-                    
+                    setLoading(true);
                     const allUserNotifications = await API.graphql({
                         query: userNotificationsByDate,
                         variables: {
@@ -105,20 +100,20 @@ function Notifications(props) {
                     });
 
 
-                    newNotifications(allUserNotifications.data.userNotificationsByDate, allChannelNotifications.data.channelNotificationsByDate);
+                    await newNotifications(allUserNotifications.data.userNotificationsByDate, allChannelNotifications.data.channelNotificationsByDate);
                     //console.log("channelNotifications", channelNotifications.data.channelNotificationsByDate)
 
-
+                    
                 }
             } catch (error) {
                 console.error("Error obtaining notifications: ", error);
             }
-            
+            setLoading(false);
         };
 
-        setLoading(true);
+        
         obtainNotifications();
-        setLoading(false);
+        
 
     }, [props.userID, props.subscriptions, props.userCreatedAt]);
 
@@ -160,7 +155,7 @@ function Notifications(props) {
                                         <Link
                                             px="0.50rem"
                                             py={1}
-                                            onClick={() => navigate(`/channel/Channel/new`)}
+                                            onClick={() => navigate(`/channel/${notification.channel}/new`)}
                                             bg="blue.600"
                                             color="blue.100"
                                             fontSize="0.90rem" //Más pequeño con xs

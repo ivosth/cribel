@@ -48,7 +48,8 @@ function ChannelNewPost(props) {
             await API.graphql({ query: createPost, variables: { input: newPostInput } })
 
             const newChannelNotificationInput = {
-                message: "New post: " + title,
+                type: "New Post",
+                message: title,
                 channelNotificationsId: props.channelID,
                 typeChannelNotificationsByDate: "ChannelNotificationsByDate",
             }

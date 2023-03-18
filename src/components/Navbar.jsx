@@ -22,12 +22,13 @@ import {
 import { MdHelpOutline, MdOutlineCastForEducation, MdScreenSearchDesktop, MdManageSearch } from "react-icons/md";
 import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsPersonSquare, BsTools } from 'react-icons/bs';
 import { FiChevronDown } from 'react-icons/fi';
-import { VscBell, VscBellDot } from 'react-icons/vsc';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Auth, /* DataStore */ } from "aws-amplify";
 import SearchBar from "./SearchBar";
 import IconCribel from "./IconCribel";
+import NotificationsButton from "./NotificationsButton";
+
 
 const NavLink = ({ icon, link, children }) => (
   <Link
@@ -57,7 +58,7 @@ const NavLink = ({ icon, link, children }) => (
 );
 
 
-function Navbar({ user, notifications }) {
+function Navbar({ user, notifications, updateIconNotifications}) {
 
   const navigate = useNavigate();
 
@@ -148,14 +149,12 @@ function Navbar({ user, notifications }) {
           {/************ EXPLORE AND NOTIFICATION *************/}
           <NavLink icon={MdManageSearch} link={"explore"}>{"explore"}</NavLink>
 
-                  {console.log(notifications)}
-          <IconButton
-            size="lg"
-            variant="ghost"
-            color={useColorModeValue("gray.600", "gray.200")}
-            aria-label="open menu"
-            icon={notifications ? <VscBellDot /> : <VscBell />}
-            onClick={() => navigate("/notifications")}
+          <NotificationsButton 
+            userID={user.id} 
+            userCreatedAt={user.createdAt} 
+            subscriptions={user.subscriptions.items || null} 
+            notifications={notifications} 
+            updateIconNotifications={updateIconNotifications}
           />
 
           {/********** PROFILE *************/}
