@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link as RouterLink, Outlet} from "react-router-dom";
 import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp, } from "react-icons/md";
 import { RiChatFollowUpLine, RiChatDeleteLine } from "react-icons/ri";
-import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers } from "../graphql/mutations";
+import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers, createUserNotification } from "../graphql/mutations";
 
 const NavLink = ({ icon, link, children }) => (
     <Link
@@ -60,6 +60,18 @@ function Channel(props) {
             }
             setSubscribed(!subscribed);
             props.updateChannelsNavbar({ subscriptions: newSubscriptions })
+
+            await API.graphql({ 
+                query: createUserNotification, 
+                variables: { 
+                  input: {
+                    message: subscribed ? `You have unsubscribed from ${channel.name} channel` : `You have subscribed to ${channel.name} channel`,
+                    type: subscribed ? "Unsubscribe" : "Subscribe", 
+                    userNotificationsId: props.userID,
+                    channelID: id,
+                    channelName: channel.name,
+                    typeUserNotificationsByDate: "UserNotificationsByDate"
+                  } } });
         }
         catch(err) {
             console.error("Error subscribing to channel: ", err)
@@ -87,7 +99,9 @@ function Channel(props) {
 
         obtainChannel();
         setSubscribed(isSubscribed());
-    }, [id, props.subscriptions]);
+        
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
     if (loading) {
         return (

@@ -4133,7 +4133,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "channel",
+          "name" : "channelID",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -4148,7 +4148,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "viewed",
+          "name" : "channelName",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -4156,7 +4156,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "Boolean",
+              "name" : "String",
               "ofType" : null
             }
           },
@@ -4256,7 +4256,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "channel",
+          "name" : "channelID",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -4265,11 +4265,11 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "viewed",
+          "name" : "channelName",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelBooleanInput",
+            "name" : "ModelStringInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -7255,7 +7255,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "channel",
+          "name" : "channelID",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -7268,14 +7268,14 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "viewed",
+          "name" : "channelName",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "Boolean",
+              "name" : "String",
               "ofType" : null
             }
           },
@@ -7339,7 +7339,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "channel",
+          "name" : "channelID",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7348,11 +7348,11 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "viewed",
+          "name" : "channelName",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelBooleanInput",
+            "name" : "ModelStringInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -7459,7 +7459,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "channel",
+          "name" : "channelID",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -7468,11 +7468,11 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "viewed",
+          "name" : "channelName",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Boolean",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -9354,7 +9354,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "channel",
+          "name" : "channelID",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -9363,11 +9363,11 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "viewed",
+          "name" : "channelName",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelSubscriptionBooleanInput",
+            "name" : "ModelSubscriptionStringInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -10523,14 +10523,6 @@
         "onFragment" : false,
         "onField" : true
       }, {
-        "name" : "aws_lambda",
-        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
         "name" : "deprecated",
         "description" : null,
         "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
@@ -10544,6 +10536,14 @@
           },
           "defaultValue" : "\"No longer supported\""
         } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_lambda",
+        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false

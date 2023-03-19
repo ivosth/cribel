@@ -86,8 +86,8 @@ export const getUser = /* GraphQL */ `
           id
           type
           message
-          channel
-          viewed
+          channelID
+          channelName
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -1039,8 +1039,8 @@ export const getUserNotification = /* GraphQL */ `
       }
       type
       message
-      channel
-      viewed
+      channelID
+      channelName
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1079,8 +1079,8 @@ export const listUserNotifications = /* GraphQL */ `
         }
         type
         message
-        channel
-        viewed
+        channelID
+        channelName
         typeUserNotificationsByDate
         createdAt
         updatedAt
@@ -1127,8 +1127,8 @@ export const userNotificationsByDate = /* GraphQL */ `
         }
         type
         message
-        channel
-        viewed
+        channelID
+        channelName
         typeUserNotificationsByDate
         createdAt
         updatedAt

@@ -99,8 +99,8 @@ export const createUser = /* GraphQL */ `
           id
           type
           message
-          channel
-          viewed
+          channelID
+          channelName
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -202,8 +202,8 @@ export const updateUser = /* GraphQL */ `
           id
           type
           message
-          channel
-          viewed
+          channelID
+          channelName
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -305,8 +305,8 @@ export const deleteUser = /* GraphQL */ `
           id
           type
           message
-          channel
-          viewed
+          channelID
+          channelName
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -1458,8 +1458,8 @@ export const createUserNotification = /* GraphQL */ `
       }
       type
       message
-      channel
-      viewed
+      channelID
+      channelName
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1510,8 +1510,8 @@ export const updateUserNotification = /* GraphQL */ `
       }
       type
       message
-      channel
-      viewed
+      channelID
+      channelName
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1562,8 +1562,8 @@ export const deleteUserNotification = /* GraphQL */ `
       }
       type
       message
-      channel
-      viewed
+      channelID
+      channelName
       typeUserNotificationsByDate
       createdAt
       updatedAt

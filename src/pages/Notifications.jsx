@@ -1,35 +1,27 @@
 import {
-    Flex, Box, CircularProgress, Text, Badge, Wrap, Spacer, Center, Link
+    Flex, Box, CircularProgress, Text, Center,
+    Tabs, Tab, TabList, TabPanels, TabPanel,
 } from "@chakra-ui/react";
 import { channelNotificationsByDate, userNotificationsByDate } from "../graphql/queries";
 import { createUserNotification } from "../graphql/mutations";
-import { useNavigate } from "react-router-dom";
 import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
+import NotificationCard from "../components/NotificationCard";
 
 
-function formatDate(awsDate) {
-    const dateobj = new Date(awsDate);
-    const date = dateobj.toLocaleDateString(navigator.language);
-    const time = dateobj.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
-  
-    return (date + ' ' + time);
-  }
-  
 
 function Notifications(props) {
 
-    const navigate = useNavigate();
-
     const [loading, setLoading] = useState(true);
-    const [userNotifications, setUserNotifications] = useState([]);
+    const [userNotificationsNew, setUserNotificationsNew] = useState([]);
+    const [userNotificationsOld, setUserNotificationsOld] = useState([]);
 
     useEffect(() => {
 
         async function newNotifications(allUserNotifications, allChannelNotifications) {
             let newNotifications = [];
             let lastDate = props.userCreatedAt;
-            
+
             //console.log(lastDate)
             //console.log("allUserNotifications", allUserNotifications)
             //console.log("allChannelNotifications", allChannelNotifications)
@@ -41,7 +33,7 @@ function Notifications(props) {
 
             if (allChannelNotifications.items.length > 0) {
                 for (let i = 0; i < allChannelNotifications.items.length; i++) {
-                    if (allChannelNotifications.items[i].createdAt > lastDate) {                        
+                    if (allChannelNotifications.items[i].createdAt > lastDate) {
                         const res = await API.graphql({
                             query: createUserNotification,
                             variables: {
@@ -49,9 +41,9 @@ function Notifications(props) {
                                     message: allChannelNotifications.items[i].message,
                                     type: allChannelNotifications.items[i].type,
                                     userNotificationsId: props.userID,
-                                    channel: allChannelNotifications.items[i].channelNotificationsId,
-                                    typeUserNotificationsByDate: "UserNotificationsByDate",
-                                    viewed: false
+                                    channelID: allChannelNotifications.items[i].channelNotificationsId,
+                                    channelName: allChannelNotifications.items[i].channel.name,
+                                    typeUserNotificationsByDate: "UserNotificationsByDate"
                                 }
                             }
                         });
@@ -65,14 +57,14 @@ function Notifications(props) {
             }
 
 
-            setUserNotifications(newNotifications);
+            setUserNotificationsNew(newNotifications);
             props.updateIconNotifications(false);
             console.log("newNotifications", newNotifications)
         }
 
         const obtainNotifications = async () => {
             try {
-                
+
                 if (props.subscriptions.length !== 0) {
                     setLoading(true);
                     const allUserNotifications = await API.graphql({
@@ -82,7 +74,8 @@ function Notifications(props) {
                             filter: { userNotificationsId: { eq: props.userID } }
                         }
                     });
-                    //console.log("allUserNotifications", allUserNotifications.data.userNotificationsByDate)
+                    console.log("allUserNotifications", allUserNotifications.data.userNotificationsByDate)
+                    setUserNotificationsOld(allUserNotifications.data.userNotificationsByDate.items);
 
                     // list of channels id that the user is subscribed to
                     const filterSubscriptions = { or: [] };
@@ -100,10 +93,12 @@ function Notifications(props) {
                     });
 
 
-                    await newNotifications(allUserNotifications.data.userNotificationsByDate, allChannelNotifications.data.channelNotificationsByDate);
-                    //console.log("channelNotifications", channelNotifications.data.channelNotificationsByDate)
+                    console.log("channelNotifications", allChannelNotifications.data.channelNotificationsByDate)
 
-                    
+                    await newNotifications(allUserNotifications.data.userNotificationsByDate, allChannelNotifications.data.channelNotificationsByDate);
+
+
+
                 }
             } catch (error) {
                 console.error("Error obtaining notifications: ", error);
@@ -111,10 +106,10 @@ function Notifications(props) {
             setLoading(false);
         };
 
-        
-        obtainNotifications();
-        
 
+        obtainNotifications();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.userID, props.subscriptions, props.userCreatedAt]);
 
     if (loading) {
@@ -130,70 +125,40 @@ function Notifications(props) {
             <Box minw="2xl" maxW="4xl" m="2rem">
                 <Flex direction="column" align="center">
                     <Text fontSize="3xl" fontWeight="bold" mb="1rem">Notifications</Text>
-                    {userNotifications.length === 0 ?
-                        <Text>There are no new notifications</Text> :
 
-                        userNotifications.map(notification => {
-                            return (
-                                <Box
-                                    mx="auto"
-                                    px={8}
-                                    py={4}
-                                    rounded="lg"
-                                    shadow="lg"
-                                    bg="white"
-                                    maxW="2xl"
-                                    minW="100%" //Tocar aquí si se quiere hacer la tarjeta más grande en pantallas grandes
-                                    _dark={{
-                                        bg: "gray.800"
-                                    }}
-                                    key={notification.id}
-                                    m="0.5rem"
-                                >
-                                    <Box mb="0.5rem">
-                                        <Flex alignItems="center">
-                                        <Link
-                                            px="0.50rem"
-                                            py={1}
-                                            onClick={() => navigate(`/channel/${notification.channel}/new`)}
-                                            bg="blue.600"
-                                            color="blue.100"
-                                            fontSize="0.90rem" //Más pequeño con xs
-                                            fontWeight="700"
-                                            textAlign={"center"}
-                                            rounded="md"
-                                            _hover={{
-                                                bg: "blue.500"
-                                            }}
-                                        >
-                                            Channel
-                                        </Link>
-                                        <Text ml="0.5rem" fontSize="sm" color="gray.500">
-                                            {formatDate(notification.createdAt)}
-                                        </Text>
+                    <Tabs variant='solid-rounded' colorScheme='blue' align="center">
+                        <TabList>
+                            <Tab> New</Tab>
+                            <Tab> Old </Tab>
+                        </TabList>
+                        <TabPanels>
+                            <TabPanel>
+                                {userNotificationsNew.length === 0 ?
+                                    <Text>There are no new notifications</Text> :
+                                    userNotificationsNew.map(notification => {
+                                        return (
+                                            <Center key={notification.id}>
+                                                <NotificationCard notification={notification} />
+                                            </Center>
+                                        )
+                                    })
+                                }
+                            </TabPanel>
+                            <TabPanel>
+                                {userNotificationsOld.length === 0 ?
+                                    <Text>There are no old notifications</Text> :
+                                    userNotificationsOld.map(notification => {
+                                        return (
+                                            <Center key={notification.id}>
+                                                <NotificationCard notification={notification} />
+                                            </Center>
+                                        )
+                                    })
+                                }
+                            </TabPanel>
+                        </TabPanels>
+                    </Tabs>
 
-                                        <Spacer />
-                                        <Badge colorScheme='green' fontSize='1rem'>{notification.type}</Badge>
-                                        </Flex>
-
-                                    </Box>
-                                    <Wrap>
-                                        <Center>
-                                            <Text mt="0.25rem" fontSize="md" mx="1rem">
-                                                {notification.message}
-                                            </Text>
-                                        </Center>
-
-
-
-                                    </Wrap>
-
-
-
-                                </Box>
-                            )
-                        })
-                    }
                 </Flex>
 
 

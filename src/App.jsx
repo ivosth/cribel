@@ -163,7 +163,7 @@ function App() {
         </Route>
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/feed" element={<Feed userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} />} />
-        <Route path="/notifications" element={<Notifications userID={userAttributes.id} userCreatedAt={userAttributes.createdAt} subscriptions={userAttributes.subscriptions.items || null} notifications={notifications} updateIconNotifications={updateIconNotifications}/>} />
+        <Route path="/notifications" element={<Notifications userID={userAttributes.id} userCreatedAt={userAttributes.createdAt} subscriptions={userAttributes.subscriptions.items || null} updateIconNotifications={updateIconNotifications}/>} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />
       </Routes>
