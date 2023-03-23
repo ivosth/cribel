@@ -147,10 +147,11 @@ function App() {
             <Route path="top" element={<PostList userID={userAttributes.id} sort="top"/>} />
           </Route>
         </Route>
-        <Route path="/settings" element={<Settings updateUserNavbar={updateUserAttributes}/>}>
+        <Route path="/settings" element={<Settings userGroup={userAttributes.group} />}>
           <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes}/>} />
-          <Route path="channels" element={<SettingsChannel userID={userAttributes.id} />} />
-          <Route path="advanced" element={<SettingsAdvanced />} />
+          {/* If userAttributes.group is creator or admin load  <SettingsChannel userID={userAttributes.id} /> if not <Error /> */}
+          <Route path="channels" element={ {userAttributes}.group !== "creator" || {userAttributes}.group !== "admin" ? <SettingsChannel userID={userAttributes.id} /> : <Error /> } />
+          <Route path="advanced" element={ {userAttributes}.group !== "admin" ? <SettingsAdvanced /> : <Error /> } />
         </Route>
         <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} >
           <Route path="new" element={<ChannelPostsSorted userID={userAttributes.id} sort="new"/> } />

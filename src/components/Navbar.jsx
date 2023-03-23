@@ -5,7 +5,6 @@ import {
   HStack,
   VStack,
   Link,
-  IconButton,
   Menu,
   MenuButton,
   MenuList,
@@ -23,7 +22,7 @@ import { MdHelpOutline, MdOutlineCastForEducation, MdScreenSearchDesktop, MdMana
 import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsPersonSquare, BsTools } from 'react-icons/bs';
 import { FiChevronDown } from 'react-icons/fi';
 import { FaChalkboardTeacher } from 'react-icons/fa';
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { Auth, /* DataStore */ } from "aws-amplify";
 import SearchBar from "./SearchBar";
 import IconCribel from "./IconCribel";
@@ -58,9 +57,7 @@ const NavLink = ({ icon, link, children }) => (
 );
 
 
-function Navbar({ user, notifications, updateIconNotifications}) {
-
-  const navigate = useNavigate();
+function Navbar({ user, notifications, updateIconNotifications }) {
 
   const onSignOutHandler = async () => {
     try {
@@ -74,6 +71,7 @@ function Navbar({ user, notifications, updateIconNotifications}) {
   //const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
+  const bg1 = useColorModeValue("blue.50", "blue.700");
 
   return (
     <Box
@@ -149,11 +147,11 @@ function Navbar({ user, notifications, updateIconNotifications}) {
           {/************ EXPLORE AND NOTIFICATION *************/}
           <NavLink icon={MdManageSearch} link={"explore"}>{"explore"}</NavLink>
 
-          <NotificationsButton 
-            userID={user.id} 
-            userCreatedAt={user.createdAt} 
-            subscriptions={user.subscriptions.items || null} 
-            notifications={notifications} 
+          <NotificationsButton
+            userID={user.id}
+            userCreatedAt={user.createdAt}
+            subscriptions={user.subscriptions.items || null}
+            notifications={notifications}
             updateIconNotifications={updateIconNotifications}
           />
 
@@ -175,8 +173,8 @@ function Navbar({ user, notifications, updateIconNotifications}) {
                   >
 
                     <Hide below='lg'>
-                      <Text mt="0.25rem" fontSize={["1.1rem", "1.1rem", "0.80rem", "sm", "0.85rem"]}> 
-                        {`${user.givenName} ${user.familyName}` || "Nombre Apellido"} 
+                      <Text mt="0.25rem" fontSize={["1.1rem", "1.1rem", "0.80rem", "sm", "0.85rem"]}>
+                        {`${user.givenName} ${user.familyName}` || "Nombre Apellido"}
                       </Text>
                     </Hide>
 
@@ -191,8 +189,8 @@ function Navbar({ user, notifications, updateIconNotifications}) {
                         textAlign={"center"}
                         rounded="md"
                       >
-                        <Text fontSize={["1.1rem", "1.1rem", "0.78rem", "0.80rem", "0.82rem"]}> 
-                          {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"} 
+                        <Text fontSize={["1.1rem", "1.1rem", "0.78rem", "0.80rem", "0.82rem"]}>
+                          {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"}
                         </Text>
                       </Box>
                     </Hide>
@@ -219,64 +217,70 @@ function Navbar({ user, notifications, updateIconNotifications}) {
                   </Flex>
 
                 </MenuItem>
-                <MenuItem
-                  _hover={{
-                    bg: useColorModeValue("blue.50", "blue.700")
-                  }}
-                /*
-                _active={{
-                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
-                }}
-                _expanded={{
-                  bg: useColorModeValue("#D3D3D3", "rgba(0, 0, 0, 0.20)")
-                }}*/
-                >
-                  <RouterLink to="/settings">
-                    <Flex>
-                      <Icon as={BsGear} mt="0.25rem" /> 
-                      <Text ml="0.5rem"> Settings </Text>
-                    </Flex>
-                  </RouterLink>
-                </MenuItem>
 
-                <MenuItem
-                  _hover={{
-                    bg: useColorModeValue("blue.50", "blue.700")
-                  }}
-                >
-                  <RouterLink to="/settings/profile">
-                    <Flex ml="0.5rem">
-                      <Icon as={BsPersonSquare} mt="0.25rem" /> 
-                      <Text ml="0.5rem"> Profile </Text>
-                    </Flex>
-                  </RouterLink>
-                </MenuItem>
 
-                <MenuItem
-                  _hover={{
-                    bg: useColorModeValue("blue.50", "blue.700")
-                  }}
-                >
-                  <RouterLink to="/settings/channels">
-                    <Flex ml="0.5rem">
-                      <Icon as={MdOutlineCastForEducation} mt="0.25rem" /> 
-                      <Text ml="0.5rem"> Channels </Text>
-                    </Flex>
-                  </RouterLink>
-                </MenuItem>
+                {user.group !== "viewer" ?
+                  <>
+                    <MenuItem _hover={{ bg: bg1 }} >
+                      <RouterLink to="/settings">
+                        <Flex>
+                          <Icon as={BsGear} mt="0.25rem" /> 
+                          <Text ml="0.5rem"> Settings </Text>
+                        </Flex>
+                      </RouterLink>
+                    </MenuItem>
 
-                <MenuItem
-                  _hover={{
-                    bg: useColorModeValue("blue.50", "blue.700")
-                  }}
-                >
-                  <RouterLink to="/settings/advanced">
-                    <Flex ml="0.5rem">
-                      <Icon as={BsTools} mt="0.25rem" /> 
-                      <Text ml="0.5rem"> Advanced </Text>
-                    </Flex>
-                  </RouterLink>
-                </MenuItem>
+                    <MenuItem _hover={{ bg: bg1 }} >
+                      <RouterLink to="/settings/profile">
+                        <Flex ml="0.5rem">
+                          <Icon as={BsPersonSquare} mt="0.25rem" /> 
+                          <Text ml="0.5rem"> Profile </Text>
+                        </Flex>
+                      </RouterLink>
+                    </MenuItem>
+                  </>
+                  :
+                  <MenuItem _hover={{ bg: bg1 }} >
+                    <RouterLink to="/settings/profile">
+                      <Flex>
+                        <Icon as={BsPersonSquare} mt="0.25rem" />
+                        <Text ml="0.5rem"> Profile </Text>
+                      </Flex>
+                    </RouterLink>
+                  </MenuItem>
+                }
+
+                {user.group === "admin" || user.group === "creator" ?
+                  <MenuItem
+                    _hover={{
+                      bg: bg1
+                    }}
+                  >
+                    <RouterLink to="/settings/channels">
+                      <Flex ml="0.5rem">
+                        <Icon as={MdOutlineCastForEducation} mt="0.25rem" />
+                        <Text ml="0.5rem"> Channels </Text>
+                      </Flex>
+                    </RouterLink>
+                  </MenuItem>
+                  : null
+                }
+
+                {user.group === "admin" ?
+                  <MenuItem
+                    _hover={{
+                      bg: bg1
+                    }}
+                  >
+                    <RouterLink to="/settings/advanced">
+                      <Flex ml="0.5rem">
+                        <Icon as={BsTools} mt="0.25rem" />
+                        <Text ml="0.5rem"> Advanced </Text>
+                      </Flex>
+                    </RouterLink>
+                  </MenuItem>
+                  : null
+                }
 
                 <MenuItem
                   _hover={{
@@ -285,7 +289,7 @@ function Navbar({ user, notifications, updateIconNotifications}) {
                 >
                   <RouterLink to="/about">
                     <Flex>
-                      <Icon as={MdHelpOutline} mt="0.25rem" /> 
+                      <Icon as={MdHelpOutline} mt="0.25rem" />
                       <Text ml="0.5rem"> About </Text>
                     </Flex>
                   </RouterLink>
@@ -296,10 +300,10 @@ function Navbar({ user, notifications, updateIconNotifications}) {
                     bg: useColorModeValue("blue.50", "blue.700")
                   }}
                 >
-                    <Flex>
-                      <Icon as={BsBoxArrowRight} mt="0.25rem" /> 
-                      <Text ml="0.5rem"> Logout </Text>
-                    </Flex>
+                  <Flex>
+                    <Icon as={BsBoxArrowRight} mt="0.25rem" />
+                    <Text ml="0.5rem"> Logout </Text>
+                  </Flex>
                 </MenuItem>
               </MenuList>
             </Menu>

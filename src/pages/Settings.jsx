@@ -33,7 +33,7 @@ const NavLink = ({ icon, link, children }) => (
     </Link>
 );
 
-function Explore() {
+function Settings(props) {
 
     return (
         <Box
@@ -41,22 +41,28 @@ function Explore() {
             fontFamily="monospace"
             justifyContent="center"
         >
-            <Flex mb="2rem">
-                <Spacer />
-                <Flex alignItems={"center"} justifyContent={"space-between"}>
+            {props.userGroup !== "viewer" ?
+                <Flex mb="2rem">
                     <Spacer />
                     <Flex alignItems={"center"} justifyContent={"space-between"}>
-                        <NavLink icon={BsPersonSquare} link={"profile"}>{"profile"}</NavLink>
-                        <NavLink icon={MdOutlineCastForEducation} link={"channels"}>{"channels"}</NavLink>
-                        <NavLink icon={BsTools} link={"advanced"}>{"advanced"}</NavLink>
+                        <Spacer />
+                        <Flex alignItems={"center"} justifyContent={"space-between"}>
+                            <NavLink icon={BsPersonSquare} link={"profile"}>{"profile"}</NavLink>
+                            {props.userGroup === "admin" || props.userGroup === "creator" ?
+                                <NavLink icon={MdOutlineCastForEducation} link={"channels"}>{"channels"}</NavLink>
+                                : null
+                            }
+                            {props.userGroup === "admin" ? <NavLink icon={BsTools} link={"advanced"}>{"advanced"}</NavLink> : null}
+                        </Flex>
                     </Flex>
+                    <Spacer />
                 </Flex>
-                <Spacer />
-            </Flex>
+                : null
+            }
 
             <Outlet />
         </Box>
     );
 }
 
-export default Explore;
+export default Settings;
