@@ -30,7 +30,7 @@ function App() {
   const [notifications, setNotifications] = useState(false);
 
   const updateUserAttributes = (newAttributes) => {
-    console.log("Updating user attributes: ", newAttributes);
+    //console.log("Updating user attributes: ", newAttributes);
     setUserAttributes({ ...userAttributes, ...newAttributes });
   };
 
@@ -51,20 +51,20 @@ function App() {
           familyName: currentUser.attributes.family_name,
         }
 
-        console.log({ currentUserAttributes });
+        //console.log({ currentUserAttributes });
 
         /* Check if user exists in database */
         /* If not, create user in database */
         const user = await API.graphql({ query: getUser, variables: { id: currentUserAttributes.id } });
-        console.log({ user });
+        //console.log({ user });
         if (!user.data.getUser) {
           try {
             currentUserAttributes.disabled = false;
-            const newUser = await API.graphql({
+            /* const newUser = */ await API.graphql({
               query: createUser,
               variables: { input: currentUserAttributes }
             });
-            console.log({ newUser });
+            //console.log({ newUser });
             setUserAttributes(currentUserAttributes);
     
           } catch (err) {
@@ -80,24 +80,20 @@ function App() {
             role: user.data.getUser.role || null,
             currentPosition: user.data.getUser.currentPosition || null,
             description: user.data.getUser.description || null,
-            posts: user.data.getUser.posts || null,
+            //posts: user.data.getUser.posts || null,
             ownedChannels: user.data.getUser.ownedChannels || null,
             subscriptions: user.data.getUser.subscriptions || null,
             participantChannels: user.data.getUser.participantChannels || null,
             createdAt: user.data.getUser.createdAt || null,
-            /// Delete this
-            givenName: user.data.getUser.givenName,
-            familyName: user.data.getUser.familyName,
-            /////
           };
           setUserAttributes(newCurrentUserAttribute);
-          console.log(newCurrentUserAttribute);
+          //console.log(newCurrentUserAttribute);
         }
 
         //await DataStore.start();
       } catch (err) {
         setUserAttributes(null);
-        console.log(err);
+        console.error("Error obtaining User data: ", err);
       }
     };
 

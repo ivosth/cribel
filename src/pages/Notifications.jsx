@@ -59,7 +59,7 @@ function Notifications(props) {
 
             setUserNotificationsNew(newNotifications);
             props.updateIconNotifications(false);
-            console.log("newNotifications", newNotifications)
+            //console.log("newNotifications", newNotifications)
         }
 
         const obtainNotifications = async () => {
@@ -74,7 +74,7 @@ function Notifications(props) {
                             filter: { userNotificationsId: { eq: props.userID } }
                         }
                     });
-                    console.log("allUserNotifications", allUserNotifications.data.userNotificationsByDate)
+                    //console.log("allUserNotifications", allUserNotifications.data.userNotificationsByDate)
                     setUserNotificationsOld(allUserNotifications.data.userNotificationsByDate.items);
 
                     // list of channels id that the user is subscribed to
@@ -84,7 +84,7 @@ function Notifications(props) {
                     });
 
                     //console.log("filterSubscriptions", filterSubscriptions)
-                    console.log("props.subscriptions", props.subscriptions)
+                    //console.log("props.subscriptions", props.subscriptions)
 
                     // filter channel notifications by channels subscribed
                     const allChannelNotifications = await API.graphql({
@@ -93,7 +93,7 @@ function Notifications(props) {
                     });
 
 
-                    console.log("channelNotifications", allChannelNotifications.data.channelNotificationsByDate)
+                    //console.log("channelNotifications", allChannelNotifications.data.channelNotificationsByDate)
 
                     await newNotifications(allUserNotifications.data.userNotificationsByDate, allChannelNotifications.data.channelNotificationsByDate);
 

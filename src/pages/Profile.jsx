@@ -25,7 +25,7 @@ function Profile() {
                 setLoading(true);
                 const profile = await API.graphql({ query: getProfile, variables: { id: id } });
                 setLoading(false);
-                console.log(profile.data.getUser)
+                //console.log(profile.data.getUser)
                 setProfile(profile.data.getUser);
             } catch (error) {
                 console.error("Error obtaining profile: ", error);

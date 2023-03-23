@@ -15,7 +15,7 @@ function NotificationsButton(props) {
     useEffect(() => {
 
         async function newNotifications(allUserNotifications, allChannelNotifications) {
-            let newNotifications = [];
+            //let newNotifications = [];
             let lastDate = props.userCreatedAt;
             
             //console.log(lastDate)
@@ -36,7 +36,7 @@ function NotificationsButton(props) {
                 }
             }
 
-            console.log("newNotifications", newNotifications)
+            //console.log("newNotifications", newNotifications)
         }
 
         const obtainNotifications = async () => {
@@ -59,7 +59,7 @@ function NotificationsButton(props) {
                     });
 
                     //console.log("filterSubscriptions", filterSubscriptions)
-                    console.log("props.subscriptions", props.subscriptions)
+                    //console.log("props.subscriptions", props.subscriptions)
 
                     // filter channel notifications by channels subscribed
                     const allChannelNotifications = await API.graphql({
@@ -81,11 +81,12 @@ function NotificationsButton(props) {
 
         obtainNotifications();
 
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.userID, props.subscriptions, props.userCreatedAt]);
 
     return (
         <>
-            {console.log(props.notifications)}
+            {/*console.log(props.notifications)*/}
             <IconButton
                 size="lg"
                 variant="ghost"

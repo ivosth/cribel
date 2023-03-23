@@ -29,7 +29,7 @@ function Feed(props) {
               filter: filterSubscriptions
           }});
   
-          console.log(allPosts.data.postsByDate.items);
+          //console.log(allPosts.data.postsByDate.items);
           setPosts(allPosts.data.postsByDate.items);
         } catch (error) {
           console.error("Error obtaining posts: ", error);
