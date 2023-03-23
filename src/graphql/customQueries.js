@@ -354,3 +354,68 @@ export const getUserChannels = /* GraphQL */ `
     }
   }
 `;
+
+
+
+export const channelNotificationsByDate = /* GraphQL */ `
+  query ChannelNotificationsByDate(
+    $typeChannelNotificationsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelChannelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    channelNotificationsByDate(
+      typeChannelNotificationsByDate: $typeChannelNotificationsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        channel {
+          name
+        }
+        type
+        message
+        createdAt
+        channelNotificationsId
+      }
+      nextToken
+    }
+  }
+`;
+
+
+export const userNotificationsByDate = /* GraphQL */ `
+  query UserNotificationsByDate(
+    $typeUserNotificationsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userNotificationsByDate(
+      typeUserNotificationsByDate: $typeUserNotificationsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        message
+        channelID
+        channelName
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;

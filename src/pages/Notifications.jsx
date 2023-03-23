@@ -2,7 +2,7 @@ import {
     Flex, Box, CircularProgress, Text, Center,
     Tabs, Tab, TabList, TabPanels, TabPanel,
 } from "@chakra-ui/react";
-import { channelNotificationsByDate, userNotificationsByDate } from "../graphql/queries";
+import { channelNotificationsByDate, userNotificationsByDate } from "../graphql/customQueries";
 import { createUserNotification } from "../graphql/mutations";
 import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
