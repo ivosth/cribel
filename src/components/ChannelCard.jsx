@@ -29,14 +29,14 @@ function ChannelCard(props) {
         let newSubscriptions = {};
         newSubscriptions.items = props.subscriptions;
         if (subscribed) {
-            const subscriptionID = props.subscriptions.find(sub => sub.channelID === props.channel.id).id;
+            const subscriptionID = props.subscriptions.find(sub => sub.channelSubscribersId === props.channel.id).id;
             await API.graphql({ query: deleteSubscriptionsSubscribers, variables: { input: { id: subscriptionID } } });
-            newSubscriptions.items = newSubscriptions.items.filter(sub => sub.channelID !== props.channel.id);
+            newSubscriptions.items = newSubscriptions.items.filter(sub => sub.channelSubscribersId !== props.channel.id);
 
         } else {
-            const res = await API.graphql({ query: createSubscriptionsSubscribers, variables: { input: { channelID: props.channel.id, userID: props.userID } } });
+            const res = await API.graphql({ query: createSubscriptionsSubscribers, variables: { input: { channelSubscribersId: props.channel.id, userSubscriptionsId: props.userID } } });
             const channelInfo = { name: props.channel.name, image: props.channel.image };
-            newSubscriptions.items.push({ channel: channelInfo, id: res.data.createSubscriptionsSubscribers.id, userID: props.userID, channelID: props.channel.id });
+            newSubscriptions.items.push({ channel: channelInfo, id: res.data.createSubscriptionsSubscribers.id, userSubscriptionsId: props.userID, channelSubscribersId: props.channel.id });
             
         }
         setSubscribed(!subscribed);
@@ -63,7 +63,7 @@ function ChannelCard(props) {
     function isSubscribed() {
       //console.log("props.subscriptions: ", props.subscriptions)
       if (props.subscriptions != null && props.subscriptions.length > 0)
-        return props.subscriptions.some(sub => sub.channelID === props.channel.id)
+        return props.subscriptions.some(sub => sub.channelSubscribersId === props.channel.id)
     }
     
     setSubscribed(isSubscribed());

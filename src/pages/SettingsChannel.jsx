@@ -153,7 +153,7 @@ function SettingsChannel({ userID }) {
                                                 md: "column",
                                             }}
                                             bg={bg2}
-                                            key={channel.channelID}
+                                            key={channel.channelParticipantsId}
                                             shadow="lg"
                                             rounded="lg"
                                         >
@@ -168,7 +168,7 @@ function SettingsChannel({ userID }) {
                                                 px="0.25rem"
                                                 fontWeight="hairline"
                                             >
-                                                <RouterLink to={`/channel/${channel.channelID}/new`}>
+                                                <RouterLink to={`/channel/${channel.channelParticipantsId}/new`}>
                                                     <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem" mt="0.25rem">{channel.channel.name}</Text>
                                                 </RouterLink>
 
@@ -182,7 +182,7 @@ function SettingsChannel({ userID }) {
                                                         <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md'}} mr="1rem" mt="0.25rem">Channel disabled by owner</Text>
                                                         :
                                                         <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
-                                                            <ChannelNewPost userID={userID} channelID={channel.channelID} topics={channel.channel.topics} />
+                                                            <ChannelNewPost userID={userID} channelID={channel.channelParticipantsId} topics={channel.channel.topics} />
                                                         </ButtonGroup>
                                                     }
                                                 </Flex>

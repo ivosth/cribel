@@ -55,19 +55,18 @@ function UserEditRole(props) {
             if (role === "student" || role === "graduated" || role === "Student" || role === "Graduated") {
                 oldGroup = "viewer"
             } else if (role === "technical" || role === "professor" ||role === "Technical" || role === "Professor") {
-                oldGroup = "admin"
+                oldGroup = "creator"
             }
 
             let newGroup
             if (roleButton === "student" || roleButton === "graduated" || roleButton === "Student" || roleButton === "Graduated") {
                 newGroup = "viewer"
             } else if (roleButton === "technical" || roleButton === "professor" || roleButton === "Technical" || roleButton === "Professor") {
-                newGroup = "admin"
+                newGroup = "creator"
             }
             
             
-            await API.graphql({ query: updateUser, variables: { input: { id: props.user.id, role: roleButton.charAt(0).toLowerCase() + roleButton.slice(1) } } })
-
+            await API.graphql({ query: updateUser, variables: { input: { id: props.user.id, role: roleButton.charAt(0).toLowerCase() + roleButton.slice(1), group: newGroup } } })
 
             if(oldGroup !== newGroup){
                 await API.graphql({ query: `mutation changeUserGroup { changeUserGroup(id: "${props.user.id}", group: ${newGroup}) }` })

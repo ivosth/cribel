@@ -25,11 +25,11 @@ type User
       # allow admins and creators to read, create, update and delete user
       { allow: groups, groups: ["admin", "creator"], operations: [create, read, update, delete] }
       # allow ownner to read and update user
-      { allow: owner, operations: [read, update, create, delete] },
-      # allow all authenticated users to view other users' information
-      { allow: private, operations: [read, create, delete] },
+      { allow: owner, identityClaim: "sub::username", operations: [read, update] },
+      # allow all authenticated users to view other users' information and create user in DynamoDB
+      { allow: private, operations: [read, create] },
       # allow non authenticated users to create an user
-      { allow: public, operations: [create], provider: iam }
+      # { allow: public, operations: [create], provider: iam }
     ]
   ) {
 
@@ -47,12 +47,8 @@ type User
   ratings: [Rating] @hasMany
   posts: [Post] @hasMany
   ownedChannels: [Channel] @hasMany
-  subscriptions: [Channel]
-    @manyToMany(relationName: "SubscriptionsSubscribers")
-    #@auth(rules: [{ allow: private, operations: [create, read, update, delete] }])
-  participantChannels: [Channel]
-    @manyToMany(relationName: "UsersParticipantChannels")
-    #@auth(rules: [{ allow: groups, groups: ["admin", "creator"], operations: [create, read, update, delete] }])
+  subscriptions: [SubscriptionsSubscribers] @hasMany
+  participantChannels: [UsersParticipantChannels] @hasMany
   notifications: [UserNotification] @hasMany
 
   #To prevent an owner from reassigning their record to another user https://docs.amplify.aws/cli/graphql/authorization-rules/#per-user--owner-based-data-access
@@ -64,8 +60,10 @@ type Post
   @model 
   @auth(
     rules: [
-      # allow admins and creators to only create, read and update posts, NOT DELETE posts
-      { allow: groups, groups: ["admin", "creator"], operations: [create, read, update] },
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
+      # allow creators to only create, read and update posts, NOT DELETE posts
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
       # allow all authenticated users to read posts
       { allow: private, operations: [read] },
     ]
@@ -74,7 +72,6 @@ type Post
   id: ID!
   name: String!
   topic: String! #In the code a check will be made to ensure that only the topics in the channel can be selected.
-  #A @hasOne relationship always uses a reference to the primary key of the related model, by default id.
   owner: User! @belongsTo #(fields: ["userID"]) # field to be used for storing the relationship information
   content: String!
   channel: Channel! @belongsTo
@@ -91,10 +88,12 @@ type Channel
   @model 
   @auth(
     rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
       # allow admins and creators to read and create
-      { allow: groups, groups: ["admin", "creator"], operations: [create, read, update, delete] },
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
       # allow all authenticated users to read channels
-      { allow: private, operations: [read, create, delete] },
+      { allow: private, operations: [read] },
       # allow owner to read, create and update the channel
       # { allow: owner, operations: [create, read, update] },
       # HACIENDO REFERENCIA DE OWNER EN CUALQUIER LADO DE @AUTH NO FUNCIONA
@@ -104,7 +103,8 @@ type Channel
   id: ID! 
     @auth(rules: [
       { allow: private, operations: [read, update] }, # Needed to allow update of the avgRating
-      { allow: groups, groups: ["admin", "creator"], operations: [create, read, update] }
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
     ])  
   name: String!
   topics: [String]!
@@ -112,11 +112,12 @@ type Channel
   avgRating: Float! @default(value: "0.0") 
     @auth(rules: [
       { allow: private, operations: [read, update] },
-      { allow: groups, groups: ["admin", "creator"], operations: [create, read, update] }
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
     ])  
   owner: User! @belongsTo
-  subscribers: [User] @manyToMany(relationName: "SubscriptionsSubscribers")
-  participants: [User] @manyToMany(relationName: "UsersParticipantChannels")
+  subscribers: [SubscriptionsSubscribers] @hasMany
+  participants: [UsersParticipantChannels] @hasMany
   description: String
   image: String
   posts: [Post] @hasMany
@@ -126,11 +127,45 @@ type Channel
   notifications: [ChannelNotification] @hasMany
 }
 
+
+type SubscriptionsSubscribers
+  @model 
+  @auth(
+    rules: [
+      # allow all permissions to owners
+      { allow: owner, operations: [create, read, update, delete] }, # COMENTAR ESTA LÍNEA SI SE QUIERE DEJAR DE HISTORIAS
+      # Y DESCOMENTAR LA SIGUIENTE
+      # { allow: private, operations: [create, read, update, delete] }
+      # allow all authenticated users to read channels
+      { allow: private, operations: [read] },
+    ]
+  ) {
+    id: ID!
+    channel: Channel! @belongsTo
+    user: User! @belongsTo
+}
+
+
+type UsersParticipantChannels
+  @model 
+  @auth(
+    rules: [
+      # allow admins and creators to read and create
+      { allow: groups, groups: ["admin", "creator"], operations: [create, read, update, delete] },
+      # allow all authenticated users to read channels
+      { allow: private, operations: [read] },
+    ]
+  ) {
+    id: ID!
+    channel: Channel! @belongsTo
+    user: User! @belongsTo
+}
+
 type Rating 
   @model 
   @auth(
     rules: [
-      # allow all authenticated users to read, create and update the channel
+      # allow all authenticated users to read, create and update ratings
       { allow: private, operations: [create, read, update] },
     ]
   ) {
@@ -145,8 +180,10 @@ type ChannelNotification
   @model 
   @auth(
     rules: [
-      # allow admins and creators to read and create
-      { allow: groups, groups: ["admin", "creator"], operations: [create, read] },
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
+      # allow creators to read and create
+      { allow: groups, groups: ["creator"], operations: [create, read] },
       # allow all authenticated users to read posts
       { allow: private, operations: [read] },
     ]

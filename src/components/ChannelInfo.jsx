@@ -231,7 +231,7 @@ function ChannelInfo({ channel, posts }) {
                                     </Text></Flex>
                                 <Text as="h2" px={2} fontSize="md" >
                                     {channel.participants.items.map(participant =>
-                                        <RouterLink key={participant.userID} to={`/profile/${participant.userID}`}>
+                                        <RouterLink key={participant.userParticipantChannelsId} to={`/profile/${participant.userParticipantChannelsId}`}>
                                             <Text> {`${participant.user.givenName} ${participant.user.familyName}` || "Nombre Apellido"} </Text>
                                         </RouterLink>
                                     )}

@@ -49,6 +49,8 @@ function App() {
           emailVerified: currentUser.attributes.email_verified,
           givenName: currentUser.attributes.given_name,
           familyName: currentUser.attributes.family_name,
+          role: "student",
+          group: "viewer",
         }
 
         //console.log({ currentUserAttributes });

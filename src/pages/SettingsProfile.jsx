@@ -1,12 +1,12 @@
 import {
-    Flex, Box, Icon, Text, Spacer, Image, SimpleGrid, Avatar, Button
+    Flex, Box, Icon, Text, Spacer, Avatar
 } from "@chakra-ui/react";
 import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import ProfileEdit from "../components/ProfileEdit";
 import { Link as RouterLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 function SettingsProfile({ user, updateUserNavbar }) {
@@ -101,6 +101,7 @@ function SettingsProfile({ user, updateUserNavbar }) {
                             }}
                         >
                             {userDescription ||
+                            // eslint-disable-next-line
                             "No description provided. \
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus ex odio, et vulputate metus suscipit quis. \
                             Vestibulum tincidunt eros at lacinia cursus. Vivamus nec elit ac ante faucibus egestas at a arcu. Phasellus sed \
@@ -137,7 +138,11 @@ function SettingsProfile({ user, updateUserNavbar }) {
                                     </Text>
                                 </Flex>
 
-                                {user.ownedChannels.items.length > 0 ?
+                                {user.ownedChannels === undefined || user.ownedChannels?.items.length === 0 ?
+                                    <Text as="h2" px={2} fontSize="sm" >
+                                        No channel has been created by you
+                                    </Text>
+                                    :
                                     user.ownedChannels.items.map(channel => (
                                         <RouterLink key={channel.id} to={`/channel/${channel.id}/new`}>
                                             <Text as="h2" px={2} fontSize="sm" >
@@ -145,10 +150,6 @@ function SettingsProfile({ user, updateUserNavbar }) {
                                             </Text>
                                         </RouterLink>
                                     ))
-                                    :
-                                    <Text as="h2" px={2} fontSize="sm" >
-                                        No channel has been created by you
-                                    </Text>
                                 }
 
                                 
@@ -172,18 +173,18 @@ function SettingsProfile({ user, updateUserNavbar }) {
                                     </Text></Flex>
 
 
-                                    {user.participantChannels.items.length > 0 ?
-                                        user.participantChannels.items.map(channel => (
-                                            <RouterLink key={channel.channelID} to={`/channel/${channel.channelID}/new`}>
-                                                <Text as="h2" px={2} fontSize="sm" >
-                                                    {channel.channel.name}
-                                                </Text>
-                                            </RouterLink>
-                                    ))
-                                    :
+                                    {user.participantChannels === undefined || user.participantChannels.items.length === 0 ?
                                     <Text as="h2" px={2} fontSize="sm" >
                                         Does not participate in any channel
                                     </Text>
+                                    :
+                                    user.participantChannels.items.map(channel => (
+                                        <RouterLink key={channel.channelParticipantsId} to={`/channel/${channel.channelParticipantsId}/new`}>
+                                            <Text as="h2" px={2} fontSize="sm" >
+                                                {channel.channel.name}
+                                            </Text>
+                                        </RouterLink>
+                                ))
                                 }
                             </Box>
                         </Flex>

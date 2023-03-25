@@ -65,10 +65,10 @@ export const onCreateUser = /* GraphQL */ `
       subscriptions {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
+          userSubscriptionsId
+          channelSubscribersId
           owner
         }
         nextToken
@@ -76,11 +76,10 @@ export const onCreateUser = /* GraphQL */ `
       participantChannels {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -168,10 +167,10 @@ export const onUpdateUser = /* GraphQL */ `
       subscriptions {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
+          userSubscriptionsId
+          channelSubscribersId
           owner
         }
         nextToken
@@ -179,11 +178,10 @@ export const onUpdateUser = /* GraphQL */ `
       participantChannels {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -271,10 +269,10 @@ export const onDeleteUser = /* GraphQL */ `
       subscriptions {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
+          userSubscriptionsId
+          channelSubscribersId
           owner
         }
         nextToken
@@ -282,11 +280,10 @@ export const onDeleteUser = /* GraphQL */ `
       participantChannels {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -667,10 +664,10 @@ export const onCreateChannel = /* GraphQL */ `
       subscribers {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
+          userSubscriptionsId
+          channelSubscribersId
           owner
         }
         nextToken
@@ -678,11 +675,10 @@ export const onCreateChannel = /* GraphQL */ `
       participants {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -769,10 +765,10 @@ export const onUpdateChannel = /* GraphQL */ `
       subscribers {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
+          userSubscriptionsId
+          channelSubscribersId
           owner
         }
         nextToken
@@ -780,11 +776,10 @@ export const onUpdateChannel = /* GraphQL */ `
       participants {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -871,10 +866,10 @@ export const onDeleteChannel = /* GraphQL */ `
       subscribers {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
+          userSubscriptionsId
+          channelSubscribersId
           owner
         }
         nextToken
@@ -882,11 +877,10 @@ export const onDeleteChannel = /* GraphQL */ `
       participants {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -925,6 +919,546 @@ export const onDeleteChannel = /* GraphQL */ `
       }
       updatedAt
       userOwnedChannelsId
+    }
+  }
+`;
+export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
+  subscription OnCreateSubscriptionsSubscribers(
+    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
+    $owner: String
+  ) {
+    onCreateSubscriptionsSubscribers(filter: $filter, owner: $owner) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      userSubscriptionsId
+      channelSubscribersId
+      owner
+    }
+  }
+`;
+export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
+  subscription OnUpdateSubscriptionsSubscribers(
+    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
+    $owner: String
+  ) {
+    onUpdateSubscriptionsSubscribers(filter: $filter, owner: $owner) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      userSubscriptionsId
+      channelSubscribersId
+      owner
+    }
+  }
+`;
+export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
+  subscription OnDeleteSubscriptionsSubscribers(
+    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
+    $owner: String
+  ) {
+    onDeleteSubscriptionsSubscribers(filter: $filter, owner: $owner) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      userSubscriptionsId
+      channelSubscribersId
+      owner
+    }
+  }
+`;
+export const onCreateUsersParticipantChannels = /* GraphQL */ `
+  subscription OnCreateUsersParticipantChannels(
+    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
+  ) {
+    onCreateUsersParticipantChannels(filter: $filter) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      userParticipantChannelsId
+      channelParticipantsId
+    }
+  }
+`;
+export const onUpdateUsersParticipantChannels = /* GraphQL */ `
+  subscription OnUpdateUsersParticipantChannels(
+    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
+  ) {
+    onUpdateUsersParticipantChannels(filter: $filter) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      userParticipantChannelsId
+      channelParticipantsId
+    }
+  }
+`;
+export const onDeleteUsersParticipantChannels = /* GraphQL */ `
+  subscription OnDeleteUsersParticipantChannels(
+    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
+  ) {
+    onDeleteUsersParticipantChannels(filter: $filter) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      userParticipantChannelsId
+      channelParticipantsId
     }
   }
 `;
@@ -1525,552 +2059,6 @@ export const onDeleteUserNotification = /* GraphQL */ `
       createdAt
       updatedAt
       userNotificationsId
-    }
-  }
-`;
-export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
-  subscription OnCreateSubscriptionsSubscribers(
-    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
-    $owner: String
-  ) {
-    onCreateSubscriptionsSubscribers(filter: $filter, owner: $owner) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
-  subscription OnUpdateSubscriptionsSubscribers(
-    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
-    $owner: String
-  ) {
-    onUpdateSubscriptionsSubscribers(filter: $filter, owner: $owner) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
-  subscription OnDeleteSubscriptionsSubscribers(
-    $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
-    $owner: String
-  ) {
-    onDeleteSubscriptionsSubscribers(filter: $filter, owner: $owner) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onCreateUsersParticipantChannels = /* GraphQL */ `
-  subscription OnCreateUsersParticipantChannels(
-    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
-    $owner: String
-  ) {
-    onCreateUsersParticipantChannels(filter: $filter, owner: $owner) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onUpdateUsersParticipantChannels = /* GraphQL */ `
-  subscription OnUpdateUsersParticipantChannels(
-    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
-    $owner: String
-  ) {
-    onUpdateUsersParticipantChannels(filter: $filter, owner: $owner) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onDeleteUsersParticipantChannels = /* GraphQL */ `
-  subscription OnDeleteUsersParticipantChannels(
-    $filter: ModelSubscriptionUsersParticipantChannelsFilterInput
-    $owner: String
-  ) {
-    onDeleteUsersParticipantChannels(filter: $filter, owner: $owner) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
     }
   }
 `;

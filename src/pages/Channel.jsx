@@ -48,14 +48,14 @@ function Channel(props) {
             let newSubscriptions = {};
             newSubscriptions.items = props.subscriptions;
             if (subscribed) {
-                const subscriptionID = props.subscriptions.find(sub => sub.channelID === id).id;
+                const subscriptionID = props.subscriptions.find(sub => sub.channelSubscribersId === id).id;
                 await API.graphql({ query: deleteSubscriptionsSubscribers, variables: { input: { id: subscriptionID } } });
-                newSubscriptions.items = newSubscriptions.items.filter(sub => sub.channelID !== id);
+                newSubscriptions.items = newSubscriptions.items.filter(sub => sub.channelSubscribersId !== id);
 
             } else {
-                const res = await API.graphql({ query: createSubscriptionsSubscribers, variables: { input: { channelID: id, userID: props.userID } } });
+                const res = await API.graphql({ query: createSubscriptionsSubscribers, variables: { input: { channelSubscribersId: id, userSubscriptionsId: props.userID } } });
                 const channelInfo = { name: channel.name, image: channel.image };
-                newSubscriptions.items.push({ channel: channelInfo, id: res.data.createSubscriptionsSubscribers.id, userID: props.userID, channelID: id });
+                newSubscriptions.items.push({ channel: channelInfo, id: res.data.createSubscriptionsSubscribers.id, userSubscriptionsId: props.userID, channelSubscribersId: id });
                 
             }
             setSubscribed(!subscribed);
@@ -94,7 +94,8 @@ function Channel(props) {
         };
         function isSubscribed() {
             //console.log("props.subscriptions: ", props.subscriptions)
-            return props.subscriptions.some(sub => sub.channelID === id)
+        if (props.subscriptions != null && props.subscriptions.length > 0)
+            return props.subscriptions.some(sub => sub.channelSubscribersId === id)
         }
 
         obtainChannel();

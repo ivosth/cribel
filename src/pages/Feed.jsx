@@ -20,7 +20,7 @@ function Feed(props) {
   
           const filterSubscriptions = {or: []};
           props.subscriptions.forEach(subscription => {
-              filterSubscriptions.or.push({channelPostsId: {eq: subscription.channelID}});
+              filterSubscriptions.or.push({channelPostsId: {eq: subscription.channelSubscribersId}});
           });
   
           const allPosts = await API.graphql({ query: postsByDate, variables: {

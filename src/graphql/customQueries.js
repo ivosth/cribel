@@ -16,7 +16,7 @@ export const getUser = /* GraphQL */ `
       subscriptions {
         items {
           id
-          channelID
+          channelSubscribersId
           channel {
             name
             image
@@ -26,7 +26,7 @@ export const getUser = /* GraphQL */ `
       }
       participantChannels {
         items {
-          channelID
+          channelParticipantsId
           channel {
             name
           }
@@ -58,7 +58,7 @@ export const getProfile = /* GraphQL */ `
       }
       participantChannels {
         items {
-          channelID
+          channelParticipantsId
           channel {
             name
           }
@@ -90,7 +90,7 @@ export const getChannel = /* GraphQL */ `
       participants {
         items {
           id
-          userID
+          userParticipantChannelsId
           user {
               familyName
               givenName
@@ -342,7 +342,7 @@ export const getUserChannels = /* GraphQL */ `
       participantChannels {
         items {
           id
-          channelID
+          channelParticipantsId
           channel {
             name
             topics

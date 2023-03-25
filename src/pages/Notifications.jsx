@@ -65,7 +65,7 @@ function Notifications(props) {
         const obtainNotifications = async () => {
             try {
 
-                if (props.subscriptions.length !== 0) {
+                if (props.subscriptions !== null && props.subscriptions?.length !== 0) {
                     setLoading(true);
                     const allUserNotifications = await API.graphql({
                         query: userNotificationsByDate,
@@ -80,7 +80,7 @@ function Notifications(props) {
                     // list of channels id that the user is subscribed to
                     const filterSubscriptions = { or: [] };
                     props.subscriptions.forEach(subscription => {
-                        filterSubscriptions.or.push({ channelNotificationsId: { eq: subscription.channelID } });
+                        filterSubscriptions.or.push({ channelNotificationsId: { eq: subscription.channelSubscribersId } });
                     });
 
                     //console.log("filterSubscriptions", filterSubscriptions)
@@ -145,7 +145,7 @@ function Notifications(props) {
                                 }
                             </TabPanel>
                             <TabPanel>
-                                {userNotificationsOld.length === 0 ?
+                                {userNotificationsOld === null || userNotificationsOld.length === 0 ?
                                     <Text>There are no old notifications</Text> :
                                     userNotificationsOld.map(notification => {
                                         return (

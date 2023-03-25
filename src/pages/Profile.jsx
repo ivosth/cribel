@@ -176,7 +176,7 @@ function Profile() {
 
                                     {profile.participantChannels.items.length > 0 ?
                                         profile.participantChannels.items.map(channel => (
-                                            <RouterLink to={`/channel/${channel.channelID}/new`} key={channel.channelID}>
+                                            <RouterLink to={`/channel/${channel.channelParticipantsId}/new`} key={channel.channelParticipantsId}>
                                                 <Text as="h2" px={2} fontSize="sm" >
                                                     {channel.channel.name}
                                                 </Text>

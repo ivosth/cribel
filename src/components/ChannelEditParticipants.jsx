@@ -78,7 +78,7 @@ function ChannelEditParticipants(props) {
             const users = await API.graphql({ query: listUsersWithFilters, variables: { filter: filterExpression } })
             // Don't show users that are already participants nor the owner of the channel
             const newUsers = users.data.listUsers.items.filter((user) => {
-                return !channel.participants.items.some((participant) => participant.userID === user.id) && user.id !== channel.userOwnedChannelsId
+                return !channel.participants.items.some((participant) => participant.userParticipantChannelsId === user.id) && user.id !== channel.userOwnedChannelsId
             })
             
             setSearchUsers(newUsers)
@@ -91,8 +91,8 @@ function ChannelEditParticipants(props) {
     async function addParticipant(userID, givenName, familyName) {
         try {
             const newParticipant = {
-                channelID: props.channelID,
-                userID: userID
+                channelParticipantsId: props.channelID,
+                userParticipantChannelsId: userID
             }
             const result = await API.graphql({ query: createUsersParticipantChannels, variables: { input: newParticipant } })
             

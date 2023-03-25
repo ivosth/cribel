@@ -62,10 +62,10 @@ export const getUser = /* GraphQL */ `
       subscriptions {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
+          userSubscriptionsId
+          channelSubscribersId
           owner
         }
         nextToken
@@ -73,11 +73,10 @@ export const getUser = /* GraphQL */ `
       participantChannels {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -486,10 +485,10 @@ export const getChannel = /* GraphQL */ `
       subscribers {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
+          userSubscriptionsId
+          channelSubscribersId
           owner
         }
         nextToken
@@ -497,11 +496,10 @@ export const getChannel = /* GraphQL */ `
       participants {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -717,6 +715,286 @@ export const channelsByRating = /* GraphQL */ `
         }
         updatedAt
         userOwnedChannelsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getSubscriptionsSubscribers = /* GraphQL */ `
+  query GetSubscriptionsSubscribers($id: ID!) {
+    getSubscriptionsSubscribers(id: $id) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      userSubscriptionsId
+      channelSubscribersId
+      owner
+    }
+  }
+`;
+export const listSubscriptionsSubscribers = /* GraphQL */ `
+  query ListSubscriptionsSubscribers(
+    $filter: ModelSubscriptionsSubscribersFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSubscriptionsSubscribers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        user {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        userSubscriptionsId
+        channelSubscribersId
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getUsersParticipantChannels = /* GraphQL */ `
+  query GetUsersParticipantChannels($id: ID!) {
+    getUsersParticipantChannels(id: $id) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      userParticipantChannelsId
+      channelParticipantsId
+    }
+  }
+`;
+export const listUsersParticipantChannels = /* GraphQL */ `
+  query ListUsersParticipantChannels(
+    $filter: ModelUsersParticipantChannelsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsersParticipantChannels(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        user {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        userParticipantChannelsId
+        channelParticipantsId
       }
       nextToken
     }
@@ -1133,288 +1411,6 @@ export const userNotificationsByDate = /* GraphQL */ `
         createdAt
         updatedAt
         userNotificationsId
-      }
-      nextToken
-    }
-  }
-`;
-export const getSubscriptionsSubscribers = /* GraphQL */ `
-  query GetSubscriptionsSubscribers($id: ID!) {
-    getSubscriptionsSubscribers(id: $id) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const listSubscriptionsSubscribers = /* GraphQL */ `
-  query ListSubscriptionsSubscribers(
-    $filter: ModelSubscriptionsSubscribersFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listSubscriptionsSubscribers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userID
-        channelID
-        user {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        channel {
-          id
-          name
-          topics
-          disabled
-          avgRating
-          description
-          image
-          typeChannelsByDate
-          typeChannelsByRating
-          createdAt
-          updatedAt
-          userOwnedChannelsId
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getUsersParticipantChannels = /* GraphQL */ `
-  query GetUsersParticipantChannels($id: ID!) {
-    getUsersParticipantChannels(id: $id) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const listUsersParticipantChannels = /* GraphQL */ `
-  query ListUsersParticipantChannels(
-    $filter: ModelUsersParticipantChannelsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUsersParticipantChannels(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userID
-        channelID
-        user {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        channel {
-          id
-          name
-          topics
-          disabled
-          avgRating
-          description
-          image
-          typeChannelsByDate
-          typeChannelsByRating
-          createdAt
-          updatedAt
-          userOwnedChannelsId
-        }
-        createdAt
-        updatedAt
-        owner
       }
       nextToken
     }
