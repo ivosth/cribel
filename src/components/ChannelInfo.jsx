@@ -1,5 +1,5 @@
 import {
-    Flex, Box, Icon, Text, Spacer, Image, SimpleGrid, Wrap
+    Flex, Box, Icon, Text, Spacer, Image, Wrap
 } from "@chakra-ui/react";
 import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
@@ -48,7 +48,13 @@ function ChannelInfo({ channel, posts }) {
                 id: channel.id,
                 avgRating: rate
             }
-            API.graphql({ query: updateChannel, variables: { input: updatedChannel } });
+            try {
+                API.graphql({ query: updateChannel, variables: { input: updatedChannel } });
+            }
+            catch (err) {
+                console.error('Error updating channel in channel info:', err);
+            }
+            
 
             return String(rate);
         }

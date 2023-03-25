@@ -45,7 +45,7 @@ function ChannelNewChannel(props) {
             newChannelInput.topics = topicsList
 
             if (content) {
-                newChannelInput.content = content
+                newChannelInput.description = content
             }
             //console.log("newChannelInput 1:", newChannelInput)
 

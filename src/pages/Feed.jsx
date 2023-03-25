@@ -14,7 +14,7 @@ function Feed(props) {
   useEffect(() => {
 
     const obtainListPosts = async() => {
-      if (props.subscriptions.length > 0) {
+      if (props.subscriptions != null && props.subscriptions.length > 0 ) {
         try{
           setLoading(true);
   

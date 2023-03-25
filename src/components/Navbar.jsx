@@ -124,7 +124,7 @@ function Navbar({ user, notifications, updateIconNotifications }) {
             <MenuList maxH='20rem' sx={{ overflowY: "scroll" }}>
               <MenuGroup title='Your followed channels'>
                 <MenuDivider />
-                {user.subscriptions.items.map(channel => (
+                {user.subscriptions?.items.map(channel => (
                   <RouterLink to={`/channel/${channel.channelID}/new`} key={channel.channelID}>
                     <MenuItem>
                       <Avatar size="sm" name={channel.channel.name} mr="0.75rem"
@@ -150,7 +150,7 @@ function Navbar({ user, notifications, updateIconNotifications }) {
           <NotificationsButton
             userID={user.id}
             userCreatedAt={user.createdAt}
-            subscriptions={user.subscriptions.items || null}
+            subscriptions={user.subscriptions?.items || null}
             notifications={notifications}
             updateIconNotifications={updateIconNotifications}
           />
@@ -190,7 +190,7 @@ function Navbar({ user, notifications, updateIconNotifications }) {
                         rounded="md"
                       >
                         <Text fontSize={["1.1rem", "1.1rem", "0.78rem", "0.80rem", "0.82rem"]}>
-                          {user.role.charAt(0).toUpperCase() + user.role.slice(1) || "Role"}
+                          {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1) || "Role"}
                         </Text>
                       </Box>
                     </Hide>

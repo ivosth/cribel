@@ -45,7 +45,7 @@ function ProfileEdit(props) {
       
 
     } catch (err) {
-      console.log('Error updating user profile: ', err)
+      console.error('Error updating user profile: ', err)
     }
 
   }

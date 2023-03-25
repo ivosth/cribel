@@ -62,7 +62,8 @@ function ChannelCard(props) {
   useEffect(() => {
     function isSubscribed() {
       //console.log("props.subscriptions: ", props.subscriptions)
-      return props.subscriptions.some(sub => sub.channelID === props.channel.id)
+      if (props.subscriptions != null && props.subscriptions.length > 0)
+        return props.subscriptions.some(sub => sub.channelID === props.channel.id)
     }
     
     setSubscribed(isSubscribed());

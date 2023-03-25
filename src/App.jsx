@@ -96,7 +96,7 @@ function App() {
         console.error("Error obtaining User data: ", err);
       }
     };
-
+    obtainUser();
 
     const onAuthEventListener = () => {
       Hub.listen('auth', (data) => {
@@ -119,7 +119,7 @@ function App() {
 
     };
 
-    obtainUser();
+    
     onAuthEventListener();
   }, []);
 
@@ -137,9 +137,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />}>
           <Route path="channels" element={<Outlet/>} >
-            <Route path="new" element={<ChannelList sort="new" userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} /> } />
-            <Route path="trending" element={<ChannelList sort="trending" userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
-            <Route path="top" element={<ChannelList sort="top" userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} />
+            <Route path="new" element={<ChannelList sort="new" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} /> } />
+            <Route path="trending" element={<ChannelList sort="trending" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />} />
+            <Route path="top" element={<ChannelList sort="top" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />} />
           </Route>
           <Route path="posts" element={<Outlet/>} >
             <Route path="new" element={<PostList userID={userAttributes.id} sort="new"/> } />
@@ -153,14 +153,14 @@ function App() {
           <Route path="channels" element={ {userAttributes}.group !== "creator" || {userAttributes}.group !== "admin" ? <SettingsChannel userID={userAttributes.id} /> : <Error /> } />
           <Route path="advanced" element={ {userAttributes}.group !== "admin" ? <SettingsAdvanced /> : <Error /> } />
         </Route>
-        <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} updateChannelsNavbar={updateUserAttributes} />} >
+        <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />} >
           <Route path="new" element={<ChannelPostsSorted userID={userAttributes.id} sort="new"/> } />
           <Route path="trending" element={<ChannelPostsSorted userID={userAttributes.id} sort="trending"/>} />
           <Route path="top" element={<ChannelPostsSorted userID={userAttributes.id} sort="top"/>} />
         </Route>
         <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/feed" element={<Feed userID={userAttributes.id} subscriptions={userAttributes.subscriptions.items || null} />} />
-        <Route path="/notifications" element={<Notifications userID={userAttributes.id} userCreatedAt={userAttributes.createdAt} subscriptions={userAttributes.subscriptions.items || null} updateIconNotifications={updateIconNotifications}/>} />
+        <Route path="/feed" element={<Feed userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} />} />
+        <Route path="/notifications" element={<Notifications userID={userAttributes.id} userCreatedAt={userAttributes.createdAt} subscriptions={userAttributes.subscriptions?.items || null} updateIconNotifications={updateIconNotifications}/>} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />
       </Routes>
