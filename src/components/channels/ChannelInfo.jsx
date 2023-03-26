@@ -7,7 +7,7 @@ import { MdPeopleOutline, MdStar } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
 import { Prose } from "@nikolovlazar/chakra-ui-prose";
 import { API } from 'aws-amplify';
-import { updateChannel } from "../graphql/mutations";
+import { updateChannel } from "../../graphql/mutations";
 import DOMPurify from 'dompurify';
 
 const minimumViews = 5;

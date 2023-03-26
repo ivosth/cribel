@@ -16,7 +16,7 @@ import { Prose } from "@nikolovlazar/chakra-ui-prose";
 import { RiChatDeleteLine, RiChatFollowUpLine} from "react-icons/ri";
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers, createUserNotification } from "../graphql/mutations";
+import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers, createUserNotification } from "../../graphql/mutations";
 import DOMPurify from 'dompurify';
 
 function ChannelCard(props) {

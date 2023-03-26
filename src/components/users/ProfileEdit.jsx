@@ -12,9 +12,9 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
-import awsExports from '../aws-exports'
+import awsExports from '../../aws-exports'
 import { Storage, Auth, API } from 'aws-amplify'
-import { updateUser } from "../graphql/mutations";
+import { updateUser } from "../../graphql/mutations";
 
 function ProfileEdit(props) {
   const { isOpen, onClose, onOpen } = useDisclosure();

@@ -18,7 +18,7 @@ import {
 import { API } from 'aws-amplify'
 import { FaUserTag } from "react-icons/fa";
 import { useState } from "react";
-import { updateUser } from "../graphql/mutations";
+import { updateUser } from "../../graphql/mutations";
 
 function UserEditRole(props) {
     const { isOpen, onClose, onOpen } = useDisclosure();

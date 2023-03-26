@@ -6,7 +6,7 @@ import { channelNotificationsByDate, userNotificationsByDate } from "../graphql/
 import { createUserNotification } from "../graphql/mutations";
 import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
-import NotificationCard from "../components/NotificationCard";
+import NotificationCard from "../components/notifications/NotificationCard";
 
 
 

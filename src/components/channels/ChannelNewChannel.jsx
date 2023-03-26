@@ -13,11 +13,11 @@ import {
     useDisclosure,
     Center,
 } from "@chakra-ui/react";
-import { createChannel } from "../graphql/mutations";
+import { createChannel } from "../../graphql/mutations";
 import { MdOutlineLibraryAdd } from "react-icons/md";
-import RichEditor from "./RichEditor";
+import RichEditor from "../common/RichEditor";
 import { useState } from "react";
-import awsExports from '../aws-exports'
+import awsExports from '../../aws-exports'
 import { Storage, Auth, API } from 'aws-amplify'
 
 function ChannelNewChannel(props) {

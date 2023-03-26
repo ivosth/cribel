@@ -11,7 +11,7 @@ import { Rating } from "react-simple-star-rating";
 import { useNavigate } from 'react-router-dom';
 import { Prose } from '@nikolovlazar/chakra-ui-prose';
 import { API } from 'aws-amplify';
-import { createRating, updateRating, updatePost } from '../graphql/mutations';
+import { createRating, updateRating, updatePost } from '../../graphql/mutations';
 import DOMPurify from 'dompurify';
 
 const minimumViews = 5;

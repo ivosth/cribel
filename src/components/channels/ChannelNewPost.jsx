@@ -18,9 +18,9 @@ import {
     Select
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify'
-import { createPost, createChannelNotification } from "../graphql/mutations";
+import { createPost, createChannelNotification } from "../../graphql/mutations";
 import { MdPostAdd } from "react-icons/md";
-import RichEditor from "./RichEditor";
+import RichEditor from "../common/RichEditor";
 import { useState } from "react";
 
 

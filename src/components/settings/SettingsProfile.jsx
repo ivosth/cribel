@@ -4,7 +4,7 @@ import {
 import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
 import { MdOutlineCastForEducation } from "react-icons/md";
-import ProfileEdit from "../components/ProfileEdit";
+import ProfileEdit from "../users/ProfileEdit";
 import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 

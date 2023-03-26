@@ -2,14 +2,14 @@ import {
     Flex, useColorModeValue, Stack, SimpleGrid, ButtonGroup, Box, CircularProgress, Text
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import ChannelNewPost from './../components/ChannelNewPost';
-import ChannelEditInfo from './../components/ChannelEditInfo';
-import ChannelEditParticipants from './../components/ChannelEditParticipants';
-import { getUserChannels } from './../graphql/customQueries';
+import ChannelNewPost from '../channels/ChannelNewPost';
+import ChannelEditInfo from '../channels/ChannelEditInfo';
+import ChannelEditParticipants from '../channels/ChannelEditParticipants';
+import { getUserChannels } from '../../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import ChannelNewChannel from './../components/ChannelNewChannel';
-import ChannelStatus from './../components/ChannelStatus';
+import ChannelNewChannel from '../channels/ChannelNewChannel';
+import ChannelStatus from '../channels/ChannelStatus';
 
 function SettingsChannel({ userID }) {
     const bg = useColorModeValue("gray.100", "gray.600");

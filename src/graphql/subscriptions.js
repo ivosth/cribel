@@ -2,11 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onCreateUser(filter: $filter, owner: $owner) {
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
       id
       email
       emailVerified
@@ -69,7 +66,6 @@ export const onCreateUser = /* GraphQL */ `
           updatedAt
           userSubscriptionsId
           channelSubscribersId
-          owner
         }
         nextToken
       }
@@ -99,16 +95,12 @@ export const onCreateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onUpdateUser(filter: $filter, owner: $owner) {
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
       id
       email
       emailVerified
@@ -171,7 +163,6 @@ export const onUpdateUser = /* GraphQL */ `
           updatedAt
           userSubscriptionsId
           channelSubscribersId
-          owner
         }
         nextToken
       }
@@ -201,16 +192,12 @@ export const onUpdateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onDeleteUser(filter: $filter, owner: $owner) {
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
       id
       email
       emailVerified
@@ -273,7 +260,6 @@ export const onDeleteUser = /* GraphQL */ `
           updatedAt
           userSubscriptionsId
           channelSubscribersId
-          owner
         }
         nextToken
       }
@@ -303,7 +289,6 @@ export const onDeleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -345,7 +330,6 @@ export const onCreatePost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       content
       channel {
@@ -368,7 +352,6 @@ export const onCreatePost = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -449,7 +432,6 @@ export const onUpdatePost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       content
       channel {
@@ -472,7 +454,6 @@ export const onUpdatePost = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -553,7 +534,6 @@ export const onDeletePost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       content
       channel {
@@ -576,7 +556,6 @@ export const onDeletePost = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -659,7 +638,6 @@ export const onCreateChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       subscribers {
         items {
@@ -668,7 +646,6 @@ export const onCreateChannel = /* GraphQL */ `
           updatedAt
           userSubscriptionsId
           channelSubscribersId
-          owner
         }
         nextToken
       }
@@ -760,7 +737,6 @@ export const onUpdateChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       subscribers {
         items {
@@ -769,7 +745,6 @@ export const onUpdateChannel = /* GraphQL */ `
           updatedAt
           userSubscriptionsId
           channelSubscribersId
-          owner
         }
         nextToken
       }
@@ -861,7 +836,6 @@ export const onDeleteChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       subscribers {
         items {
@@ -870,7 +844,6 @@ export const onDeleteChannel = /* GraphQL */ `
           updatedAt
           userSubscriptionsId
           channelSubscribersId
-          owner
         }
         nextToken
       }
@@ -925,9 +898,8 @@ export const onDeleteChannel = /* GraphQL */ `
 export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
   subscription OnCreateSubscriptionsSubscribers(
     $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
-    $owner: String
   ) {
-    onCreateSubscriptionsSubscribers(filter: $filter, owner: $owner) {
+    onCreateSubscriptionsSubscribers(filter: $filter) {
       id
       channel {
         id
@@ -949,7 +921,6 @@ export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1003,22 +974,19 @@ export const onCreateSubscriptionsSubscribers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
       userSubscriptionsId
       channelSubscribersId
-      owner
     }
   }
 `;
 export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
   subscription OnUpdateSubscriptionsSubscribers(
     $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
-    $owner: String
   ) {
-    onUpdateSubscriptionsSubscribers(filter: $filter, owner: $owner) {
+    onUpdateSubscriptionsSubscribers(filter: $filter) {
       id
       channel {
         id
@@ -1040,7 +1008,6 @@ export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1094,22 +1061,19 @@ export const onUpdateSubscriptionsSubscribers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
       userSubscriptionsId
       channelSubscribersId
-      owner
     }
   }
 `;
 export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
   subscription OnDeleteSubscriptionsSubscribers(
     $filter: ModelSubscriptionSubscriptionsSubscribersFilterInput
-    $owner: String
   ) {
-    onDeleteSubscriptionsSubscribers(filter: $filter, owner: $owner) {
+    onDeleteSubscriptionsSubscribers(filter: $filter) {
       id
       channel {
         id
@@ -1131,7 +1095,6 @@ export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1185,13 +1148,11 @@ export const onDeleteSubscriptionsSubscribers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
       userSubscriptionsId
       channelSubscribersId
-      owner
     }
   }
 `;
@@ -1221,7 +1182,6 @@ export const onCreateUsersParticipantChannels = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1275,7 +1235,6 @@ export const onCreateUsersParticipantChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -1310,7 +1269,6 @@ export const onUpdateUsersParticipantChannels = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1364,7 +1322,6 @@ export const onUpdateUsersParticipantChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -1399,7 +1356,6 @@ export const onDeleteUsersParticipantChannels = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1453,7 +1409,6 @@ export const onDeleteUsersParticipantChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -1498,7 +1453,6 @@ export const onCreateRating = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       post {
         id
@@ -1518,7 +1472,6 @@ export const onCreateRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -1590,7 +1543,6 @@ export const onUpdateRating = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       post {
         id
@@ -1610,7 +1562,6 @@ export const onUpdateRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -1682,7 +1633,6 @@ export const onDeleteRating = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       post {
         id
@@ -1702,7 +1652,6 @@ export const onDeleteRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -1764,7 +1713,6 @@ export const onCreateChannelNotification = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1821,7 +1769,6 @@ export const onUpdateChannelNotification = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1878,7 +1825,6 @@ export const onDeleteChannelNotification = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1947,7 +1893,6 @@ export const onCreateUserNotification = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       type
       message
@@ -1998,7 +1943,6 @@ export const onUpdateUserNotification = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       type
       message
@@ -2049,7 +1993,6 @@ export const onDeleteUserNotification = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       type
       message

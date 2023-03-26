@@ -1,4 +1,4 @@
-import { postsByDate, postsByRating } from '../graphql/customQueries';
+import { postsByDate, postsByRating } from '../../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { CircularProgress, Flex, Box, Spacer } from "@chakra-ui/react";

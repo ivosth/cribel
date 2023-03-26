@@ -66,7 +66,6 @@ export const getUser = /* GraphQL */ `
           updatedAt
           userSubscriptionsId
           channelSubscribersId
-          owner
         }
         nextToken
       }
@@ -96,7 +95,6 @@ export const getUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -139,7 +137,6 @@ export const listUsers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -183,7 +180,6 @@ export const getPost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       content
       channel {
@@ -206,7 +202,6 @@ export const getPost = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -274,7 +269,6 @@ export const listPosts = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -341,7 +335,6 @@ export const postsByDate = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -408,7 +401,6 @@ export const postsByRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -480,7 +472,6 @@ export const getChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       subscribers {
         items {
@@ -489,7 +480,6 @@ export const getChannel = /* GraphQL */ `
           updatedAt
           userSubscriptionsId
           channelSubscribersId
-          owner
         }
         nextToken
       }
@@ -568,7 +558,6 @@ export const listChannels = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -631,7 +620,6 @@ export const channelsByDate = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -694,7 +682,6 @@ export const channelsByRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -744,7 +731,6 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -798,13 +784,11 @@ export const getSubscriptionsSubscribers = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
       userSubscriptionsId
       channelSubscribersId
-      owner
     }
   }
 `;
@@ -849,13 +833,11 @@ export const listSubscriptionsSubscribers = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         createdAt
         updatedAt
         userSubscriptionsId
         channelSubscribersId
-        owner
       }
       nextToken
     }
@@ -885,7 +867,6 @@ export const getUsersParticipantChannels = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -939,7 +920,6 @@ export const getUsersParticipantChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -989,7 +969,6 @@ export const listUsersParticipantChannels = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         createdAt
         updatedAt
@@ -1036,7 +1015,6 @@ export const getRating = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       post {
         id
@@ -1056,7 +1034,6 @@ export const getRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -1115,7 +1092,6 @@ export const listRatings = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         post {
           id
@@ -1164,7 +1140,6 @@ export const getChannelNotification = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1313,7 +1288,6 @@ export const getUserNotification = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       type
       message
@@ -1353,7 +1327,6 @@ export const listUserNotifications = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         type
         message
@@ -1401,7 +1374,6 @@ export const userNotificationsByDate = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         type
         message

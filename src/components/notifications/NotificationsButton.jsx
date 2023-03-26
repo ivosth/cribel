@@ -1,5 +1,5 @@
 import { IconButton, useColorModeValue } from "@chakra-ui/react";
-import { channelNotificationsByDate, userNotificationsByDate } from "../graphql/customQueries";
+import { channelNotificationsByDate, userNotificationsByDate } from "../../graphql/customQueries";
 import { useNavigate } from "react-router-dom";
 import { API } from "aws-amplify";
 import { useEffect } from "react";

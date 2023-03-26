@@ -2,7 +2,7 @@ import { postsByDate } from '../graphql/customQueries';
 import { API, /* DataStore */ } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { CircularProgress, Flex, Box, Spacer, Text } from "@chakra-ui/react";
-import PostCard from '../components/PostCard';
+import PostCard from '../components/posts/PostCard';
 //import { ChannelNotification } from '../models';
 
 function Feed(props) {

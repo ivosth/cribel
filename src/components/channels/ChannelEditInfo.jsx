@@ -16,11 +16,11 @@ import {
     IconButton,
     Box
 } from "@chakra-ui/react";
-import awsExports from '../aws-exports'
+import awsExports from '../../aws-exports'
 import { Storage, Auth, API } from 'aws-amplify'
-import { updateChannel } from "../graphql/mutations";
+import { updateChannel } from "../../graphql/mutations";
 import { AiFillEdit } from "react-icons/ai";
-import RichEditor from "./RichEditor";
+import RichEditor from "../common/RichEditor";
 import { useState } from "react";
 
 

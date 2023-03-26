@@ -13,7 +13,7 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify'
-import { updateChannel } from "../graphql/mutations";
+import { updateChannel } from "../../graphql/mutations";
 import { AiFillLock, AiFillUnlock } from "react-icons/ai";
 import { useState } from "react";
 

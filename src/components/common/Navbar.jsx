@@ -26,7 +26,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Auth, /* DataStore */ } from "aws-amplify";
 import SearchBar from "./SearchBar";
 import IconCribel from "./IconCribel";
-import NotificationsButton from "./NotificationsButton";
+import NotificationsButton from "../notifications/NotificationsButton";
 
 
 const NavLink = ({ icon, link, children }) => (

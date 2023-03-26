@@ -17,8 +17,8 @@ import {
     Spacer
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify'
-import { deleteUsersParticipantChannels, createUsersParticipantChannels } from "../graphql/mutations";
-import { getChannel, listUsersWithFilters } from "../graphql/customQueries";
+import { deleteUsersParticipantChannels, createUsersParticipantChannels } from "../../graphql/mutations";
+import { getChannel, listUsersWithFilters } from "../../graphql/customQueries";
 import { useState } from "react";
 import { HiOutlineUserRemove, HiUserGroup } from "react-icons/hi";
 import { HiOutlineUserPlus } from "react-icons/hi2";

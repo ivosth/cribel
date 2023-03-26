@@ -34,7 +34,6 @@ export const getUser = /* GraphQL */ `
         nextToken
       }
       createdAt
-      owner
     }
   }
 `;
@@ -65,7 +64,6 @@ export const getProfile = /* GraphQL */ `
         }
         nextToken
       }
-      owner
     }
   }
 `;

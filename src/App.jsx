@@ -4,9 +4,9 @@ import { /*createContext,*/ useState, useEffect } from "react";
 import { API, Auth, Hub, /* DataStore */ } from "aws-amplify";
 import { Authenticator } from '@aws-amplify/ui-react';
 //import PostList from './components/PostList';
-import ChannelList from './components/ChannelList';
-import PostList from './components/PostList';
-import Navbar from './components/Navbar'
+import ChannelList from './components/channels/ChannelList';
+import PostList from './components/posts/PostList';
+import Navbar from './components/common/Navbar'
 import Explore from './pages/Explore'
 import Channel from './pages/Channel';
 import Home from './pages/Home';
@@ -14,13 +14,13 @@ import { createUser } from "./graphql/mutations";
 import { getUser } from "./graphql/customQueries";
 import { Routes, Route, Outlet } from "react-router-dom";
 import Settings from './pages/Settings';
-import SettingsProfile from './pages/SettingsProfile';
-import SettingsChannel from './pages/SettingsChannel';
-import SettingsAdvanced from './pages/SettingsAdvanced';
+import SettingsProfile from './components/settings/SettingsProfile';
+import SettingsChannel from './components/settings/SettingsChannel';
+import SettingsAdvanced from './components/settings/SettingsAdvanced';
 import About from './pages/About';
 import Error from './pages/Error';
 import Profile from './pages/Profile';
-import ChannelPostsSorted from './pages/ChannelPostsSorted';
+import ChannelPostsSorted from './components/channels/ChannelPostsSorted';
 import Feed from './pages/Feed';
 import Notifications from './pages/Notifications';
 //const UserContext = createContext(null);

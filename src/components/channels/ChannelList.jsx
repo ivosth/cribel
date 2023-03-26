@@ -1,4 +1,4 @@
-import { channelsByDate, channelsByRating } from '../graphql/customQueries';
+import { channelsByDate, channelsByRating } from '../../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { CircularProgress } from "@chakra-ui/react";

@@ -13,12 +13,12 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 //import { useSearchParams } from "react-router-dom";
-import { listUsersWithFilters } from "../graphql/customQueries";
+import { listUsersWithFilters } from "../../graphql/customQueries";
 import { API } from "aws-amplify";
 import { CircularProgress } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import UserStatus from './../components/UserStatus';
-import UserEditRole from "../components/UserEditRole";
+import UserStatus from '../users/UserStatus';
+import UserEditRole from "../users/UserEditRole";
 
 
 function SettingsAdvanced() {

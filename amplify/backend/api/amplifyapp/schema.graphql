@@ -22,28 +22,40 @@ type User
   @model 
   @auth(
     rules: [
-      # allow admins and creators to read, create, update and delete user
-      { allow: groups, groups: ["admin", "creator"], operations: [create, read, update, delete] }
-      # allow ownner to read and update user
-      { allow: owner, identityClaim: "sub::username", operations: [read, update] },
+      # allow admins to read, create, update and delete user
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       # allow all authenticated users to view other users' information and create user in DynamoDB
       { allow: private, operations: [read, create] },
-      # allow non authenticated users to create an user
-      # { allow: public, operations: [create], provider: iam }
     ]
   ) {
 
   id: ID!
+    @auth(rules: [ 
+      { allow: private, operations: [read, create, update] }, # Needed to allow update of the image, currentPosition and description fields
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])
   email: AWSEmail!
   emailVerified: Boolean!
   disabled: Boolean! @default(value: "false")
   givenName: String!
   familyName: String!
   image: String
+    @auth(rules: [
+      { allow: private, operations: [read, create, update] }, #Allow to update only this field
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])
   role: Role @default(value: "student")
   group: Group @default(value: "viewer")
   currentPosition: String 
+      @auth(rules: [
+      { allow: private, operations: [read, create, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])
   description: String
+      @auth(rules: [
+      { allow: private, operations: [read, create, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])
   ratings: [Rating] @hasMany
   posts: [Post] @hasMany
   ownedChannels: [Channel] @hasMany
@@ -76,9 +88,7 @@ type Post
   content: String!
   channel: Channel! @belongsTo
   avgRating: Float! @default(value: "0.0")
-  ratings: [Rating] @hasMany #@default(value: "0.0") #The value parameter must be formatted as a string regardless of the corresponding field type
-  # https://github.com/trek10inc/graphql-default-value-transformer
-  # https://docs.amplify.aws/guides/api-graphql/query-with-sorting/q/platform/js/#overview
+  ratings: [Rating] @hasMany
   typePostsByDate: String! @default(value: "PostsByDate") @index(name: "postsByDate", queryField: "postsByDate", sortKeyFields: ["createdAt"])
   typePostsByRating: String! @default(value: "PostsByRating") @index(name: "postsByRating", queryField: "postsByRating", sortKeyFields: ["avgRating"])
   createdAt: String!
@@ -132,12 +142,14 @@ type SubscriptionsSubscribers
   @model 
   @auth(
     rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
       # allow all permissions to owners
-      { allow: owner, operations: [create, read, update, delete] }, # COMENTAR ESTA LÍNEA SI SE QUIERE DEJAR DE HISTORIAS
+      #{ allow: owner, operations: [create, read, update, delete] }, # COMENTAR ESTA LÍNEA SI SE QUIERE DEJAR DE HISTORIAS
       # Y DESCOMENTAR LA SIGUIENTE
-      # { allow: private, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
       # allow all authenticated users to read channels
-      { allow: private, operations: [read] },
+      #{ allow: private, operations: [read] },
     ]
   ) {
     id: ID!
@@ -165,6 +177,8 @@ type Rating
   @model 
   @auth(
     rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
       # allow all authenticated users to read, create and update ratings
       { allow: private, operations: [create, read, update] },
     ]
@@ -203,6 +217,8 @@ type UserNotification
   @model 
   @auth(
     rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
       # allow all authenticated to read and create user notifications
       { allow: private, operations: [create, read] },
     ]
@@ -221,8 +237,10 @@ type UserNotification
 }
 
 
-
+#Only admin group can changeUsergroup and changeUserStatus
 type Mutation {
-  changeUserGroup(id: ID!, group: Group!): String @function(name: "changeUserGroup-${env}"),
-  changeUserStatus(id: ID!, disable: Boolean!): String @function(name: "changeUserStatus-${env}")
+  changeUserGroup(id: ID!, group: Group!): String @function(name: "changeUserGroup-${env}") 
+    @auth(rules: [{ allow: groups, groups: ["admin"] }]),
+  changeUserStatus(id: ID!, disable: Boolean!): String @function(name: "changeUserStatus-${env}") 
+    @auth(rules: [{ allow: groups, groups: ["admin"] }]),
 }

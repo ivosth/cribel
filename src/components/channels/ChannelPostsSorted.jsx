@@ -1,12 +1,12 @@
 import {
     Flex, Box, Hide, Spacer, CircularProgress, Show
 } from "@chakra-ui/react";
-import { postsByDate, postsByRating, getChannel } from '../graphql/customQueries';
+import { postsByDate, postsByRating, getChannel } from '../../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import PostCard from "../components/PostCard";
-import ChannelInfo from "../components/ChannelInfo";
+import PostCard from "../posts/PostCard";
+import ChannelInfo from "./ChannelInfo";
 
 
 
