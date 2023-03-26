@@ -112,6 +112,7 @@ function Profile() {
                         </Text>
                     </Box>
 
+                    {profile.group !== "viewer" ?
                     <Box borderWidth="1px" rounded="lg" px="1rem" py="0.4rem">
                         <Flex color="gray.700"
                             _dark={{
@@ -188,10 +189,13 @@ function Profile() {
                                     </Text>
                                 }
                             </Box>
+                            
                         </Flex>
 
 
                     </Box>
+                    :
+                    null}
                 </Box>
             </Flex>
         </Box>

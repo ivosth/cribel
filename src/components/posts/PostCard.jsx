@@ -116,21 +116,23 @@ function PostCard({ post, userID }) {
     }
   };
 
-  function setAlreadyRated() {
-    // If the user has already rated the post, update the setRatingValue with star rating value
-    if (post.ratings.items.length > 0) {
-      const userRating = post.ratings.items.find(rating => rating.userRatingsId === userID);
-      if (userRating) {
-        setRatingValue(userRating.stars);
-        setInitialRating(userRating.stars);
-      }
-    }
-  }
+
 
   useEffect(() => {
+    function setAlreadyRated() {
+      // If the user has already rated the post, update the setRatingValue with star rating value
+      if (post.ratings.items.length > 0) {
+        const userRating = post.ratings.items.find(rating => rating.userRatingsId === userID);
+        if (userRating) {
+          setRatingValue(userRating.stars);
+          setInitialRating(userRating.stars);
+        }
+      }
+    }
+
     setAlreadyRated();     
     
-  }, []);
+  }, [post.ratings.items, userID]);
 
 
   return (

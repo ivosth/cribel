@@ -22,6 +22,7 @@ import { updateChannel } from "../../graphql/mutations";
 import { AiFillEdit } from "react-icons/ai";
 import RichEditor from "../common/RichEditor";
 import { useState } from "react";
+import imageCompression from 'browser-image-compression';
 
 
 function ChannelEditPost(props) {
@@ -72,7 +73,10 @@ function ChannelEditPost(props) {
             //console.log(editInfoChannelInput)
 
             if (file) {
-                await Storage.put(file.name, file, { level: 'protected' })
+                // Compress image
+                const compressedFile = await imageCompression(file, { maxSizeMB: 0.075, maxWidthOrHeight: 512, useWebWorker: true });
+
+                await Storage.put(file.name, compressedFile, { level: 'protected' })
                 const creds = await Auth.currentCredentials()
                 const url = `https://${awsExports.aws_user_files_s3_bucket}.s3.${awsExports.aws_user_files_s3_bucket_region}.amazonaws.com/protected/${creds.identityId}/${file.name}`
                 editInfoChannelInput.image = url

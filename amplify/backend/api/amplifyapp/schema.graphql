@@ -1,9 +1,3 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
-
-#union Subscribable = Channel | User
-
 enum Role {
  student,
  graduated,
@@ -63,9 +57,6 @@ type User
   participantChannels: [UsersParticipantChannels] @hasMany
   notifications: [UserNotification] @hasMany
 
-  #To prevent an owner from reassigning their record to another user https://docs.amplify.aws/cli/graphql/authorization-rules/#per-user--owner-based-data-access
-  #owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
-
 }
 
 type Post
@@ -84,7 +75,7 @@ type Post
   id: ID!
   name: String!
   topic: String! #In the code a check will be made to ensure that only the topics in the channel can be selected.
-  owner: User! @belongsTo #(fields: ["userID"]) # field to be used for storing the relationship information
+  owner: User! @belongsTo
   content: String!
   channel: Channel! @belongsTo
   avgRating: Float! @default(value: "0.0")
@@ -104,9 +95,6 @@ type Channel
       { allow: groups, groups: ["creator"], operations: [create, read, update] },
       # allow all authenticated users to read channels
       { allow: private, operations: [read] },
-      # allow owner to read, create and update the channel
-      # { allow: owner, operations: [create, read, update] },
-      # HACIENDO REFERENCIA DE OWNER EN CUALQUIER LADO DE @AUTH NO FUNCIONA
     ]
   ) {
 
@@ -144,12 +132,9 @@ type SubscriptionsSubscribers
     rules: [
       # allow all permissions to admins
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
-      # allow all permissions to owners
-      #{ allow: owner, operations: [create, read, update, delete] }, # COMENTAR ESTA LÍNEA SI SE QUIERE DEJAR DE HISTORIAS
-      # Y DESCOMENTAR LA SIGUIENTE
+      # any authenticated user can read, create and update subscriptions
       { allow: private, operations: [create, read, update, delete] }
-      # allow all authenticated users to read channels
-      #{ allow: private, operations: [read] },
+
     ]
   ) {
     id: ID!
@@ -230,14 +215,13 @@ type UserNotification
   message: String!
   channelID: ID!
   channelName: String!
-  #viewed: Boolean! @default(value: "false")
   typeUserNotificationsByDate: String! @default(value: "UserNotificationsByDate") 
     @index(name: "userNotificationsByDate", queryField: "userNotificationsByDate", sortKeyFields: ["createdAt"])
   createdAt: String!
 }
 
 
-#Only admin group can changeUsergroup and changeUserStatus
+# only admin group can call changeUsergroup and changeUserStatus
 type Mutation {
   changeUserGroup(id: ID!, group: Group!): String @function(name: "changeUserGroup-${env}") 
     @auth(rules: [{ allow: groups, groups: ["admin"] }]),

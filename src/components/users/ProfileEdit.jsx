@@ -11,10 +11,12 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Textarea 
 } from "@chakra-ui/react";
 import awsExports from '../../aws-exports'
 import { Storage, Auth, API } from 'aws-amplify'
 import { updateUser } from "../../graphql/mutations";
+import imageCompression from 'browser-image-compression';
 
 function ProfileEdit(props) {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -26,7 +28,10 @@ function ProfileEdit(props) {
       const newUserInput = {};
       newUserInput.id = props.userID;
       if (file) {
-        await Storage.put(file.name, file, { level: 'protected' })
+        // Compress image
+        const compressedFile = await imageCompression(file, { maxSizeMB: 0.008, maxWidthOrHeight: 128, useWebWorker: true });
+
+        await Storage.put(file.name, compressedFile, { level: 'protected' })
         const creds = await Auth.currentCredentials()
         url = `https://${awsExports.aws_user_files_s3_bucket}.s3.${awsExports.aws_user_files_s3_bucket_region}.amazonaws.com/protected/${creds.identityId}/${file.name}`
         newUserInput.image = url
@@ -83,7 +88,7 @@ function ProfileEdit(props) {
               </FormControl>
               <FormControl>
                 <FormLabel>Current description</FormLabel>
-                <Input />
+                <Textarea />
               </FormControl>
             </form>
           </ModalBody>
