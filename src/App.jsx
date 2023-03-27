@@ -1,29 +1,37 @@
 import './App.css';
 import '@aws-amplify/ui-react/styles.css';
-import { /*createContext,*/ useState, useEffect } from "react";
+import React, { /*createContext,*/ useState, useEffect, Suspense } from "react";
 import { API, Auth, Hub, /* DataStore */ } from "aws-amplify";
-import { Authenticator } from '@aws-amplify/ui-react';
-//import PostList from './components/PostList';
-import ChannelList from './components/channels/ChannelList';
-import PostList from './components/posts/PostList';
-import Navbar from './components/common/Navbar'
-import Explore from './pages/Explore'
-import Channel from './pages/Channel';
-import Home from './pages/Home';
+
 import { createUser } from "./graphql/mutations";
 import { getUser } from "./graphql/customQueries";
 import { Routes, Route, Outlet } from "react-router-dom";
-import Settings from './pages/Settings';
-import SettingsProfile from './components/settings/SettingsProfile';
-import SettingsChannel from './components/settings/SettingsChannel';
-import SettingsAdvanced from './components/settings/SettingsAdvanced';
-import About from './pages/About';
-import Error from './pages/Error';
-import Profile from './pages/Profile';
-import ChannelPostsSorted from './components/channels/ChannelPostsSorted';
-import Feed from './pages/Feed';
-import Notifications from './pages/Notifications';
+
+import Loading from './components/common/Loading';
 //const UserContext = createContext(null);
+
+const Authenticator = React.lazy(() => {
+  return import('@aws-amplify/ui-react').then(module => {
+    return { default: module.Authenticator };
+  });
+});
+
+const ChannelList = React.lazy(() => import('./components/channels/ChannelList'));
+const PostList = React.lazy(() => import('./components/posts/PostList'));
+const Navbar = React.lazy(() => import('./components/common/Navbar'));
+const Explore = React.lazy(() => import('./pages/Explore'));
+const Channel = React.lazy(() => import('./pages/Channel'));
+const Home = React.lazy(() => import('./pages/Home'));
+const Settings = React.lazy(() => import('./pages/Settings'));
+const SettingsProfile = React.lazy(() => import('./components/settings/SettingsProfile'));
+const SettingsChannel = React.lazy(() => import('./components/settings/SettingsChannel'));
+const SettingsAdvanced = React.lazy(() => import('./components/settings/SettingsAdvanced'));
+const About = React.lazy(() => import('./pages/About'));
+const Error = React.lazy(() => import('./pages/Error'));
+const Profile = React.lazy(() => import('./pages/Profile'));
+const ChannelPostsSorted = React.lazy(() => import('./components/channels/ChannelPostsSorted'));
+const Feed = React.lazy(() => import('./pages/Feed'));
+const Notifications = React.lazy(() => import('./pages/Notifications'));
 
 function App() {
   const [userAttributes, setUserAttributes] = useState(null);
@@ -68,7 +76,7 @@ function App() {
             });
             //console.log({ newUser });
             setUserAttributes(currentUserAttributes);
-    
+
           } catch (err) {
             console.error("Error registering new user: ", err);
           }
@@ -121,50 +129,116 @@ function App() {
 
     };
 
-    
+
     onAuthEventListener();
   }, []);
 
 
 
   return !userAttributes ? (
-    <Authenticator signUpAttributes={[
-      'given_name',
-      'family_name',
-    ]}/>
+    <Suspense fallback={<Loading />}>
+      <Authenticator signUpAttributes={[
+        'given_name',
+        'family_name',
+      ]} />
+    </Suspense>
   ) : (
     <> {/*<UserContext.Provider value={{ userAttributes }}>*/}
       <Navbar user={userAttributes} notifications={notifications} updateIconNotifications={updateIconNotifications} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/explore" element={<Explore />}>
-          <Route path="channels" element={<Outlet/>} >
-            <Route path="new" element={<ChannelList sort="new" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} /> } />
-            <Route path="trending" element={<ChannelList sort="trending" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />} />
-            <Route path="top" element={<ChannelList sort="top" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />} />
+        <Route path="/" element={<Suspense fallback={<Loading />}><Home/></Suspense>} />
+        <Route path="/explore" element={<Suspense fallback={<Loading />}><Explore /></Suspense>} >
+          <Route path="channels" element={<Outlet />} >
+            <Route path="new" element={
+              <Suspense fallback={<Loading/>}>
+                <ChannelList sort="new" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />
+              </Suspense> 
+            }/>
+            <Route path="trending" element={
+              <Suspense fallback={<Loading/>}>
+                <ChannelList sort="trending" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />
+              </Suspense>
+            }/>
+            <Route path="top" element={
+              <Suspense fallback={<Loading/>}>
+                <ChannelList sort="top" userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />
+              </Suspense>
+            }/>
           </Route>
-          <Route path="posts" element={<Outlet/>} >
-            <Route path="new" element={<PostList userID={userAttributes.id} sort="new"/> } />
-            <Route path="trending" element={<PostList userID={userAttributes.id} sort="trending"/>} />
-            <Route path="top" element={<PostList userID={userAttributes.id} sort="top"/>} />
+          <Route path="posts" element={<Outlet />} >
+            <Route path="new" element={
+              <Suspense fallback={<Loading/>}>
+                <PostList userID={userAttributes.id} sort="new" />
+              </Suspense>
+            }/>
+            <Route path="trending" element={
+              <Suspense fallback={<Loading/>}>
+                <PostList userID={userAttributes.id} sort="trending" />
+              </Suspense>
+            }/>
+            <Route path="top" element={
+              <Suspense fallback={<Loading/>}>
+                <PostList userID={userAttributes.id} sort="top" />
+              </Suspense>
+            }/>
           </Route>
         </Route>
-        <Route path="/settings" element={<Settings userGroup={userAttributes.group} />}>
-          <Route path="profile" element={<SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes}/>} />
+        <Route path="/settings" element={
+          <Suspense fallback={<Loading />}>
+            <Settings userGroup={userAttributes.group} />
+          </Suspense>
+        } >
+          <Route path="profile" element={
+            <Suspense fallback={<Loading />}>
+              <SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes} />
+            </Suspense>
+          } />
           {/* If userAttributes.group is creator or admin load  <SettingsChannel userID={userAttributes.id} /> if not <Error /> */}
-          <Route path="channels" element={ {userAttributes}.group !== "creator" || {userAttributes}.group !== "admin" ? <SettingsChannel userID={userAttributes.id} /> : <Error /> } />
-          <Route path="advanced" element={ {userAttributes}.group !== "admin" ? <SettingsAdvanced /> : <Error /> } />
+          <Route path="channels" element={
+            <Suspense fallback={<Loading />}>
+              { userAttributes.group !== "creator" || userAttributes.group !== "admin" ? <SettingsChannel userID={userAttributes.id} /> : <Error /> }
+            </Suspense>
+          } />
+          <Route path="advanced" element={
+            <Suspense fallback={<Loading />}>
+              { userAttributes.group === "admin" ? <SettingsAdvanced /> : <Error /> }
+            </Suspense>
+          } />
         </Route>
-        <Route path="/channel/:id" element={<Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />} >
-          <Route path="new" element={<ChannelPostsSorted userID={userAttributes.id} sort="new"/> } />
-          <Route path="trending" element={<ChannelPostsSorted userID={userAttributes.id} sort="trending"/>} />
-          <Route path="top" element={<ChannelPostsSorted userID={userAttributes.id} sort="top"/>} />
+        <Route path="/channel/:id" element={
+          <Suspense fallback={<Loading />}>
+            <Channel userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} updateChannelsNavbar={updateUserAttributes} />
+          </Suspense>
+        } >
+          <Route path="new" element={
+            <Suspense fallback={<Loading />}>
+              <ChannelPostsSorted userID={userAttributes.id} sort="new" />
+            </Suspense>
+          } />
+          <Route path="trending" element={
+            <Suspense fallback={<Loading />}>
+              <ChannelPostsSorted userID={userAttributes.id} sort="trending" />
+            </Suspense>
+          } />
+          <Route path="top" element={
+            <Suspense fallback={<Loading />}>
+              <ChannelPostsSorted userID={userAttributes.id} sort="top" />
+            </Suspense>
+          } />
         </Route>
-        <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/feed" element={<Feed userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} />} />
-        <Route path="/notifications" element={<Notifications userID={userAttributes.id} userCreatedAt={userAttributes.createdAt} subscriptions={userAttributes.subscriptions?.items || null} updateIconNotifications={updateIconNotifications}/>} />
-        <Route path="/about" element={<About />} />
-        <Route path="*" element={<Error />} />
+        <Route path="/profile/:id" element={ <Suspense fallback={<Loading />}> <Profile /> </Suspense>} />
+        <Route path="/feed" element={
+          <Suspense fallback={<Loading />}>
+            <Feed userID={userAttributes.id} subscriptions={userAttributes.subscriptions?.items || null} />
+          </Suspense>
+        } />
+        <Route path="/notifications" element={
+          <Suspense fallback={<Loading />}>
+            <Notifications userID={userAttributes.id} userCreatedAt={userAttributes.createdAt} subscriptions={userAttributes.subscriptions?.items || null} updateIconNotifications={updateIconNotifications} />
+          </Suspense>
+        } />
+        <Route path="/about" element={<Suspense fallback={<Loading />}><About /></Suspense>} />
+        <Route path="*" element={<Suspense fallback={<Loading />}><Error /></Suspense>} />
       </Routes>
       {/*</UserContext.Provider>*/} </>
   )
