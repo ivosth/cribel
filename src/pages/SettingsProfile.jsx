@@ -139,7 +139,7 @@ function SettingsProfile({ user, updateUserNavbar }) {
 
                                 {user.ownedChannels.items.length > 0 ?
                                     user.ownedChannels.items.map(channel => (
-                                        <RouterLink key={channel.id} to={`/channel/${channel.id}`}>
+                                        <RouterLink key={channel.id} to={`/channel/${channel.id}/new`}>
                                             <Text as="h2" px={2} fontSize="sm" >
                                                 {channel.name}
                                             </Text>
@@ -174,7 +174,7 @@ function SettingsProfile({ user, updateUserNavbar }) {
 
                                     {user.participantChannels.items.length > 0 ?
                                         user.participantChannels.items.map(channel => (
-                                            <RouterLink key={channel.channelID} to={`/channel/${channel.channelID}`}>
+                                            <RouterLink key={channel.channelID} to={`/channel/${channel.channelID}/new`}>
                                                 <Text as="h2" px={2} fontSize="sm" >
                                                     {channel.channel.name}
                                                 </Text>

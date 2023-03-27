@@ -6,6 +6,11 @@ import { BsStarFill } from "react-icons/bs";
 import { MdPeopleOutline, MdStar } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
 import { Prose } from "@nikolovlazar/chakra-ui-prose";
+import { API } from 'aws-amplify';
+import { updateChannel } from "../graphql/mutations";
+
+
+const minimumViews = 5;
 
 function formatDate(awsDate) {
     const dateobj = new Date(awsDate);
@@ -15,33 +20,41 @@ function formatDate(awsDate) {
     return (date);
 }
 
+function ChannelInfo({ channel, posts }) {
 
-function computeRating(posts) {
-    //console.log("posts", posts)
 
-    let rating = 0;
-    let count = 0;
-    posts.forEach((post) => {
-        if (post.ratings.items.length !== 0){
-            let sum = 0;
-            for (let i = 0; i < post.ratings.items.length; i++) {
-                sum += post.ratings.items[i].stars;
+    function computeRating() {
+        //console.log("posts", posts)
+    
+        let rating = 0;
+        let count = 0;
+        posts.forEach((post) => {
+            if (post.ratings.items.length !== 0){
+                let sum = 0;
+                for (let i = 0; i < post.ratings.items.length; i++) {
+                    sum += post.ratings.items[i].stars;
+                }
+                rating += sum / post.ratings.items.length;
+                count++;
             }
-            rating += sum / post.ratings.items.length;
-            count++;
+            
+        });
+    
+        if(count < minimumViews) return 'N/A';
+        else{
+            const rate = (rating / count).toFixed(1)
+
+            const updatedChannel = {
+                id: channel.id,
+                avgRating: rate
+            }
+            API.graphql({ query: updateChannel, variables: { input: updatedChannel } });
+
+            return String(rate);
         }
         
-    });
+    }
 
-    if(count < 2) return 'N/A';
-    else return String((rating / count).toFixed(1));
-    
-}
-
-
-
-
-function ChannelInfo({ channel }) {
 
     return (
 
@@ -146,7 +159,7 @@ function ChannelInfo({ channel }) {
                                         : <Text pl="0.3rem" marginRight="1.5rem"> N/A </Text>
                         */}
                                     <Text as="h2" px={2} fontSize="md" fontWeight="bold">
-                                        {computeRating(channel.posts.items)}
+                                        {computeRating()}
                                     </Text>
                                     <Spacer />
                                 </Flex>

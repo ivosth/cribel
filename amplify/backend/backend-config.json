@@ -81,7 +81,36 @@
       }
     }
   },
-  "function": {},
+  "function": {
+    "changeUserGroup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "amplifyappfb6ef5ea",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    },
+    "changeUserStatus": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "amplifyappfb6ef5ea",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    }
+  },
   "storage": {
     "s3storage": {
       "service": "S3",

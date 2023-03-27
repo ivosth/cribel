@@ -27,8 +27,12 @@ import { CircularProgress } from "@chakra-ui/react";
 import { AiTwotoneLock, AiFillEdit, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 import { MdPeopleOutline, MdStar } from "react-icons/md";
+import { FaUserTag } from "react-icons/fa";
 import { BiMessageAdd } from "react-icons/bi";
 import { Link as RouterLink } from "react-router-dom";
+import UserStatus from './../components/UserStatus';
+import UserEditRole from "../components/UserEditRole";
+
 
 function SettingsAdvanced() {
     const letters = ["All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",];
@@ -89,6 +93,15 @@ function SettingsAdvanced() {
 
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
+    
+    function updateUsersList(id, role) {
+        //Search the user in the list and update the role with setUsers
+        const userIndex = users.findIndex((user) => user.id === id);
+        const newUsers = [...users];
+        newUsers[userIndex].role = role;
+        setUsers(newUsers);
+
+    }
 
 
     const obtainListUsersWithFilters = async () => {
@@ -114,7 +127,7 @@ function SettingsAdvanced() {
         })
 
         setLoading(false);
-        console.log(usersWithFilters.data.listUsers.items)
+        //console.log(usersWithFilters.data.listUsers.items)
         setUsers(usersWithFilters.data.listUsers.items);
     };
 
@@ -131,7 +144,7 @@ function SettingsAdvanced() {
                     id="search-users"
                     onSubmit={(event) => {
                         event.preventDefault();
-                        console.log(nameLetter, lastNameLetter, role);
+                        //console.log(nameLetter, lastNameLetter, role);
                         setSearchParams({ name: nameLetter, lastName: lastNameLetter, role: role });
 
                         obtainListUsersWithFilters();
@@ -232,12 +245,6 @@ function SettingsAdvanced() {
                         <Box
                             w="2xl"
                             mx="auto"
-
-                            _dark={{
-                                bg: "gray.800",
-                            }}
-
-
                         >
                             <Text fontSize="xl" fontWeight="bold">Search results: </Text>
                             <Stack
@@ -281,7 +288,7 @@ function SettingsAdvanced() {
                                                 >
                                                     <Box>
                                                         <RouterLink to={`/profile/${user.id}`}>
-                                                            <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} mx="1rem">
+                                                            <Text mt="0.25rem" fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} mx="1rem">
                                                                 {`${user.givenName} ${user.familyName}` || "Nombre Apellido"}
                                                             </Text>
                                                         </RouterLink>
@@ -326,30 +333,8 @@ function SettingsAdvanced() {
                                                         </Box>
 
                                                         <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing={3} alignItems='center'>
-                                                            <Button colorScheme="purple" variant="solid">
-                                                                <Flex fontSize="lg" align="center" >
-                                                                    <Icon as={BiMessageAdd} size="1.5rem" />
-                                                                    <Hide below='md'>
-                                                                        <Text ml="0.3rem" fontSize="md" >New Post</Text>
-                                                                    </Hide>
-                                                                </Flex>
-                                                            </Button>
-                                                            <IconButton
-                                                                colorScheme="blue"
-                                                                icon={<AiOutlineUsergroupAdd />}
-                                                                aria-label="Up"
-                                                            />
-                                                            <IconButton
-                                                                colorScheme="green"
-                                                                icon={<AiFillEdit />}
-                                                                aria-label="Edit"
-                                                            />
-                                                            <IconButton
-                                                                colorScheme="red"
-                                                                variant="outline"
-                                                                icon={<BsFillTrashFill />}
-                                                                aria-label="Delete"
-                                                            />
+                                                            <UserEditRole user={user} updateUsersList={updateUsersList}/>
+                                                            <UserStatus userID={user.id} disabled={user.disabled}/>
                                                         </ButtonGroup>
                                                     </Flex>
                                                 </SimpleGrid>

@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Flex,
   Box,
   Text,
   Link,
   Avatar,
-  useBoolean,
-  useColorModeValue
 } from "@chakra-ui/react";
 import { FaRegEye } from "react-icons/fa";
 import { Rating } from "react-simple-star-rating";
 import { useNavigate } from 'react-router-dom';
 import { Prose } from '@nikolovlazar/chakra-ui-prose';
+import { API } from 'aws-amplify';
+import { createRating, updateRating, updatePost } from '../graphql/mutations';
+
+const minimumViews = 5;
 
 function formatDate(awsDate) {
   const dateobj = new Date(awsDate);
@@ -22,7 +24,7 @@ function formatDate(awsDate) {
 }
 
 function computeRating(ratings) {
-  if (ratings.length < 2) return 'N/A';
+  if (ratings.length < minimumViews) return 'N/A';
   else {
     let sum = 0;
     for (let i = 0; i < ratings.length; i++) {
@@ -33,14 +35,113 @@ function computeRating(ratings) {
 }
 
 
-function PostCard({ post }) {
-  const [like, setLike] = useBoolean();
+function PostCard({ post, userID }) {
+  const [ratingValue, setRatingValue] = useState(0);
+  const [views, setViews] = useState(post.ratings.items.length);
+  const [averageRating, setAverageRating] = useState(post.avgRating); //useState(computeRating(post.ratings.items));
+  const [initialRating, setInitialRating] = useState(0);
+
   const navigate = useNavigate();
 
-  const [ratingValue, setRatingValue] = useState(0);
-  const handleRating = (rate) => {
-    setRatingValue(rate);
+
+  async function changeRating(rate) {
+    //console.log(post)
+    
+    try{
+      //console.log("ratingValue", ratingValue)
+      if (ratingValue === 0) {
+        // If the user has not rated the post, create a new rating
+        const newRating = {
+          userRatingsId: userID,
+          postRatingsId: post.id,
+          stars: rate,
+        };
+        const res = await API.graphql({ query: createRating, variables: { input: newRating } });
+        newRating.id = res.data.createRating.id;
+
+        if (views >= minimumViews){
+          const sum = parseFloat(averageRating) * views + rate;
+          setViews(views + 1);
+          setAverageRating(String((sum / views).toFixed(2)));
+
+          const updatedPost = {
+            id: post.id,
+            avgRating: (sum / views).toFixed(2),
+          };
+          await API.graphql({ query: updatePost, variables: { input: updatedPost } });
+          
+        }
+        else if (views + 1 === minimumViews){
+
+          let  newRatingsList = post.ratings.items;
+          newRatingsList.push(newRating);
+          const rate = parseFloat(computeRating(newRatingsList)).toFixed(2)
+          setViews(views + 1);
+          setAverageRating(rate);
+
+          const updatedPost = {
+            id: post.id,
+            avgRating: rate,
+          };
+          await API.graphql({ query: updatePost, variables: { input: updatedPost } });
+        }
+        else{
+          setAverageRating("N/A");
+          setViews(views + 1);
+        }
+
+
+      } else {
+        // If the user has already rated the post, update the rating
+        const ratingID = post.ratings.items.find(rating => rating.userRatingsId === userID).id;
+        const updatedRating = {
+          id: ratingID,
+          stars: rate,
+        };
+        
+        await API.graphql({ query: updateRating, variables: { input: updatedRating } });
+
+        if (averageRating === "N/A" || averageRating === 0){
+          setAverageRating("N/A");
+        }
+        else{
+          const sum = parseFloat(averageRating) * views - initialRating + rate;
+          //console.log("averageRating", averageRating, "views", views, "initialRating", initialRating, "rate", rate, "sum", sum)
+          setAverageRating(String((sum / views).toFixed(2)));
+          setInitialRating(rate)
+
+          const updatedPost = {
+            id: post.id,
+            avgRating: (sum / views).toFixed(2),
+          };
+          //console.log("updatedPost", updatedPost)
+          await API.graphql({ query: updatePost, variables: { input: updatedPost } });
+        }
+      }
+
+      setRatingValue(rate);
+    }
+    catch (err) {
+      console.error("Error rating post: ", err);
+    }
   };
+
+  function setAlreadyRated() {
+    // If the user has already rated the post, update the setRatingValue with star rating value
+    if (post.ratings.items.length > 0) {
+      const userRating = post.ratings.items.find(rating => rating.userRatingsId === userID);
+      if (userRating) {
+        setRatingValue(userRating.stars);
+        setInitialRating(userRating.stars);
+      }
+    }
+  }
+
+  useEffect(() => {
+    setAlreadyRated();     
+    
+  }, []);
+
 
   return (
     <Flex
@@ -68,7 +169,7 @@ function PostCard({ post }) {
               <Link
                 px="0.50rem"
                 py={1}
-                onClick={() => navigate(`/channel/${post.channel.id}`)}
+                onClick={() => navigate(`/channel/${post.channel.id}/new`)}
                 bg="blue.600"
                 color="blue.100"
                 fontSize="0.8rem" //Más pequeño con xs
@@ -168,18 +269,22 @@ function PostCard({ post }) {
               </Text>
             */}
 
-            <Rating onClick={handleRating}
+            <Rating onClick={changeRating}
               allowFraction
               fillColorArray={["#e79b3b", "#e9a435", "#ebab30", "#edb32a", "#f0bb25", "#f2c320", "#f4cb1a", "#f6d215", "#f8da0f", "#fae20a"]}
               SVGstyle={{ display: "inline-block" }}
               size={25}
               style={{ marginTop: "6px" }}
+              initialValue={ratingValue}
+
             />
 
-            <Text pl="0.3rem" marginRight="1.5rem"> {computeRating(post.ratings.items)} </Text>
+            <Text pl="0.3rem" marginRight="1.5rem"> 
+              {averageRating === "N/A" || averageRating === 0 ? "N/A" :  parseFloat(averageRating).toFixed(2)}
+            </Text>
 
             <FaRegEye size="22px" />
-            <Text pl="0.3rem"> {post.ratings.items.length} </Text>
+            <Text pl="0.3rem"> {views} </Text>
           </Flex>
         </Flex>
       </Box>

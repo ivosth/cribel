@@ -143,7 +143,7 @@ function Profile() {
 
                                 {profile.ownedChannels.items.length > 0 ?
                                     profile.ownedChannels.items.map(channel => (
-                                        <RouterLink key={channel.id} to={`/channel/${channel.id}`}>
+                                        <RouterLink key={channel.id} to={`/channel/${channel.id}/new`}>
                                             <Text as="h2" px={2} fontSize="sm" >
                                                 {channel.name}
                                             </Text>
@@ -178,8 +178,8 @@ function Profile() {
 
                                     {profile.participantChannels.items.length > 0 ?
                                         profile.participantChannels.items.map(channel => (
-                                            <RouterLink to={`/channel/${channel.channelID}`}>
-                                                <Text key={channel.channelID} as="h2" px={2} fontSize="sm" >
+                                            <RouterLink to={`/channel/${channel.channelID}/new`} key={channel.channelID}>
+                                                <Text as="h2" px={2} fontSize="sm" >
                                                     {channel.channel.name}
                                                 </Text>
                                             </RouterLink>

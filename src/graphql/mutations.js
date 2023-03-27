@@ -1,6 +1,16 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const changeUserGroup = /* GraphQL */ `
+  mutation ChangeUserGroup($id: ID!, $group: Group!) {
+    changeUserGroup(id: $id, group: $group)
+  }
+`;
+export const changeUserStatus = /* GraphQL */ `
+  mutation ChangeUserStatus($id: ID!, $disable: Boolean!) {
+    changeUserStatus(id: $id, disable: $disable)
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -10,6 +20,7 @@ export const createUser = /* GraphQL */ `
       id
       email
       emailVerified
+      disabled
       givenName
       familyName
       image
@@ -34,6 +45,9 @@ export const createUser = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -47,8 +61,11 @@ export const createUser = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -74,6 +91,17 @@ export const createUser = /* GraphQL */ `
           createdAt
           updatedAt
           owner
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          message
+          typeUserNotificationsByDate
+          createdAt
+          updatedAt
+          userNotificationsId
         }
         nextToken
       }
@@ -92,6 +120,7 @@ export const updateUser = /* GraphQL */ `
       id
       email
       emailVerified
+      disabled
       givenName
       familyName
       image
@@ -116,6 +145,9 @@ export const updateUser = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -129,8 +161,11 @@ export const updateUser = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -156,6 +191,17 @@ export const updateUser = /* GraphQL */ `
           createdAt
           updatedAt
           owner
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          message
+          typeUserNotificationsByDate
+          createdAt
+          updatedAt
+          userNotificationsId
         }
         nextToken
       }
@@ -174,6 +220,7 @@ export const deleteUser = /* GraphQL */ `
       id
       email
       emailVerified
+      disabled
       givenName
       familyName
       image
@@ -198,6 +245,9 @@ export const deleteUser = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -211,8 +261,11 @@ export const deleteUser = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
@@ -238,6 +291,17 @@ export const deleteUser = /* GraphQL */ `
           createdAt
           updatedAt
           owner
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          message
+          typeUserNotificationsByDate
+          createdAt
+          updatedAt
+          userNotificationsId
         }
         nextToken
       }
@@ -260,6 +324,7 @@ export const createPost = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -282,6 +347,9 @@ export const createPost = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -292,10 +360,12 @@ export const createPost = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -318,10 +388,16 @@ export const createPost = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
+      avgRating
       ratings {
         items {
           id
@@ -333,6 +409,8 @@ export const createPost = /* GraphQL */ `
         }
         nextToken
       }
+      typePostsByDate
+      typePostsByRating
       createdAt
       updatedAt
       userPostsId
@@ -353,6 +431,7 @@ export const updatePost = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -375,6 +454,9 @@ export const updatePost = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -385,10 +467,12 @@ export const updatePost = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -411,10 +495,16 @@ export const updatePost = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
+      avgRating
       ratings {
         items {
           id
@@ -426,6 +516,8 @@ export const updatePost = /* GraphQL */ `
         }
         nextToken
       }
+      typePostsByDate
+      typePostsByRating
       createdAt
       updatedAt
       userPostsId
@@ -446,6 +538,7 @@ export const deletePost = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -468,6 +561,9 @@ export const deletePost = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -478,10 +574,12 @@ export const deletePost = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -504,10 +602,16 @@ export const deletePost = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
+      avgRating
       ratings {
         items {
           id
@@ -519,6 +623,8 @@ export const deletePost = /* GraphQL */ `
         }
         nextToken
       }
+      typePostsByDate
+      typePostsByRating
       createdAt
       updatedAt
       userPostsId
@@ -536,10 +642,12 @@ export const createChannel = /* GraphQL */ `
       name
       topics
       disabled
+      avgRating
       owner {
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -560,6 +668,9 @@ export const createChannel = /* GraphQL */ `
           nextToken
         }
         participantChannels {
+          nextToken
+        }
+        notifications {
           nextToken
         }
         createdAt
@@ -596,6 +707,9 @@ export const createChannel = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -603,7 +717,20 @@ export const createChannel = /* GraphQL */ `
         }
         nextToken
       }
+      typeChannelsByDate
+      typeChannelsByRating
       createdAt
+      notifications {
+        items {
+          id
+          message
+          typeChannelNotificationsByDate
+          createdAt
+          updatedAt
+          channelNotificationsId
+        }
+        nextToken
+      }
       updatedAt
       userOwnedChannelsId
     }
@@ -619,10 +746,12 @@ export const updateChannel = /* GraphQL */ `
       name
       topics
       disabled
+      avgRating
       owner {
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -643,6 +772,9 @@ export const updateChannel = /* GraphQL */ `
           nextToken
         }
         participantChannels {
+          nextToken
+        }
+        notifications {
           nextToken
         }
         createdAt
@@ -679,6 +811,9 @@ export const updateChannel = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -686,7 +821,20 @@ export const updateChannel = /* GraphQL */ `
         }
         nextToken
       }
+      typeChannelsByDate
+      typeChannelsByRating
       createdAt
+      notifications {
+        items {
+          id
+          message
+          typeChannelNotificationsByDate
+          createdAt
+          updatedAt
+          channelNotificationsId
+        }
+        nextToken
+      }
       updatedAt
       userOwnedChannelsId
     }
@@ -702,10 +850,12 @@ export const deleteChannel = /* GraphQL */ `
       name
       topics
       disabled
+      avgRating
       owner {
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -726,6 +876,9 @@ export const deleteChannel = /* GraphQL */ `
           nextToken
         }
         participantChannels {
+          nextToken
+        }
+        notifications {
           nextToken
         }
         createdAt
@@ -762,6 +915,9 @@ export const deleteChannel = /* GraphQL */ `
           name
           topic
           content
+          avgRating
+          typePostsByDate
+          typePostsByRating
           createdAt
           updatedAt
           userPostsId
@@ -769,7 +925,20 @@ export const deleteChannel = /* GraphQL */ `
         }
         nextToken
       }
+      typeChannelsByDate
+      typeChannelsByRating
       createdAt
+      notifications {
+        items {
+          id
+          message
+          typeChannelNotificationsByDate
+          createdAt
+          updatedAt
+          channelNotificationsId
+        }
+        nextToken
+      }
       updatedAt
       userOwnedChannelsId
     }
@@ -786,6 +955,7 @@ export const createRating = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -808,6 +978,9 @@ export const createRating = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -820,6 +993,7 @@ export const createRating = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -837,15 +1011,21 @@ export const createRating = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
         }
+        avgRating
         ratings {
           nextToken
         }
+        typePostsByDate
+        typePostsByRating
         createdAt
         updatedAt
         userPostsId
@@ -870,6 +1050,7 @@ export const updateRating = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -892,6 +1073,9 @@ export const updateRating = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -904,6 +1088,7 @@ export const updateRating = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -921,15 +1106,21 @@ export const updateRating = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
         }
+        avgRating
         ratings {
           nextToken
         }
+        typePostsByDate
+        typePostsByRating
         createdAt
         updatedAt
         userPostsId
@@ -954,6 +1145,7 @@ export const deleteRating = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -976,6 +1168,9 @@ export const deleteRating = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -988,6 +1183,7 @@ export const deleteRating = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1005,15 +1201,21 @@ export const deleteRating = /* GraphQL */ `
           name
           topics
           disabled
+          avgRating
           description
           image
+          typeChannelsByDate
+          typeChannelsByRating
           createdAt
           updatedAt
           userOwnedChannelsId
         }
+        avgRating
         ratings {
           nextToken
         }
+        typePostsByDate
+        typePostsByRating
         createdAt
         updatedAt
         userPostsId
@@ -1027,54 +1229,24 @@ export const deleteRating = /* GraphQL */ `
     }
   }
 `;
-export const createSubscriptionsSubscribers = /* GraphQL */ `
-  mutation CreateSubscriptionsSubscribers(
-    $input: CreateSubscriptionsSubscribersInput!
-    $condition: ModelSubscriptionsSubscribersConditionInput
+export const createChannelNotification = /* GraphQL */ `
+  mutation CreateChannelNotification(
+    $input: CreateChannelNotificationInput!
+    $condition: ModelChannelNotificationConditionInput
   ) {
-    createSubscriptionsSubscribers(input: $input, condition: $condition) {
+    createChannelNotification(input: $input, condition: $condition) {
       id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
       channel {
         id
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1097,7 +1269,366 @@ export const createSubscriptionsSubscribers = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      message
+      typeChannelNotificationsByDate
+      createdAt
+      updatedAt
+      channelNotificationsId
+    }
+  }
+`;
+export const updateChannelNotification = /* GraphQL */ `
+  mutation UpdateChannelNotification(
+    $input: UpdateChannelNotificationInput!
+    $condition: ModelChannelNotificationConditionInput
+  ) {
+    updateChannelNotification(input: $input, condition: $condition) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      message
+      typeChannelNotificationsByDate
+      createdAt
+      updatedAt
+      channelNotificationsId
+    }
+  }
+`;
+export const deleteChannelNotification = /* GraphQL */ `
+  mutation DeleteChannelNotification(
+    $input: DeleteChannelNotificationInput!
+    $condition: ModelChannelNotificationConditionInput
+  ) {
+    deleteChannelNotification(input: $input, condition: $condition) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      message
+      typeChannelNotificationsByDate
+      createdAt
+      updatedAt
+      channelNotificationsId
+    }
+  }
+`;
+export const createUserNotification = /* GraphQL */ `
+  mutation CreateUserNotification(
+    $input: CreateUserNotificationInput!
+    $condition: ModelUserNotificationConditionInput
+  ) {
+    createUserNotification(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      message
+      typeUserNotificationsByDate
+      createdAt
+      updatedAt
+      userNotificationsId
+    }
+  }
+`;
+export const updateUserNotification = /* GraphQL */ `
+  mutation UpdateUserNotification(
+    $input: UpdateUserNotificationInput!
+    $condition: ModelUserNotificationConditionInput
+  ) {
+    updateUserNotification(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      message
+      typeUserNotificationsByDate
+      createdAt
+      updatedAt
+      userNotificationsId
+    }
+  }
+`;
+export const deleteUserNotification = /* GraphQL */ `
+  mutation DeleteUserNotification(
+    $input: DeleteUserNotificationInput!
+    $condition: ModelUserNotificationConditionInput
+  ) {
+    deleteUserNotification(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      message
+      typeUserNotificationsByDate
+      createdAt
+      updatedAt
+      userNotificationsId
+    }
+  }
+`;
+export const createSubscriptionsSubscribers = /* GraphQL */ `
+  mutation CreateSubscriptionsSubscribers(
+    $input: CreateSubscriptionsSubscribersInput!
+    $condition: ModelSubscriptionsSubscribersConditionInput
+  ) {
+    createSubscriptionsSubscribers(input: $input, condition: $condition) {
+      id
+      userID
+      channelID
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
@@ -1120,6 +1651,7 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1142,6 +1674,9 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -1151,10 +1686,12 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1177,7 +1714,12 @@ export const updateSubscriptionsSubscribers = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
@@ -1200,6 +1742,7 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1222,6 +1765,9 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -1231,10 +1777,12 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1257,7 +1805,12 @@ export const deleteSubscriptionsSubscribers = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
@@ -1280,6 +1833,7 @@ export const createUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1302,6 +1856,9 @@ export const createUsersParticipantChannels = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -1311,10 +1868,12 @@ export const createUsersParticipantChannels = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1337,7 +1896,12 @@ export const createUsersParticipantChannels = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
@@ -1360,6 +1924,7 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1382,6 +1947,9 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -1391,10 +1959,12 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1417,7 +1987,12 @@ export const updateUsersParticipantChannels = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }
@@ -1440,6 +2015,7 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
         id
         email
         emailVerified
+        disabled
         givenName
         familyName
         image
@@ -1462,6 +2038,9 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
         participantChannels {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -1471,10 +2050,12 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
         name
         topics
         disabled
+        avgRating
         owner {
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image
@@ -1497,7 +2078,12 @@ export const deleteUsersParticipantChannels = /* GraphQL */ `
         posts {
           nextToken
         }
+        typeChannelsByDate
+        typeChannelsByRating
         createdAt
+        notifications {
+          nextToken
+        }
         updatedAt
         userOwnedChannelsId
       }

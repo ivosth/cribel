@@ -11,11 +11,8 @@ import {
     ModalFooter,
     Button,
     useDisclosure,
-    Flex,
-    Icon,
     Wrap,
     Text,
-    Select,
     IconButton,
     Box
 } from "@chakra-ui/react";

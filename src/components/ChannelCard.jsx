@@ -4,13 +4,12 @@ import {
   Avatar,
   VStack,
   Button,
-  Icon,
   Text,
   Hide,
   Spacer,
   Wrap
 } from "@chakra-ui/react";
-import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar, MdOutlineDataSaverOn } from "react-icons/md";
+import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar} from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from "react-router-dom";
 import { Prose } from "@nikolovlazar/chakra-ui-prose";
@@ -19,36 +18,10 @@ import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers } from "../graphql/mutations";
 
-function computeRating(posts) {
-  //console.log("posts", posts)
-
-  let rating = 0;
-  let count = 0;
-  posts.forEach((post) => {
-    if (post.ratings.items.length !== 0) {
-      let sum = 0;
-      for (let i = 0; i < post.ratings.items.length; i++) {
-        sum += post.ratings.items[i].stars;
-      }
-      rating += sum / post.ratings.items.length;
-      count++;
-    }
-
-  });
-
-  if (count < 2) return 'N/A';
-  else return String((rating / count).toFixed(1));
-
-}
-
 function ChannelCard(props) {
   const navigate = useNavigate();
   const [subscribed, setSubscribed] = useState(null);
 
-  function isSubscribed() {
-    //console.log("props.subscriptions: ", props.subscriptions)
-    return props.subscriptions.some(sub => sub.channelID === props.channel.id)
-  }
 
   async function handlSubscription() {
     try {
@@ -74,8 +47,13 @@ function ChannelCard(props) {
   }
 
   useEffect(() => {
+    function isSubscribed() {
+      //console.log("props.subscriptions: ", props.subscriptions)
+      return props.subscriptions.some(sub => sub.channelID === props.channel.id)
+    }
+    
     setSubscribed(isSubscribed());
-  }, []);
+  }, [props.subscriptions, props.channel.id]);
 
   return (
     <Box
@@ -97,10 +75,10 @@ function ChannelCard(props) {
           ml="2"
           display={{ md: 'flex' }}
         >
-          {/*<Text onClick={() => navigate(`/channel/${props.channel.id}`)} 
+          {/*<Text onClick={() => navigate(`/channel/${props.channel.id}/new`)} 
               as="b" fontSize={[16, 20, 20, 25]} align="center"> {props.channel.name} </Text>*/}
           <Button colorScheme='facebook' mb="0.3rem"
-            onClick={() => navigate(`/channel/${props.channel.id}`)}
+            onClick={() => navigate(`/channel/${props.channel.id}/new`)}
             fontSize={[13, 18, 18, 23]}
           >
             {props.channel.name}
@@ -131,7 +109,7 @@ function ChannelCard(props) {
         <Text fontSize="sm" ml="0.3rem" mr="1.1rem"> {props.channel.participants.items.length} </Text>
 
         <MdStar color="#fae20a" size="1.5rem" />
-        <Text fontSize="sm" ml="0.1rem" mr="1.1rem"> {computeRating(props.channel.posts.items)} </Text>
+        <Text fontSize="sm" ml="0.1rem" mr="1.1rem"> {props.channel.avgRating} </Text>
 
       </Flex>
       <Prose my="0.6rem">

@@ -13,6 +13,7 @@ export const getUser = /* GraphQL */ `
       description
       ratings {
         items {
+          id
           stars
           userRatingsId
           postRatingsId
@@ -190,33 +191,9 @@ export const getChannel = /* GraphQL */ `
         }
         nextToken
       }
+      avgRating
       description
       image
-      posts {
-        items {
-          id
-          name
-          topic
-          content
-          ratings {
-            items {
-              postRatingsId
-              userRatingsId
-              stars
-            }
-          }
-          createdAt
-          updatedAt
-          userPostsId
-          channelPostsId
-          owner {
-            familyName
-            givenName
-            image
-          }
-        }
-        nextToken
-      }
       createdAt
       updatedAt
       userOwnedChannelsId
@@ -224,6 +201,155 @@ export const getChannel = /* GraphQL */ `
   }
 `;
 
+
+
+export const postsByDate = /* GraphQL */ `
+  query PostsByDate(
+    $typePostsByDate: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDate(
+      typePostsByDate: $typePostsByDate
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        avgRating
+        ratings {
+          items {
+            id
+            postRatingsId
+            userRatingsId
+            stars
+          }
+        }
+        typePostsByDate
+        typePostsByRating
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
+      nextToken
+    }
+  }
+`;
+
+
+
+export const postsByRating = /* GraphQL */ `
+  query PostsByRating(
+    $typePostsByRating: String!
+    $avgRating: ModelFloatKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByRating(
+      typePostsByRating: $typePostsByRating
+      avgRating: $avgRating
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        topic
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+          owner
+        }
+        content
+        channel {
+          id
+          name
+          topics
+          disabled
+          avgRating
+          description
+          image
+          typeChannelsByDate
+          typeChannelsByRating
+          createdAt
+          updatedAt
+          userOwnedChannelsId
+        }
+        avgRating
+        ratings {
+          items {
+            id
+            postRatingsId
+            userRatingsId
+            stars
+          }
+        }
+        typePostsByDate
+        typePostsByRating
+        createdAt
+        updatedAt
+        userPostsId
+        channelPostsId
+      }
+      nextToken
+    }
+  }
+`;
 
 
 export const listChannels = /* GraphQL */ `
@@ -268,13 +394,16 @@ export const listChannels = /* GraphQL */ `
         }
         description
         image
+        avgRating
         posts {
           items {
             id
             name
             content
+            avgRating
             ratings {
               items {
+                id
                 postRatingsId
                 userRatingsId
                 stars
@@ -325,12 +454,15 @@ export const listPosts = /* GraphQL */ `
           topics
           description
           image
+          avgRating
           createdAt
           updatedAt
           userOwnedChannelsId
         }
+        avgRating
         ratings {
           items {
+            id
             postRatingsId
             userRatingsId
             stars
@@ -359,6 +491,7 @@ export const listUsersWithFilters = /* GraphQL */ `
           id
           email
           emailVerified
+          disabled
           givenName
           familyName
           image

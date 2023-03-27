@@ -26,7 +26,7 @@ function SettingsChannel({ userID }) {
         setLoading(true);
         const allUserChannels = await API.graphql({ query: getUserChannels, variables: { id: userID } });
         setLoading(false);
-        console.log(allUserChannels.data.getUser)
+        //console.log(allUserChannels.data.getUser)
         setUserChannels(allUserChannels.data.getUser);
       };
     
@@ -92,7 +92,7 @@ function SettingsChannel({ userID }) {
                                                 px="0.25rem"
                                                 fontWeight="hairline"
                                             >
-                                                <RouterLink to={`/channel/${channel.id}`}>
+                                                <RouterLink to={`/channel/${channel.id}/new`}>
                                                     <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem" mt="0.25rem">{channel.name}</Text>
                                                 </RouterLink>
 
@@ -167,7 +167,7 @@ function SettingsChannel({ userID }) {
                                                 px="0.25rem"
                                                 fontWeight="hairline"
                                             >
-                                                <RouterLink to={`/channel/${channel.channelID}`}>
+                                                <RouterLink to={`/channel/${channel.channelID}/new`}>
                                                     <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md', lg: 'md', xl: 'md' }} ml="1rem" mt="0.25rem">{channel.channel.name}</Text>
                                                 </RouterLink>
 

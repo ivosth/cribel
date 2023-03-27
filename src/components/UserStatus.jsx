@@ -7,26 +7,26 @@ import {
     ModalBody,
     FormControl,
     FormLabel,
-    IconButton,
+    Icon,
     ModalFooter,
     Button,
-    useDisclosure
+    useDisclosure,
+    Flex,
+    Hide,
+    Text
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify'
-import { updateChannel } from "../graphql/mutations";
 import { AiFillLock, AiFillUnlock } from "react-icons/ai";
 import { useState } from "react";
 
-function ChannelStatus(props) {
+function UserStatus(props) {
     const { isOpen, onClose, onOpen } = useDisclosure();
     const [disabled, setDisabled] = useState(props.disabled)
 
     async function changeStatus() {
         try {
-            const updateChannelInput = {}
-            updateChannelInput.id = props.channelID
-            updateChannelInput.disabled = !disabled
-            await API.graphql({ query: updateChannel, variables: { input: updateChannelInput } })
+
+            await API.graphql({ query: `mutation changeUserStatus { changeUserStatus(id: "${props.userID}", disable: ${!disabled}) }` })
             setDisabled(!disabled)
 
         } catch (err) {
@@ -37,13 +37,16 @@ function ChannelStatus(props) {
 
     return (
         <>
-        
-            <IconButton
-                colorScheme={disabled ? "orange" : "red"}
-                icon={disabled ? <AiFillUnlock /> : <AiFillLock />}
-                aria-label="Delete"
-                onClick={onOpen}
-            />
+
+            <Button colorScheme={disabled ? "orange" : "red"} variant="solid" onClick={onOpen}>
+                <Flex fontSize="lg" align="center" >
+                    {disabled ? <Icon as={AiFillUnlock} size="1.5rem" /> : <Icon as={AiFillLock} size="1.5rem" />}
+                    <Hide below='md'>
+                        <Text ml="0.3rem" fontSize="md" >{disabled ? "Unlock User" : "Lock User"}</Text>
+                    </Hide>
+                </Flex>
+            </Button>
+
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
@@ -53,7 +56,7 @@ function ChannelStatus(props) {
 
                     <ModalBody>
                         <form
-                            id="delete-channel"
+                            id="disable-user"
                             onSubmit={(event) => {
                                 event.preventDefault();
                                 //console.log(event.target[0].value, event.target[1].value)
@@ -65,16 +68,16 @@ function ChannelStatus(props) {
                             }}
                         >
                             <FormControl>
-                                <FormLabel>Are you sure to {disabled ? "activate" : "deactivate"} this channel? <br/>
-                                            {disabled ? "Participants will be able to post on the channel again." 
-                                            : "Participants will no longer be able to post but users will still be able to view the channel and the posts."}
+                                <FormLabel>Are you sure to {disabled ? "unlock" : "lock"} this user? <br />
+                                    {disabled ? "This user will be able to log in to the platform again."
+                                        : "The user's access to the platform will be disabled."}
                                 </FormLabel>
                             </FormControl>
                         </form>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="green" type="submit" mr={3} form="delete-channel">
+                        <Button colorScheme="green" type="submit" mr={3} form="disable-user">
                             Yes
                         </Button>
                         <Button colorScheme="red" onClick={onClose}>
@@ -88,4 +91,4 @@ function ChannelStatus(props) {
 }
 
 
-export default ChannelStatus;
+export default UserStatus;

@@ -1,16 +1,9 @@
 import { listChannels } from '../graphql/customQueries';
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { Box, Card, CardHeader, CardBody, Text, CircularProgress } from "@chakra-ui/react";
+import { CircularProgress } from "@chakra-ui/react";
 import ChannelCard from './ChannelCard';
 
-function formatDate(awsDate){
-  const dateobj = new Date(awsDate);
-  const date = dateobj.toLocaleDateString(navigator.language);
-  const time = dateobj.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
-
-  return (date + ' ' + time);
-}
 
 function ChannelList(props) {
   const [loading, setLoading] = useState(true);
