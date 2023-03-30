@@ -71,7 +71,7 @@ function ChannelCard(props) {
 
   return (
     <Box
-      width={{ base: '100%', sm: '100%', md: '70%', lg: '40%', xl: '40%' }}
+      width={{ base: '95%', sm: '95%', md: '70%', lg: '70%', xl: '40%' }}
       mx="auto"
       px={8}
       py={4}
@@ -93,7 +93,7 @@ function ChannelCard(props) {
               as="b" fontSize={[16, 20, 20, 25]} align="center"> {props.channel.name} </Text>*/}
           <Button colorScheme='facebook' mb="0.3rem"
             onClick={() => navigate(`/channel/${props.channel.id}/new`)}
-            fontSize={[13, 18, 18, 23]}
+            fontSize={[14, 18, 18, 23]}
           >
             {props.channel.name}
           </Button>
@@ -103,7 +103,7 @@ function ChannelCard(props) {
               <Avatar size={'sm'} bg="teal.500" mr="0.5rem" src={props.channel.owner.image} />
             </Hide>
             <RouterLink to={`/profile/${props.channel.owner.id}`}>
-              <Text mt="0.25rem" fontSize={[10, 18, 18, 18]}> {`${props.channel.owner.givenName} ${props.channel.owner.familyName}` || "Nombre Apellido"} </Text>
+              <Text mt="0.25rem" fontSize={[14, 18, 18, 18]}> {`${props.channel.owner.givenName} ${props.channel.owner.familyName}` || "Nombre Apellido"} </Text>
             </RouterLink>
           </Flex>
         </VStack>
@@ -111,7 +111,7 @@ function ChannelCard(props) {
         <Button onClick={handlSubscription} size={["md", "md", "md", "md"]}
             leftIcon={subscribed ? <RiChatDeleteLine size="2rem"/> : <RiChatFollowUpLine size="2rem"/>}
         >
-            <Text display={{ base: 'none', lg: 'block' }}> {subscribed ? "Unsubscribe" : "Subscribe"}</Text>
+            <Text display={{ base: 'none', sm: 'block', md: 'block', lg: 'block' }}> {subscribed ? "Unsubscribe" : "Subscribe"}</Text>
         </Button>
       </Flex>
       <Flex alignItems="center" fontSize={["0.85rem", "0.9rem", "1rem", "1rem"]}>

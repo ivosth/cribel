@@ -47,8 +47,8 @@ function PostCard({ post, userID }) {
 
   async function changeRating(rate) {
     //console.log(post)
-    
-    try{
+
+    try {
       //console.log("ratingValue", ratingValue)
       if (ratingValue === 0) {
         // If the user has not rated the post, create a new rating
@@ -62,7 +62,7 @@ function PostCard({ post, userID }) {
 
         let newRatingsList
 
-        if(views + 1 === minimumViews){
+        if (views + 1 === minimumViews) {
           newRatingsList = post.ratings.items;
           newRatingsList.push(newRating);
           const rateComputed = parseFloat(computeRating(newRatingsList))
@@ -71,19 +71,19 @@ function PostCard({ post, userID }) {
           setInitialRating(rate);
           await API.graphql({ query: updatePost, variables: { input: { id: post.id, avgRating: rateComputed } } });
         }
-        else{
-          if(views + 1 > minimumViews){
+        else {
+          if (views + 1 > minimumViews) {
             //console.log("averageRating", averageRating, "views", views, "initialRating", initialRating, "rate", rate)
             const sum = parseFloat(averageRating) * views + rate;
             setAverageRating(sum / (views + 1));
             setInitialRating(rate);
-            
+
             await API.graphql({ query: updatePost, variables: { input: { id: post.id, avgRating: (sum / (views + 1)) } } });
             setViews(views + 1);
             newRatingsList = post.ratings.items;
             newRatingsList.push(newRating);
           }
-          else{
+          else {
             setAverageRating("N/A");
             setViews(views + 1);
             newRatingsList = post.ratings.items;
@@ -92,13 +92,13 @@ function PostCard({ post, userID }) {
         }
       } else {
         // If the user has already rated the post, update the rating
-        const ratingID = post.ratings.items.find(rating => rating.userRatingsId === userID).id;       
+        const ratingID = post.ratings.items.find(rating => rating.userRatingsId === userID).id;
         await API.graphql({ query: updateRating, variables: { input: { id: ratingID, stars: rate } } });
 
-        if (averageRating === "N/A" || averageRating === 0){
+        if (averageRating === "N/A" || averageRating === 0) {
           setAverageRating("N/A");
         }
-        else{
+        else {
           const sum = parseFloat(averageRating) * views - initialRating + rate;
           //console.log("averageRating", averageRating, "views", views, "initialRating", initialRating, "rate", rate, "sum", sum)
           setAverageRating(String((sum / views)));
@@ -130,8 +130,8 @@ function PostCard({ post, userID }) {
       }
     }
 
-    setAlreadyRated();     
-    
+    setAlreadyRated();
+
   }, [post.ratings.items, userID]);
 
 
@@ -206,7 +206,7 @@ function PostCard({ post, userID }) {
 
         <Box mt={2}>
           <Text
-            fontSize="2xl"
+            fontSize={[20, 22, 24, 24]}
             color="gray.700"
             _dark={{
               color: "white"
@@ -217,38 +217,34 @@ function PostCard({ post, userID }) {
           </Text>
 
           <Prose mt={2}>
-            <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(post.content)}}></div>
+            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}></div>
           </Prose>
         </Box>
 
         <Flex justifyContent="space-between" alignItems="center" mt={4}>
 
-            <Link
-              onClick={() => navigate(`/profile/${post.userPostsId}`)}
-              color="gray.700"
-              _dark={{
-                color: "gray.200"
-              }}
-              fontWeight="700"
-              fontSize={["0.81rem", "0.83rem", "0.85rem", "0.85rem"]}
-              cursor="pointer"
-              display={{
-                base: "none",
-                sm: "block"
-              }}
-            >
-              <Flex alignItems="center">
-                <Avatar
-                  size="sm"
-                  bg="teal.500"
-                  src={post.owner.image}
-                />
-                <Text pl="1rem">
-                  {`${post.owner.givenName} ${post.owner.familyName}` || "Nombre Apellido"}
-                </Text>
-              </Flex>
-            </Link>
-        
+          <Link
+            onClick={() => navigate(`/profile/${post.userPostsId}`)}
+            color="gray.700"
+            _dark={{
+              color: "gray.200"
+            }}
+            fontWeight="700"
+            fontSize={["0.81rem", "0.83rem", "0.85rem", "0.85rem"]}
+            cursor="pointer"
+          >
+            <Flex alignItems="center">
+              <Avatar
+                size="sm"
+                bg="teal.500"
+                src={post.owner.image}
+              />
+              <Text pl="1rem" display={{ base: "none", sm: "block" }}>
+                {`${post.owner.givenName} ${post.owner.familyName}` || "Nombre Apellido"}
+              </Text>
+            </Flex>
+          </Link>
+
 
           <Flex alignItems="center">
             {/*
@@ -275,8 +271,8 @@ function PostCard({ post, userID }) {
 
             />
 
-            <Text pl="0.3rem" marginRight="1.5rem" fontSize={["0.81rem", "0.83rem", "0.85rem", "0.85rem"]}> 
-              {averageRating === "N/A" || averageRating === 0 ? "N/A" :  parseFloat(averageRating).toFixed(2)}
+            <Text pl="0.3rem" marginRight="1.5rem" fontSize={["0.81rem", "0.83rem", "0.85rem", "0.85rem"]}>
+              {averageRating === "N/A" || averageRating === 0 ? "N/A" : parseFloat(averageRating).toFixed(2)}
             </Text>
 
             <FaRegEye size="22px" />
