@@ -73,12 +73,22 @@ type Post
   ) {
 
   id: ID!
+    @auth(rules: [
+    { allow: private, operations: [read, update] }, # Needed to allow update of the avgRating
+    { allow: groups, groups: ["creator"], operations: [create, read, update] },
+    { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+  ]) 
   name: String!
   topic: String! #In the code a check will be made to ensure that only the topics in the channel can be selected.
   owner: User! @belongsTo
   content: String!
   channel: Channel! @belongsTo
   avgRating: Float! @default(value: "0.0")
+    @auth(rules: [
+      { allow: private, operations: [read, update] },
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])  
   ratings: [Rating] @hasMany
   typePostsByDate: String! @default(value: "PostsByDate") @index(name: "postsByDate", queryField: "postsByDate", sortKeyFields: ["createdAt"])
   typePostsByRating: String! @default(value: "PostsByRating") @index(name: "postsByRating", queryField: "postsByRating", sortKeyFields: ["avgRating"])
