@@ -64,7 +64,7 @@ function SearchBar() {
                 }
               />
             </InputGroup>
-            <AutoCompleteList>
+            <AutoCompleteList w="15.5rem">
               {channels.map((channel, id) => (
                 <Link
                   fontSize="md"
