@@ -1,3 +1,4 @@
+// Made with https://github.com/kodingdotninja/chakra-icons
 import { Icon } from "@chakra-ui/react";
 
 export const IconCribel = (props) => {

@@ -22,12 +22,7 @@ function Notifications(props) {
             let newNotifications = [];
             let lastDate = props.userCreatedAt;
 
-            //console.log(lastDate)
-            //console.log("allUserNotifications", allUserNotifications)
-            //console.log("allChannelNotifications", allChannelNotifications)
-
             if (allUserNotifications.items.length > 0) {
-                //console.log("lastDate", allUserNotifications.items[0].createdAt)
                 lastDate = allUserNotifications.items[0].createdAt;
             }
 
@@ -59,7 +54,6 @@ function Notifications(props) {
 
             setUserNotificationsNew(newNotifications);
             props.updateIconNotifications(false);
-            //console.log("newNotifications", newNotifications)
         }
 
         const obtainNotifications = async () => {
@@ -74,7 +68,6 @@ function Notifications(props) {
                             filter: { userNotificationsId: { eq: props.userID } }
                         }
                     });
-                    //console.log("allUserNotifications", allUserNotifications.data.userNotificationsByDate)
                     setUserNotificationsOld(allUserNotifications.data.userNotificationsByDate.items);
 
                     // list of channels id that the user is subscribed to
@@ -83,9 +76,6 @@ function Notifications(props) {
                         filterSubscriptions.or.push({ channelNotificationsId: { eq: subscription.channelSubscribersId } });
                     });
 
-                    //console.log("filterSubscriptions", filterSubscriptions)
-                    //console.log("props.subscriptions", props.subscriptions)
-
                     // filter channel notifications by channels subscribed
                     const allChannelNotifications = await API.graphql({
                         query: channelNotificationsByDate,
@@ -93,12 +83,7 @@ function Notifications(props) {
                     });
 
 
-                    //console.log("channelNotifications", allChannelNotifications.data.channelNotificationsByDate)
-
                     await newNotifications(allUserNotifications.data.userNotificationsByDate, allChannelNotifications.data.channelNotificationsByDate);
-
-
-
                 }
             } catch (error) {
                 console.error("Error obtaining notifications: ", error);

@@ -1,18 +1,6 @@
-import {
-  Flex,
-  Icon,
-  InputGroup,
-  InputRightElement,
-  Avatar,
-  Link,
-} from "@chakra-ui/react";
+import { Flex, Icon, InputGroup, InputRightElement, Avatar, Link, } from "@chakra-ui/react";
 import * as React from "react";
-import {
-  AutoComplete,
-  AutoCompleteInput,
-  AutoCompleteItem,
-  AutoCompleteList,
-} from "@choc-ui/chakra-autocomplete";
+import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList, } from "@choc-ui/chakra-autocomplete";
 import { MdOutlineSearch, MdOutlineYoutubeSearchedFor } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -22,12 +10,13 @@ import { API } from 'aws-amplify';
 function SearchBar() {
 
   const [channels, setChannels] = useState([]);
-  
 
-  const obtainChannels = async() => {
+
+  const obtainChannels = async () => {
     // Only get channel id, name and image
     try {
-      const allChannels = await API.graphql({query: `query ListChannels {
+      const allChannels = await API.graphql({
+        query: `query ListChannels {
         listChannels {
           items {
             id
@@ -54,10 +43,7 @@ function SearchBar() {
         {({ isOpen }) => (
           <>
             <InputGroup>
-              <AutoCompleteInput placeholder="Search..." 
-                //_dark={{ bg:"blue.600" }}
-                //_light={{ bg:"blue.50" }}
-              />
+              <AutoCompleteInput placeholder="Search..." />
               <InputRightElement
                 children={
                   <Icon as={isOpen ? MdOutlineYoutubeSearchedFor : MdOutlineSearch} />
@@ -85,8 +71,8 @@ function SearchBar() {
                     _focus={{ bg: "none" }}
                   >
 
-                    <Avatar size="sm" name={channel.name} mr="0.75rem" 
-                    src={channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}
+                    <Avatar size="sm" name={channel.name} mr="0.75rem"
+                      src={channel.image || "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}
                     />
                     {channel.name}
 

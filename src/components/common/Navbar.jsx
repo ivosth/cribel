@@ -1,3 +1,5 @@
+// Based on Simple Navbar with user dropdown: https://chakra-templates.dev/navigation/navbar
+// and Sidebar with Header: https://chakra-templates.dev/navigation/sidebar
 import {
   Box,
   Flex,
@@ -23,11 +25,10 @@ import { BsSun, BsMoon, BsGear, BsBoxArrowRight, BsPersonSquare, BsTools } from 
 import { FiChevronDown } from 'react-icons/fi';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import { Link as RouterLink } from "react-router-dom";
-import { Auth, /* DataStore */ } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import SearchBar from "./SearchBar";
 import IconCribel from "./IconCribel";
 import NotificationsButton from "../notifications/NotificationsButton";
-
 
 const NavLink = ({ icon, link, children }) => (
   <Link
@@ -38,12 +39,7 @@ const NavLink = ({ icon, link, children }) => (
     rounded={"md"}
     _hover={{
       bg: useColorModeValue("blue.100", "blue.600"),
-    }}
-  //_focus={{ boxShadow: "none" }}
-  >
-
-    {/*children.toUpperCase()*/}
-
+    }}>
     <Flex align="center" >
       <Icon as={icon} />
       <Hide below='md'>
@@ -51,26 +47,21 @@ const NavLink = ({ icon, link, children }) => (
           {children.charAt(0).toUpperCase() + children.slice(1)}
         </Text>
       </Hide>
-
     </Flex>
   </Link>
 );
 
 
 function Navbar({ user, notifications, updateIconNotifications }) {
-
   const onSignOutHandler = async () => {
     try {
-      //await DataStore.clear();
       await Auth.signOut();
     } catch (err) {
       console.error("Error signing out user", err);
     }
   };
 
-  //const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-
   const bg1 = useColorModeValue("blue.50", "blue.700");
 
   return (
@@ -84,13 +75,6 @@ function Navbar({ user, notifications, updateIconNotifications }) {
 
       {/**************** LOGO AND HOME ************************/}
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-        {/*<IconButton
-          size={"md"}
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          aria-label={"Open Menu"}
-          display={{ md: "none" }}
-          onClick={isOpen ? onClose : onOpen}
-        />*/}
         <HStack alignItems={"center"}>
           <Hide below="md">
             <LinkBox as={RouterLink} to="/">
@@ -106,7 +90,6 @@ function Navbar({ user, notifications, updateIconNotifications }) {
           </Hide>
           <NavLink icon={FaChalkboardTeacher} link={"feed"}>{"feed"}</NavLink>
         </HStack>
-
 
         {/************ CHANNELS AND SEARCH *******************/}
         <Flex align="center" px="0.4rem">
@@ -224,7 +207,7 @@ function Navbar({ user, notifications, updateIconNotifications }) {
                     <MenuItem _hover={{ bg: bg1 }} >
                       <RouterLink to="/settings">
                         <Flex>
-                          <Icon as={BsGear} mt="0.25rem" /> 
+                          <Icon as={BsGear} mt="0.25rem" />
                           <Text ml="0.5rem"> Settings </Text>
                         </Flex>
                       </RouterLink>
@@ -233,7 +216,7 @@ function Navbar({ user, notifications, updateIconNotifications }) {
                     <MenuItem _hover={{ bg: bg1 }} >
                       <RouterLink to="/settings/profile">
                         <Flex ml="0.5rem">
-                          <Icon as={BsPersonSquare} mt="0.25rem" /> 
+                          <Icon as={BsPersonSquare} mt="0.25rem" />
                           <Text ml="0.5rem"> Profile </Text>
                         </Flex>
                       </RouterLink>
@@ -312,15 +295,6 @@ function Navbar({ user, notifications, updateIconNotifications }) {
 
         </HStack>
       </Flex>
-
-
-      {/*isOpen ? (
-        <Box pb={4} display={{ md: "none" }}>
-          <Stack as={"nav"} spacing={4}>
-            <NavLink icon={BsHouseDoor} link={"posts"}>{"home"}</NavLink>
-          </Stack>
-        </Box>
-      ) : null*/}
     </Box>
   );
 }

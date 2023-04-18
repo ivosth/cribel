@@ -4,7 +4,7 @@ import {
 import { Outlet } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import { MdOutlineCastForEducation } from "react-icons/md";
-import { BsPersonSquare, BsTools} from "react-icons/bs";
+import { BsPersonSquare, BsTools } from "react-icons/bs";
 
 const NavLink = ({ icon, link, children }) => (
     <Link
@@ -15,7 +15,6 @@ const NavLink = ({ icon, link, children }) => (
         py={1}
         rounded={"md"}
         mx="1rem"
-        //color= {useColorModeValue("blue.900", "blue.100")}
         bgColor={useColorModeValue("blue.400", "blue.100")}
         _hover={{
             bg: useColorModeValue("blue.500", "blue.200"),
@@ -23,7 +22,7 @@ const NavLink = ({ icon, link, children }) => (
 
     >
         <Flex align="center">
-            <Icon as={icon} color={useColorModeValue("white", "black")}/>
+            <Icon as={icon} color={useColorModeValue("white", "black")} />
             <Hide below='md'>
                 <Text marginLeft="0.5rem" color={useColorModeValue("white", "black")}>
                     {children.charAt(0).toUpperCase() + children.slice(1)}

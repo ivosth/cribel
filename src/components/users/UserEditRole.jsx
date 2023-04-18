@@ -54,7 +54,7 @@ function UserEditRole(props) {
             let oldGroup
             if (role === "student" || role === "graduated" || role === "Student" || role === "Graduated") {
                 oldGroup = "viewer"
-            } else if (role === "technical" || role === "professor" ||role === "Technical" || role === "Professor") {
+            } else if (role === "technical" || role === "professor" || role === "Technical" || role === "Professor") {
                 oldGroup = "creator"
             }
 
@@ -64,14 +64,14 @@ function UserEditRole(props) {
             } else if (roleButton === "technical" || roleButton === "professor" || roleButton === "Technical" || roleButton === "Professor") {
                 newGroup = "creator"
             }
-            
-            
+
+
             await API.graphql({ query: updateUser, variables: { input: { id: props.user.id, role: roleButton.charAt(0).toLowerCase() + roleButton.slice(1), group: newGroup } } })
 
-            if(oldGroup !== newGroup){
+            if (oldGroup !== newGroup) {
                 await API.graphql({ query: `mutation changeUserGroup { changeUserGroup(id: "${props.user.id}", group: ${newGroup}) }` })
             }
-            
+
             setRole(roleButton);
             setRoleButton(null);
             setRoleBg({ [roleButton]: 'transparent' });
@@ -108,8 +108,6 @@ function UserEditRole(props) {
                                 event.preventDefault();
                                 updateUserRol()
 
-
-
                                 onClose();
                             }}
                         >
@@ -121,7 +119,7 @@ function UserEditRole(props) {
                                     marginRight="0.5rem"
                                     bg="gray.600"
                                     color="gray.100"
-                                    fontSize="sm" //Más pequeño con xs
+                                    fontSize="sm" //Smaller with xs
                                     fontWeight="700"
                                     textAlign={"center"}
                                     rounded="md"

@@ -17,20 +17,19 @@ function SettingsChannel({ userID }) {
 
     const [loading, setLoading] = useState(true);
     const [userChannels, setUserChannels] = useState([]);
-    
+
     useEffect(() => {
 
-        const obtainUserChannels = async() => {
+        const obtainUserChannels = async () => {
             try {
                 setLoading(true);
                 const allUserChannels = await API.graphql({ query: getUserChannels, variables: { id: userID } });
                 setLoading(false);
-                //console.log(allUserChannels.data.getUser)
                 setUserChannels(allUserChannels.data.getUser);
             } catch (error) {
                 console.error("Error obtaining user channels: ", error);
             }
-          };
+        };
 
         obtainUserChannels();
     }, [userID]);
@@ -39,7 +38,7 @@ function SettingsChannel({ userID }) {
     if (loading) {
         return (
             <div className="centerLoading">
-            <CircularProgress isIndeterminate size="25rem" />
+                <CircularProgress isIndeterminate size="25rem" />
             </div>
         )
     }
@@ -105,9 +104,9 @@ function SettingsChannel({ userID }) {
                                                 >
                                                     <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
                                                         <ChannelNewPost userID={userID} channelID={channel.id} topics={channel.topics} />
-                                                        <ChannelEditParticipants channelID={channel.id}/>
+                                                        <ChannelEditParticipants channelID={channel.id} />
                                                         <ChannelEditInfo channelID={channel.id} topics={channel.topics} />
-                                                        <ChannelStatus channelID={channel.id} disabled={channel.disabled}/>
+                                                        <ChannelStatus channelID={channel.id} disabled={channel.disabled} />
                                                     </ButtonGroup>
                                                 </Flex>
                                             </SimpleGrid>
@@ -179,7 +178,7 @@ function SettingsChannel({ userID }) {
                                                     }}
                                                 >
                                                     {channel.channel.disabled ?
-                                                        <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md'}} mr="1rem" mt="0.25rem">Channel disabled by owner</Text>
+                                                        <Text fontSize={{ base: 'sm', sm: 'sm', md: 'md' }} mr="1rem" mt="0.25rem">Channel disabled by owner</Text>
                                                         :
                                                         <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing="0.6rem">
                                                             <ChannelNewPost userID={userID} channelID={channel.channelParticipantsId} topics={channel.channel.topics} />

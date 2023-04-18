@@ -25,19 +25,16 @@ function UserStatus(props) {
 
     async function changeStatus() {
         try {
-
             await API.graphql({ query: `mutation changeUserStatus { changeUserStatus(id: "${props.userID}", disable: ${!disabled}) }` })
             setDisabled(!disabled)
 
         } catch (err) {
             console.error("Error changing user status: ", err)
         }
-
     }
 
     return (
         <>
-
             <Button colorScheme={disabled ? "orange" : "red"} variant="solid" onClick={onOpen}>
                 <Flex fontSize="lg" align="center" >
                     {disabled ? <Icon as={AiFillUnlock} size="1.5rem" /> : <Icon as={AiFillLock} size="1.5rem" />}
@@ -59,10 +56,7 @@ function UserStatus(props) {
                             id="disable-user"
                             onSubmit={(event) => {
                                 event.preventDefault();
-                                //console.log(event.target[0].value, event.target[1].value)
-                                //console.log(content)
                                 changeStatus()
-
 
                                 onClose();
                             }}

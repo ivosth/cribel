@@ -31,12 +31,11 @@ function sortByTrendingPosts(posts) {
     const today = new Date();
     const postsWithWeight = posts.items.map(post => {
         const postDate = new Date(post.createdAt);
-        
+
         const diffDays = Math.round(Math.abs((today - postDate) / oneDay));
         const weightForHowNewThePostIs = 0.5 * (1 - (diffDays / 365)); // normalize the weight using (1 - (diffDays / 365))
         const weightForAverageRating = 0.5 * (post.avgRating / 5); // normalize the weight using (post.avgRating / 5) 
-        //console.log({ weightForHowNewThePostIs, weightForAverageRating });
-        
+
         const totalWeight = weightForHowNewThePostIs + weightForAverageRating;
         return { ...post, totalWeight };
 
@@ -46,9 +45,6 @@ function sortByTrendingPosts(posts) {
     return { ...posts, items: sortedPosts };
 
 }
-
-
-
 
 
 
@@ -68,42 +64,47 @@ function ChannelPostsSorted(props) {
                 let postsChannel;
                 switch (props.sort) {
                     case "new":
-                        postsChannel = await API.graphql({ query: postsByDate, 
-                            variables: { typePostsByDate: "PostsByDate", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } } });
+                        postsChannel = await API.graphql({
+                            query: postsByDate,
+                            variables: { typePostsByDate: "PostsByDate", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } }
+                        });
                         setPosts(postsChannel.data.postsByDate);
-                    break;
+                        break;
                     case "trending":
-                        postsChannel = await API.graphql({ query: postsByDate, 
-                            variables: { typePostsByDate: "PostsByDate", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } } });
+                        postsChannel = await API.graphql({
+                            query: postsByDate,
+                            variables: { typePostsByDate: "PostsByDate", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } }
+                        });
                         const trendingPosts = sortByTrendingPosts(postsChannel.data.postsByDate);
                         setPosts(trendingPosts);
-                    break;
+                        break;
                     case "top":
-                        postsChannel = await API.graphql({ query: postsByRating, 
-                            variables: { typePostsByRating: "PostsByRating", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } } });
+                        postsChannel = await API.graphql({
+                            query: postsByRating,
+                            variables: { typePostsByRating: "PostsByRating", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } }
+                        });
                         setPosts(postsChannel.data.postsByRating);
-                    break;
+                        break;
                     default:
-                        postsChannel = await API.graphql({ query: postsByDate,
-                            variables: { typePostsByDate: "PostsByDate", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } } });
+                        postsChannel = await API.graphql({
+                            query: postsByDate,
+                            variables: { typePostsByDate: "PostsByDate", sortDirection: "DESC", filter: { channelPostsId: { eq: id } } }
+                        });
                         setPosts(postsChannel.data.postsByDate);
-                    break;
+                        break;
                 }
-        
-                
-                const channelInfo  = await API.graphql({ query: getChannel, variables: { id: id } });
+
+
+                const channelInfo = await API.graphql({ query: getChannel, variables: { id: id } });
                 setChannel(channelInfo.data.getChannel);
 
-                //console.log(channelInfo.data.getChannel)
-                //console.log(postsChannel.data.postsByDate)
-                
                 setLoading(false);
             } catch (err) {
                 console.error("Error obtaining posts and channel info: ", err);
             }
         };
-        
-        obtainPostsChannel();        
+
+        obtainPostsChannel();
     }, [id, props.sort]);
 
     if (loading) {
@@ -116,38 +117,38 @@ function ChannelPostsSorted(props) {
 
     return (
         <>
-        {/****** POSTS CARDS AND INFO CHANNEL *************/}
-        <Flex mx="2%">
-            <Hide below='xl'> <Box w='100%' /> </Hide>
-            <Show below='lg'> <Spacer /> </Show>
+            {/****** POSTS CARDS AND INFO CHANNEL *************/}
+            <Flex mx="2%">
+                <Hide below='xl'> <Box w='100%' /> </Hide>
+                <Show below='lg'> <Spacer /> </Show>
 
-            <Box maxW="2xl" minW="50%">
+                <Box maxW="2xl" minW="50%">
 
-                {/****** INFO CHANNEL FOR SMALL SCREENS *************/}
-                <Box p='4' maxW="2xl" minW="50%" display={{ lg: 'none' }}>
-                    <ChannelInfo channel={channel} posts={posts.items} />
+                    {/****** INFO CHANNEL FOR SMALL SCREENS *************/}
+                    <Box p='4' maxW="2xl" minW="50%" display={{ lg: 'none' }}>
+                        <ChannelInfo channel={channel} posts={posts.items} />
+                    </Box>
+
+                    {/*************** POSTS CARDS  ***************/}
+                    {posts.items.map(post => (
+                        <div key={post.id}>
+                            <PostCard post={post} userID={props.userID} />
+                        </div>
+                    ))}
                 </Box>
 
-                {/*************** POSTS CARDS  ***************/}
-                {posts.items.map(post => (
-                    <div key={post.id}>
-                        <PostCard post={post} userID={props.userID} />
-                    </div>
-                ))}
-            </Box>
+                <Hide below='xl'> <Box w='5%' /> </Hide>
+                <Spacer />
 
-            <Hide below='xl'> <Box w='5%' /> </Hide>
-            <Spacer />
+                {/****** INFO CHANNEL FOR BIGGER SCREENS *************/}
+                <Hide below='lg'>
+                    <Box p='4' w="30%" minW="25%">
+                        <ChannelInfo channel={channel} posts={posts.items} />
+                    </Box>
+                </Hide >
 
-            {/****** INFO CHANNEL FOR BIGGER SCREENS *************/}
-            <Hide below='lg'>
-                <Box p='4' w="30%" minW="25%">
-                    <ChannelInfo channel={channel} posts={posts.items} />
-                </Box>
-            </Hide >
-
-        </Flex >
-    </>
+            </Flex >
+        </>
     );
 }
 

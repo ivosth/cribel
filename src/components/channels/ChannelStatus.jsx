@@ -37,7 +37,7 @@ function ChannelStatus(props) {
 
     return (
         <>
-        
+
             <IconButton
                 colorScheme={disabled ? "orange" : "red"}
                 icon={disabled ? <AiFillUnlock /> : <AiFillLock />}
@@ -56,18 +56,15 @@ function ChannelStatus(props) {
                             id="delete-channel"
                             onSubmit={(event) => {
                                 event.preventDefault();
-                                //console.log(event.target[0].value, event.target[1].value)
-                                //console.log(content)
                                 changeStatus()
-
 
                                 onClose();
                             }}
                         >
                             <FormControl>
-                                <FormLabel>Are you sure to {disabled ? "activate" : "deactivate"} this channel? <br/>
-                                            {disabled ? "Participants will be able to post on the channel again." 
-                                            : "Participants will no longer be able to post but users will still be able to view the channel and the posts."}
+                                <FormLabel>Are you sure to {disabled ? "activate" : "deactivate"} this channel? <br />
+                                    {disabled ? "Participants will be able to post on the channel again."
+                                        : "Participants will no longer be able to post but users will still be able to view the channel and the posts."}
                                 </FormLabel>
                             </FormControl>
                         </form>

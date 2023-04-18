@@ -3,7 +3,7 @@ import {
 } from "@chakra-ui/react";
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { useParams, Link as RouterLink, Outlet} from "react-router-dom";
+import { useParams, Link as RouterLink, Outlet } from "react-router-dom";
 import { MdOutlineArrowUpward, MdOutlineUpdate, MdOutlineTrendingUp, } from "react-icons/md";
 import { RiChatFollowUpLine, RiChatDeleteLine } from "react-icons/ri";
 import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers, createUserNotification } from "../graphql/mutations";
@@ -17,7 +17,6 @@ const NavLink = ({ icon, link, children }) => (
         py={1}
         rounded={"md"}
         mx="1rem"
-        //color= {useColorModeValue("blue.900", "blue.100")}
         bgColor={useColorModeValue("blue.50", "blue.500")}
         _hover={{
             bg: useColorModeValue("blue.100", "blue.600"),
@@ -56,24 +55,26 @@ function Channel(props) {
                 const res = await API.graphql({ query: createSubscriptionsSubscribers, variables: { input: { channelSubscribersId: id, userSubscriptionsId: props.userID } } });
                 const channelInfo = { name: channel.name, image: channel.image };
                 newSubscriptions.items.push({ channel: channelInfo, id: res.data.createSubscriptionsSubscribers.id, userSubscriptionsId: props.userID, channelSubscribersId: id });
-                
+
             }
             setSubscribed(!subscribed);
             props.updateChannelsNavbar({ subscriptions: newSubscriptions })
 
-            await API.graphql({ 
-                query: createUserNotification, 
-                variables: { 
-                  input: {
-                    message: subscribed ? `You have unsubscribed from ${channel.name} channel` : `You have subscribed to ${channel.name} channel`,
-                    type: subscribed ? "Unsubscribe" : "Subscribe", 
-                    userNotificationsId: props.userID,
-                    channelID: id,
-                    channelName: channel.name,
-                    typeUserNotificationsByDate: "UserNotificationsByDate"
-                  } } });
+            await API.graphql({
+                query: createUserNotification,
+                variables: {
+                    input: {
+                        message: subscribed ? `You have unsubscribed from ${channel.name} channel` : `You have subscribed to ${channel.name} channel`,
+                        type: subscribed ? "Unsubscribe" : "Subscribe",
+                        userNotificationsId: props.userID,
+                        channelID: id,
+                        channelName: channel.name,
+                        typeUserNotificationsByDate: "UserNotificationsByDate"
+                    }
+                }
+            });
         }
-        catch(err) {
+        catch (err) {
             console.error("Error subscribing to channel: ", err)
         }
     }
@@ -85,7 +86,6 @@ function Channel(props) {
                 setLoading(true);
                 const channel = await API.graphql({ query: `query GetChannel($id: ID!) { getChannel(id: $id) { id name image topics } }`, variables: { id: id } });
                 setLoading(false);
-                //console.log(channel.data.getChannel)
                 setChannel(channel.data.getChannel);
             }
             catch (err) {
@@ -93,14 +93,13 @@ function Channel(props) {
             }
         };
         function isSubscribed() {
-            //console.log("props.subscriptions: ", props.subscriptions)
-        if (props.subscriptions != null && props.subscriptions.length > 0)
-            return props.subscriptions.some(sub => sub.channelSubscribersId === id)
+            if (props.subscriptions != null && props.subscriptions.length > 0)
+                return props.subscriptions.some(sub => sub.channelSubscribersId === id)
         }
 
         obtainChannel();
         setSubscribed(isSubscribed());
-        
+
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
@@ -121,7 +120,7 @@ function Channel(props) {
             {/****** HEADER WITH FILTERS *************/}
             <Flex alignItems={"center"} justifyContent={"center"} mx="2%">
                 <Spacer />
-                <Box w="10%" display={{ base: 'none', lg: 'block' }}/>
+                <Box w="10%" display={{ base: 'none', lg: 'block' }} />
                 <Box>
                     <Text fontSize="3xl" fontWeight="bold" textAlign="center" mb="1rem">
                         {channel.name}
@@ -136,9 +135,9 @@ function Channel(props) {
                         <Spacer />
                     </Flex>
                 </Box>
-                <Box w="3%" display={{ base: 'none', lg: 'block' }}/>
+                <Box w="3%" display={{ base: 'none', lg: 'block' }} />
                 <Button ml="0.5rem" size={["md", "md", "lg", "lg"]} onClick={handlSubscription}
-                    leftIcon={subscribed ? <RiChatDeleteLine size="2rem"/> : <RiChatFollowUpLine size="2rem"/>}
+                    leftIcon={subscribed ? <RiChatDeleteLine size="2rem" /> : <RiChatFollowUpLine size="2rem" />}
                 >
                     <Text display={{ base: 'none', lg: 'block' }}> {subscribed ? "Unsubscribe" : "Subscribe"}</Text>
                 </Button>

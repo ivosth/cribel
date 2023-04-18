@@ -1,14 +1,13 @@
 import './App.css';
 import '@aws-amplify/ui-react/styles.css';
-import React, { /*createContext,*/ useState, useEffect, Suspense } from "react";
-import { API, Auth, Hub, /* DataStore */ } from "aws-amplify";
+import React, { useState, useEffect, Suspense } from "react";
+import { API, Auth, Hub } from "aws-amplify";
 
 import { createUser } from "./graphql/mutations";
 import { getUser } from "./graphql/customQueries";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 import Loading from './components/common/Loading';
-//const UserContext = createContext(null);
 
 const Authenticator = React.lazy(() => {
   return import('@aws-amplify/ui-react').then(module => {
@@ -38,7 +37,6 @@ function App() {
   const [notifications, setNotifications] = useState(false);
 
   const updateUserAttributes = (newAttributes) => {
-    //console.log("Updating user attributes: ", newAttributes);
     setUserAttributes({ ...userAttributes, ...newAttributes });
   };
 
@@ -61,20 +59,17 @@ function App() {
           group: "viewer",
         }
 
-        //console.log({ currentUserAttributes });
 
         /* Check if user exists in database */
         /* If not, create user in database */
         const user = await API.graphql({ query: getUser, variables: { id: currentUserAttributes.id } });
-        //console.log({ user });
         if (!user.data.getUser) {
           try {
             currentUserAttributes.disabled = false;
-            /* const newUser = */ await API.graphql({
+            await API.graphql({
               query: createUser,
               variables: { input: currentUserAttributes }
             });
-            //console.log({ newUser });
             setUserAttributes(currentUserAttributes);
 
           } catch (err) {
@@ -90,17 +85,13 @@ function App() {
             role: user.data.getUser.role || null,
             currentPosition: user.data.getUser.currentPosition || null,
             description: user.data.getUser.description || null,
-            //posts: user.data.getUser.posts || null,
             ownedChannels: user.data.getUser.ownedChannels || null,
             subscriptions: user.data.getUser.subscriptions || null,
             participantChannels: user.data.getUser.participantChannels || null,
             createdAt: user.data.getUser.createdAt || null,
           };
           setUserAttributes(newCurrentUserAttribute);
-          //console.log(newCurrentUserAttribute);
         }
-
-        //await DataStore.start();
       } catch (err) {
         setUserAttributes(null);
         console.error("Error obtaining User data: ", err);
@@ -143,7 +134,7 @@ function App() {
       ]} />
     </Suspense>
   ) : (
-    <> {/*<UserContext.Provider value={{ userAttributes }}>*/}
+    <>
       <Navbar user={userAttributes} notifications={notifications} updateIconNotifications={updateIconNotifications} />
       <Routes>
         <Route path="/" element={<Suspense fallback={<Loading />}><Home/></Suspense>} />
@@ -193,7 +184,6 @@ function App() {
               <SettingsProfile user={userAttributes} updateUserNavbar={updateUserAttributes} />
             </Suspense>
           } />
-          {/* If userAttributes.group is creator or admin load  <SettingsChannel userID={userAttributes.id} /> if not <Error /> */}
           <Route path="channels" element={
             <Suspense fallback={<Loading />}>
               { userAttributes.group !== "creator" || userAttributes.group !== "admin" ? <SettingsChannel userID={userAttributes.id} /> : <Error /> }
@@ -240,7 +230,7 @@ function App() {
         <Route path="/about" element={<Suspense fallback={<Loading />}><About /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<Loading />}><Error /></Suspense>} />
       </Routes>
-      {/*</UserContext.Provider>*/} </>
+    </>
   )
 };
 

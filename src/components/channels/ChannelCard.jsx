@@ -1,19 +1,10 @@
-import {
-  Box,
-  Flex,
-  Avatar,
-  VStack,
-  Button,
-  Text,
-  Hide,
-  Spacer,
-  Wrap
-} from "@chakra-ui/react";
-import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar} from "react-icons/md";
+// Base on Choc UI example: https://choc-ui.com/docs/elements/cards#cards/ma
+import { Box, Flex, Avatar, VStack, Button, Text, Hide, Spacer, Wrap } from "@chakra-ui/react";
+import { MdPeopleOutline, MdOutlinePersonAddAlt, MdStar } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from "react-router-dom";
 import { Prose } from "@nikolovlazar/chakra-ui-prose";
-import { RiChatDeleteLine, RiChatFollowUpLine} from "react-icons/ri";
+import { RiChatDeleteLine, RiChatFollowUpLine } from "react-icons/ri";
 import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { createSubscriptionsSubscribers, deleteSubscriptionsSubscribers, createUserNotification } from "../../graphql/mutations";
@@ -26,46 +17,47 @@ function ChannelCard(props) {
 
   async function handlSubscription() {
     try {
-        let newSubscriptions = {};
-        newSubscriptions.items = props.subscriptions;
-        if (subscribed) {
-            const subscriptionID = props.subscriptions.find(sub => sub.channelSubscribersId === props.channel.id).id;
-            await API.graphql({ query: deleteSubscriptionsSubscribers, variables: { input: { id: subscriptionID } } });
-            newSubscriptions.items = newSubscriptions.items.filter(sub => sub.channelSubscribersId !== props.channel.id);
+      let newSubscriptions = {};
+      newSubscriptions.items = props.subscriptions;
+      if (subscribed) {
+        const subscriptionID = props.subscriptions.find(sub => sub.channelSubscribersId === props.channel.id).id;
+        await API.graphql({ query: deleteSubscriptionsSubscribers, variables: { input: { id: subscriptionID } } });
+        newSubscriptions.items = newSubscriptions.items.filter(sub => sub.channelSubscribersId !== props.channel.id);
 
-        } else {
-            const res = await API.graphql({ query: createSubscriptionsSubscribers, variables: { input: { channelSubscribersId: props.channel.id, userSubscriptionsId: props.userID } } });
-            const channelInfo = { name: props.channel.name, image: props.channel.image };
-            newSubscriptions.items.push({ channel: channelInfo, id: res.data.createSubscriptionsSubscribers.id, userSubscriptionsId: props.userID, channelSubscribersId: props.channel.id });
-            
+      } else {
+        const res = await API.graphql({ query: createSubscriptionsSubscribers, variables: { input: { channelSubscribersId: props.channel.id, userSubscriptionsId: props.userID } } });
+        const channelInfo = { name: props.channel.name, image: props.channel.image };
+        newSubscriptions.items.push({ channel: channelInfo, id: res.data.createSubscriptionsSubscribers.id, userSubscriptionsId: props.userID, channelSubscribersId: props.channel.id });
+
+      }
+      setSubscribed(!subscribed);
+      props.updateChannelsNavbar({ subscriptions: newSubscriptions })
+
+      await API.graphql({
+        query: createUserNotification,
+        variables: {
+          input: {
+            message: subscribed ? `You have unsubscribed from ${props.channel.name} channel` : `You have subscribed to ${props.channel.name} channel`,
+            type: subscribed ? "Unsubscribe" : "Subscribe",
+            userNotificationsId: props.userID,
+            channelID: props.channel.id,
+            channelName: props.channel.name,
+            typeUserNotificationsByDate: "UserNotificationsByDate"
+          }
         }
-        setSubscribed(!subscribed);
-        props.updateChannelsNavbar({ subscriptions: newSubscriptions })
-
-        await API.graphql({ 
-          query: createUserNotification, 
-          variables: { 
-            input: { 
-              message: subscribed ? `You have unsubscribed from ${props.channel.name} channel` : `You have subscribed to ${props.channel.name} channel`, 
-              type: subscribed ? "Unsubscribe" : "Subscribe", 
-              userNotificationsId: props.userID, 
-              channelID: props.channel.id, 
-              channelName: props.channel.name, 
-              typeUserNotificationsByDate: "UserNotificationsByDate"
-            } } });
+      });
     }
-    catch(err) {
-        console.error("Error handling subscription in channel card: ", err);
+    catch (err) {
+      console.error("Error handling subscription in channel card: ", err);
     }
   }
 
   useEffect(() => {
     function isSubscribed() {
-      //console.log("props.subscriptions: ", props.subscriptions)
       if (props.subscriptions != null && props.subscriptions.length > 0)
         return props.subscriptions.some(sub => sub.channelSubscribersId === props.channel.id)
     }
-    
+
     setSubscribed(isSubscribed());
   }, [props.subscriptions, props.channel.id]);
 
@@ -89,8 +81,7 @@ function ChannelCard(props) {
           ml="2"
           display={{ md: 'flex' }}
         >
-          {/*<Text onClick={() => navigate(`/channel/${props.channel.id}/new`)} 
-              as="b" fontSize={[16, 20, 20, 25]} align="center"> {props.channel.name} </Text>*/}
+
           <Button colorScheme='facebook' mb="0.3rem"
             onClick={() => navigate(`/channel/${props.channel.id}/new`)}
             fontSize={[14, 18, 18, 23]}
@@ -109,9 +100,9 @@ function ChannelCard(props) {
         </VStack>
         <Spacer />
         <Button onClick={handlSubscription} size={["md", "md", "md", "md"]}
-            leftIcon={subscribed ? <RiChatDeleteLine size="2rem"/> : <RiChatFollowUpLine size="2rem"/>}
+          leftIcon={subscribed ? <RiChatDeleteLine size="2rem" /> : <RiChatFollowUpLine size="2rem" />}
         >
-            <Text display={{ base: 'none', sm: 'block', md: 'block', lg: 'block' }}> {subscribed ? "Unsubscribe" : "Subscribe"}</Text>
+          <Text display={{ base: 'none', sm: 'block', md: 'block', lg: 'block' }}> {subscribed ? "Unsubscribe" : "Subscribe"}</Text>
         </Button>
       </Flex>
       <Flex alignItems="center" fontSize={["0.85rem", "0.9rem", "1rem", "1rem"]}>
@@ -127,11 +118,11 @@ function ChannelCard(props) {
 
       </Flex>
       <Prose my="0.6rem" >
-          <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(props.channel.description)}}></div>
+        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.channel.description) }}></div>
       </Prose>
       <Flex alignItems="center">
         <Spacer />
-          <Wrap>
+        <Wrap>
           {props.channel.topics.map(topic =>
             <Box
               key={topic}
@@ -140,7 +131,6 @@ function ChannelCard(props) {
               marginRight="0.5rem"
               bg="gray.600"
               color="gray.100"
-              //fontSize="0.8rem" //Más pequeño con xs
               fontWeight="700"
               textAlign={"center"}
               rounded="md"

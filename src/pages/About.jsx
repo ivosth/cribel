@@ -1,3 +1,4 @@
+// Based on Offset 2x2 Grid from Choc UI: https://choc-ui.com/docs/page-sections/features
 import {
     Flex, Box, SimpleGrid, Stack, Text, GridItem, Icon
 } from "@chakra-ui/react";
@@ -93,7 +94,7 @@ export const About = () => {
               textTransform="uppercase"
               letterSpacing="wide"
             >
-              Everything you need
+              LifeLong Learning platform
             </Text>
             <Text as="h2"
               mb={3}
@@ -112,7 +113,7 @@ export const About = () => {
               lineHeight="shorter"
               letterSpacing="tight"
             >
-              All-in-one platform
+              About Cribel
             </Text>
             <Text
               mb={6}
@@ -129,8 +130,9 @@ export const About = () => {
                 color: "gray.500",
               }}
             >
-              Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
-              magnam voluptatum cupiditate veritatis in accusamus quisquam.
+              Cribel is a social network aimed at the continuous learning of users. Here you can find recommendations of quality content
+              to learn about any subject. These recommendations are made by experts in the field, teachers or technicians in the sector. 
+              You can be sure that they have done a good content filtering!
             </Text>
           </Box>
           <GridItem colSpan={2}>
@@ -152,33 +154,31 @@ export const About = () => {
                 md: 10,
               }}
             >
-              <Feature title="Invite team members">
-                Improve your conversion rates by monitoring exactly what’s going
-                on while your customers are in trial.{" "}
+              <Feature title="Consult expert channels">
+                You can consult the channels of experts on the topic you are interested in.
+                And sort them by new, popularity or best rating.
               </Feature>
-              <Feature title="Unify your payments stack">
-                Manage all your online and offline sales in one place with a
-                single integration, simplifying reporting and reconciliation.
-              </Feature>
-              <Feature title="Own your in-store experience">
+              <Feature title="Explore the best channels or posts">
                 {" "}
-                Provide a seamless customer experience across channels, like
-                reserving online and picking up in store.
-              </Feature>
-              <Feature title="Grow your platform’s revenue">
+                You will be able to browse through all the existing channels or posts on the platform.
                 {" "}
-                Add in-person payments to your platform or marketplace. Using
-                Terminal with Connect.{" "}
               </Feature>
-              <Feature title="Clear overview for efficient tracking">
+              <Feature title="Rate posts">
                 {" "}
-                Handle your subscriptions and transactions efficiently with the
-                clear overview in Dashboard. Fea
+                Your ratings are very important for other users.
+                Don't forget to rate the posts you see.
               </Feature>
-              <Feature title="Decide how you integrate Payments">
+              <Feature title="Subscribe to channels">
                 {" "}
-                Love to code? Decide how you integrate Payments and build
-                advanced and reliable products yourself from scratch.{" "}
+                By subscribing to a channel you will be kept up to date with the latest posts.{" "}
+              </Feature>
+              <Feature title="Create channels">
+                You can create channels dedicated to a specific topic of your choice.
+                And start posting!{" "}
+              </Feature>
+              <Feature title="Add participants to your channels">
+                {" "}
+                Add other users to your channels so they can collaborate with you.{" "}
               </Feature>
             </Stack>
           </GridItem>

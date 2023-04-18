@@ -1,3 +1,4 @@
+// Base on Choc UI example: https://choc-ui.com/docs/elements/cards#cards/ma
 import { useState, useEffect } from 'react';
 import {
   Flex,
@@ -39,17 +40,15 @@ function computeRating(ratings) {
 function PostCard({ post, userID }) {
   const [ratingValue, setRatingValue] = useState(0);
   const [views, setViews] = useState(post.ratings.items.length);
-  const [averageRating, setAverageRating] = useState(post.avgRating); //useState(computeRating(post.ratings.items));
+  const [averageRating, setAverageRating] = useState(post.avgRating);
   const [initialRating, setInitialRating] = useState(0);
 
   const navigate = useNavigate();
 
 
   async function changeRating(rate) {
-    //console.log(post)
 
     try {
-      //console.log("ratingValue", ratingValue)
       if (ratingValue === 0) {
         // If the user has not rated the post, create a new rating
         const newRating = {
@@ -104,7 +103,6 @@ function PostCard({ post, userID }) {
           setAverageRating(String((sum / views)));
           setInitialRating(rate)
 
-          //console.log("updatedPost", updatedPost)
           await API.graphql({ query: updatePost, variables: { input: { id: post.id, avgRating: (sum / views) } } });
         }
       }
@@ -150,7 +148,7 @@ function PostCard({ post, userID }) {
         shadow="lg"
         bg="white"
         maxW="2xl"
-        minW="100%" //Tocar aquí si se quiere hacer la tarjeta más grande en pantallas grandes
+        minW="100%" //Check here if you want to make the card bigger on large screens
         _dark={{
           bg: "gray.800"
         }}
@@ -164,7 +162,7 @@ function PostCard({ post, userID }) {
                 onClick={() => navigate(`/channel/${post.channel.id}/new`)}
                 bg="blue.600"
                 color="blue.100"
-                fontSize="0.85rem" //Más pequeño con xs
+                fontSize="0.85rem" //Smaller with xs
                 fontWeight="700"
                 textAlign={"center"}
                 rounded="md"
@@ -195,7 +193,7 @@ function PostCard({ post, userID }) {
             marginRight="0.5rem"
             bg="gray.600"
             color="gray.100"
-            fontSize="0.8rem" //Más pequeño con xs
+            fontSize="0.8rem" //Smaller with xs
             fontWeight="700"
             textAlign={"center"}
             rounded="md"
@@ -247,20 +245,6 @@ function PostCard({ post, userID }) {
 
 
           <Flex alignItems="center">
-            {/*
-            <Button
-                size="lg"
-                onClick={setLike.toggle}
-                variant="link"
-                minW={0}
-              >
-                {like ? <FaHeart color="red" /> : <FaRegHeart /> }
-              </Button>
-              <Text pl="0.3rem" pr="1.5rem">
-                2
-              </Text>
-            */}
-
             <Rating onClick={changeRating}
               allowFraction
               fillColorArray={["#e79b3b", "#e9a435", "#ebab30", "#edb32a", "#f0bb25", "#f2c320", "#f4cb1a", "#f6d215", "#f8da0f", "#fae20a"]}

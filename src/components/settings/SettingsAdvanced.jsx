@@ -1,18 +1,5 @@
-import {
-    Flex,
-    useColorModeValue,
-    Text,
-    Stack,
-    Button,
-    SimpleGrid,
-    ButtonGroup,
-    Box,
-    Wrap,
-    FormControl,
-    FormLabel,
-} from "@chakra-ui/react";
+import { Flex, useColorModeValue, Text, Stack, Button, SimpleGrid, ButtonGroup, Box, Wrap, FormControl, FormLabel, } from "@chakra-ui/react";
 import { useState } from "react";
-//import { useSearchParams } from "react-router-dom";
 import { listUsersWithFilters } from "../../graphql/customQueries";
 import { API } from "aws-amplify";
 import { CircularProgress } from "@chakra-ui/react";
@@ -27,18 +14,12 @@ function SettingsAdvanced() {
     const bg = useColorModeValue("gray.100", "gray.600");
     const bg2 = useColorModeValue("gray.50", "gray.800");
 
-
     const [nameLetter, setNameLetter] = useState('All');
     const [nameLetterBg, setNameLetterBg] = useState({ [nameLetter]: '#C0C0C0' });
     const [lastNameLetter, setLastNameLetter] = useState('All');
     const [lastNameLetterBg, setLastNameLetterBg] = useState({ [lastNameLetter]: '#C0C0C0' });
     const [role, setRole] = useState("All");
     const [roleBg, setRoleBg] = useState({ [role]: '#C0C0C0' });
-
-    //const [searchParams, setSearchParams] = useSearchParams();
-    //const searchRole = searchParams.get("role");
-    //const searchName = searchParams.get("name");
-    //const searchLastName = searchParams.get("lastName");
 
     const handleNameClick = (event) => {
         const { value } = event.target;
@@ -80,7 +61,7 @@ function SettingsAdvanced() {
 
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
-    
+
     function updateUsersList(id, role) {
         //Search the user in the list and update the role with setUsers
         const userIndex = users.findIndex((user) => user.id === id);
@@ -114,7 +95,6 @@ function SettingsAdvanced() {
         })
 
         setLoading(false);
-        //console.log(usersWithFilters.data.listUsers.items)
         setUsers(usersWithFilters.data.listUsers.items);
     };
 
@@ -131,9 +111,6 @@ function SettingsAdvanced() {
                     id="search-users"
                     onSubmit={(event) => {
                         event.preventDefault();
-                        //console.log(nameLetter, lastNameLetter, role);
-                        //setSearchParams({ name: nameLetter, lastName: lastNameLetter, role: role });
-
                         obtainListUsersWithFilters();
                     }}
                 >
@@ -286,7 +263,7 @@ function SettingsAdvanced() {
                                                             py={1}
                                                             bg="gray.600"
                                                             color="gray.100"
-                                                            fontSize="xs" //Más pequeño con xs
+                                                            fontSize="xs"
                                                             fontWeight="700"
                                                             alignItems='center'
                                                             justifyContent='center'
@@ -310,7 +287,7 @@ function SettingsAdvanced() {
                                                             py={1}
                                                             bg="gray.600"
                                                             color="gray.100"
-                                                            fontSize="xs" //Más pequeño con xs
+                                                            fontSize="xs"
                                                             fontWeight="700"
                                                             alignItems='center'
                                                             justifyContent='center'
@@ -320,8 +297,8 @@ function SettingsAdvanced() {
                                                         </Box>
 
                                                         <ButtonGroup variant="solid" size="sm" mx="0.5rem" spacing={3} alignItems='center'>
-                                                            <UserEditRole user={user} updateUsersList={updateUsersList}/>
-                                                            <UserStatus userID={user.id} disabled={user.disabled}/>
+                                                            <UserEditRole user={user} updateUsersList={updateUsersList} />
+                                                            <UserStatus userID={user.id} disabled={user.disabled} />
                                                         </ButtonGroup>
                                                     </Flex>
                                                 </SimpleGrid>

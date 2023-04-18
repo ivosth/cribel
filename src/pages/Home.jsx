@@ -1,3 +1,4 @@
+// Based on Choc UI Brand Panel With App Screenshot: https://choc-ui.com/docs/page-sections/cta
 import {
     Flex, Box, Image, Text
 } from "@chakra-ui/react";
@@ -54,10 +55,10 @@ export const Home = () => {
                             md: "2xl",
                         }}
                     >
-                        Tired of searching through several websites until you find quality content?<br/><br/>
+                        Tired of searching through several websites until you find quality content?<br /><br />
                         In Cribel you will find recommendations of quality content to learn about any topic.
                     </Text>
-                    
+
                 </Box>
                 <Box
                     w={{
@@ -72,7 +73,7 @@ export const Home = () => {
                         rounded="lg"
                         shadow="2xl"
                         src="../../screenshot.png"
-                        alt="Hellonext feedback boards software screenshot"
+                        alt="Screenshot of the Python channel on Cribel"
                     />
                 </Box>
             </Flex>

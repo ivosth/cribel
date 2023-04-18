@@ -32,7 +32,7 @@ function NotificationCard(props) {
             shadow="lg"
             bg="white"
             maxW="2xl"
-            minW="100%" //Tocar aquí si se quiere hacer la tarjeta más grande en pantallas grandes
+            minW="100%" //Check here if you want to make the card bigger on large screens
             _dark={{
                 bg: "gray.800"
             }}
@@ -46,7 +46,7 @@ function NotificationCard(props) {
                         onClick={() => navigate(`/channel/${props.notification.channelID}/new`)}
                         bg="blue.600"
                         color="blue.100"
-                        fontSize="0.90rem" //Más pequeño con xs
+                        fontSize="0.90rem" //Smaller with xs
                         fontWeight="700"
                         textAlign={"center"}
                         rounded="md"
@@ -71,15 +71,9 @@ function NotificationCard(props) {
                         {props.notification.message}
                     </Text>
                 </Center>
-
-
-
             </Wrap>
 
-
-
         </Box>
-
     );
 }
 

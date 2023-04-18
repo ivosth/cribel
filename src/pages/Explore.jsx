@@ -16,7 +16,6 @@ const NavLink = ({ icon, link, children }) => (
         py={1}
         rounded={"md"}
         mx="1rem"
-        //color= {useColorModeValue("blue.900", "blue.100")}
         bgColor={useColorModeValue("blue.50", "blue.500")}
         _hover={{
             bg: useColorModeValue("blue.100", "blue.600"),
@@ -50,29 +49,29 @@ function Explore() {
                 <TabPanels>
                     <TabPanel>
                         <Flex alignItems={"center"} justifyContent={"space-between"}>
-                            <Spacer/>
-                            <Flex  alignItems={"center"} justifyContent={"space-between"}>
+                            <Spacer />
+                            <Flex alignItems={"center"} justifyContent={"space-between"}>
                                 <NavLink icon={MdOutlineUpdate} link={"channels/new"}>{"new"}</NavLink>
                                 <NavLink icon={MdOutlineTrendingUp} link={"channels/trending"}>{"trending"}</NavLink>
                                 <NavLink icon={MdOutlineArrowUpward} link={"channels/top"}>{"top"}</NavLink>
                             </Flex>
-                            <Spacer/>
+                            <Spacer />
                         </Flex>
                     </TabPanel>
                     <TabPanel>
                         <Flex alignItems={"center"} justifyContent={"space-between"}>
-                            <Spacer/>
+                            <Spacer />
                             <Flex alignItems={"center"} justifyContent={"space-between"}>
                                 <NavLink icon={MdOutlineUpdate} link={"posts/new"}>{"new"}</NavLink>
                                 <NavLink icon={MdOutlineTrendingUp} link={"posts/trending"}>{"trending"}</NavLink>
                                 <NavLink icon={MdOutlineArrowUpward} link={"posts/top"}>{"top"}</NavLink>
                             </Flex>
-                            <Spacer/>
+                            <Spacer />
                         </Flex>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            
+
             <Outlet />
         </Box>
     );

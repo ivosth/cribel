@@ -27,11 +27,11 @@ import { useState } from "react";
 function ChannelNewPost(props) {
     const { isOpen, onClose, onOpen } = useDisclosure();
     const [content, setContent] = useState("")
-    
+
     function saveContent(content) {
         setContent(content)
     }
-    
+
 
     async function newPost(title, topic, content) {
         try {
@@ -84,10 +84,7 @@ function ChannelNewPost(props) {
                             id="new-post"
                             onSubmit={(event) => {
                                 event.preventDefault();
-                                //console.log(event.target[0].value, event.target[1].value)
-                                //console.log(content)
                                 newPost(event.target[0].value, event.target[1].value, content)
-
 
                                 onClose();
                             }}
@@ -106,7 +103,7 @@ function ChannelNewPost(props) {
                             </FormControl>
                             <FormControl isRequired mt="1rem">
                                 <FormLabel>Body</FormLabel>
-                                <RichEditor saveContent={saveContent}/>
+                                <RichEditor saveContent={saveContent} />
                             </FormControl>
                         </form>
                     </ModalBody>

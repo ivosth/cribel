@@ -10,19 +10,19 @@ import { useState } from "react";
 
 
 function SettingsProfile({ user, updateUserNavbar }) {
-    
+
     const [userImage, setUserImage] = useState(user.image);
     const [userCurrentPosition, setUserCurrentPosition] = useState(user.currentPosition);
     const [userDescription, setUserDescription] = useState(user.description);
 
     function handleUpdateProfile(image, currentPosition, description) {
-        if(image){
+        if (image) {
             setUserImage(image);
         }
-        if(currentPosition){
+        if (currentPosition) {
             setUserCurrentPosition(currentPosition);
         }
-        if(description){
+        if (description) {
             setUserDescription(description);
         }
     }
@@ -30,11 +30,7 @@ function SettingsProfile({ user, updateUserNavbar }) {
 
     return (
         <Box>
-            <Flex
-                w="full"
-                alignItems="center"
-                justifyContent="center"
-            >
+            <Flex w="full" alignItems="center" justifyContent="center">
                 <Box
                     w="xl"
                     mx="auto"
@@ -56,13 +52,13 @@ function SettingsProfile({ user, updateUserNavbar }) {
                         }}>
 
                         <Box>
-                            <Avatar bg='teal.500' size='xl' mb="0.5rem" src={userImage}/>
+                            <Avatar bg='teal.500' size='xl' mb="0.5rem" src={userImage} />
                             <Box
                                 px="0.50rem"
                                 py={1}
                                 bg="gray.600"
                                 color="gray.100"
-                                fontSize="0.8rem" //Más pequeño con xs
+                                fontSize="0.8rem" //Smaller with xs
                                 fontWeight="700"
                                 textAlign={"center"}
                                 rounded="md"
@@ -71,17 +67,15 @@ function SettingsProfile({ user, updateUserNavbar }) {
                             </Box>
                         </Box>
 
-
                         <Spacer />
-                        <ProfileEdit 
-                            userID={user.id} 
-                            image={userImage} 
-                            currentPosition={userCurrentPosition} 
-                            description={userDescription} 
+                        <ProfileEdit
+                            userID={user.id}
+                            image={userImage}
+                            currentPosition={userCurrentPosition}
+                            description={userDescription}
                             handleUpdateProfile={handleUpdateProfile}
-                            updateUserNavbar={updateUserNavbar} 
+                            updateUserNavbar={updateUserNavbar}
                         />
-
                     </Flex>
 
                     <Box py="1rem" px="2rem">
@@ -101,8 +95,8 @@ function SettingsProfile({ user, updateUserNavbar }) {
                             }}
                         >
                             {userDescription ||
-                            // eslint-disable-next-line
-                            "No description provided. \
+                                // eslint-disable-next-line
+                                "No description provided. \
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus ex odio, et vulputate metus suscipit quis. \
                             Vestibulum tincidunt eros at lacinia cursus. Vivamus nec elit ac ante faucibus egestas at a arcu. Phasellus sed \
                             nunc consectetur, porta nulla id, blandit leo. Aenean feugiat euismod mauris, sed vehicula lorem dapibus vel. \
@@ -152,10 +146,9 @@ function SettingsProfile({ user, updateUserNavbar }) {
                                     ))
                                 }
 
-                                
+
                             </Box>
                         </Flex>
-
 
                         <Flex
                             alignItems="center"
@@ -173,7 +166,7 @@ function SettingsProfile({ user, updateUserNavbar }) {
                                     </Text></Flex>
 
 
-                                    {user.participantChannels === undefined || user.participantChannels.items.length === 0 ?
+                                {user.participantChannels === undefined || user.participantChannels.items.length === 0 ?
                                     <Text as="h2" px={2} fontSize="sm" >
                                         Does not participate in any channel
                                     </Text>
@@ -184,11 +177,10 @@ function SettingsProfile({ user, updateUserNavbar }) {
                                                 {channel.channel.name}
                                             </Text>
                                         </RouterLink>
-                                ))
+                                    ))
                                 }
                             </Box>
                         </Flex>
-
 
                     </Box>
                 </Box>

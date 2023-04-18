@@ -1,15 +1,5 @@
-enum Role {
- student,
- graduated,
- technical,
- professor
-}
-
-enum Group {
- admin,
- creator,
- viewer
-}
+enum Role { student, graduated, technical, professor }
+enum Group { admin, creator, viewer }
 
 
 type User 

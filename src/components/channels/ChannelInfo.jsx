@@ -24,12 +24,10 @@ function ChannelInfo({ channel, posts }) {
 
 
     function computeRating() {
-        //console.log("posts", posts)
-    
         let rating = 0;
         let count = 0;
         posts.forEach((post) => {
-            if (post.ratings.items.length !== 0){
+            if (post.ratings.items.length !== 0) {
                 let sum = 0;
                 for (let i = 0; i < post.ratings.items.length; i++) {
                     sum += post.ratings.items[i].stars;
@@ -37,11 +35,11 @@ function ChannelInfo({ channel, posts }) {
                 rating += sum / post.ratings.items.length;
                 count++;
             }
-            
+
         });
-    
-        if(count < minimumViews) return 'N/A';
-        else{
+
+        if (count < minimumViews) return 'N/A';
+        else {
             const rate = (rating / count).toFixed(1)
 
             const updatedChannel = {
@@ -54,11 +52,11 @@ function ChannelInfo({ channel, posts }) {
             catch (err) {
                 console.error('Error updating channel in channel info:', err);
             }
-            
+
 
             return String(rate);
         }
-        
+
     }
 
 
@@ -115,7 +113,7 @@ function ChannelInfo({ channel, posts }) {
                                     marginRight="0.5rem"
                                     bg="gray.600"
                                     color="gray.100"
-                                    fontSize="0.8rem" //Más pequeño con xs
+                                    fontSize="0.8rem"
                                     fontWeight="700"
                                     textAlign={"center"}
                                     rounded="md"
@@ -159,11 +157,6 @@ function ChannelInfo({ channel, posts }) {
                                 <Flex>
                                     <Spacer />
                                     <Icon as={MdStar} color="#fae20a" boxSize="1.5rem" />
-
-                                    {/*channel.posts.items.ratings ?
-                                        <Text pl="0.3rem" marginRight="1.5rem"> {post.ratings.reduce((acc, val) => acc + val, 0) / post.ratings.length} </Text>
-                                        : <Text pl="0.3rem" marginRight="1.5rem"> N/A </Text>
-                        */}
                                     <Text as="h2" px={2} fontSize="md" fontWeight="bold">
                                         {computeRating()}
                                     </Text>
@@ -175,9 +168,9 @@ function ChannelInfo({ channel, posts }) {
 
 
                         <Prose my={2} fontSize="2rem">
-                            <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(channel.description)}}></div>
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(channel.description) }}></div>
                         </Prose>
-                            
+
 
                         <Text align="right"
                             fontSize="sm"

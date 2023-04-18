@@ -1,15 +1,13 @@
 import { postsByDate } from '../graphql/customQueries';
-import { API, /* DataStore */ } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { CircularProgress, Flex, Box, Spacer, Text } from "@chakra-ui/react";
 import PostCard from '../components/posts/PostCard';
-//import { ChannelNotification } from '../models';
 
 function Feed(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   
-
 
   useEffect(() => {
 
@@ -29,7 +27,6 @@ function Feed(props) {
               filter: filterSubscriptions
           }});
   
-          //console.log(allPosts.data.postsByDate.items);
           setPosts(allPosts.data.postsByDate.items);
         } catch (error) {
           console.error("Error obtaining posts: ", error);

@@ -42,7 +42,6 @@ function ChannelEditParticipants(props) {
         try {
             const channel = await API.graphql({ query: getChannel, variables: { id: props.channelID } })
             setChannel(channel.data.getChannel)
-            //console.log(channel.data.getChannel)
         } catch (err) {
             console.error('Error fetching channels editing participants: ', err)
         }
@@ -69,7 +68,7 @@ function ChannelEditParticipants(props) {
             if (familyName) {
                 filterExpression.familyName = { beginsWith: familyName.charAt(0).toUpperCase() + familyName.slice(1) }
             }
-            // only proffesors and technicians can be added as participants
+            // only professors and technicians can be added as participants
             filterExpression.or = [
                 { role: { eq: "professor" } },
                 { role: { eq: "technical" } }
@@ -80,7 +79,7 @@ function ChannelEditParticipants(props) {
             const newUsers = users.data.listUsers.items.filter((user) => {
                 return !channel.participants.items.some((participant) => participant.userParticipantChannelsId === user.id) && user.id !== channel.userOwnedChannelsId
             })
-            
+
             setSearchUsers(newUsers)
 
         } catch (err) {
@@ -95,15 +94,14 @@ function ChannelEditParticipants(props) {
                 userParticipantChannelsId: userID
             }
             const result = await API.graphql({ query: createUsersParticipantChannels, variables: { input: newParticipant } })
-            
+
             // Update channel.participants react state without refetching adding givenName and FamilyName
             newParticipant.id = result.data.createUsersParticipantChannels.id
             newParticipant.user = {}
             newParticipant.user.familyName = familyName
             newParticipant.user.givenName = givenName
             const newParticipants = [...channel.participants.items, newParticipant]
-            //console.log("channel.participants.items: ", channel.participants.items)
-            //console.log("newParticipants: ", newParticipants)
+
             setChannel({ ...channel, participants: { items: newParticipants } })
             setSearchUsers(null)
         } catch (err) {
@@ -111,7 +109,7 @@ function ChannelEditParticipants(props) {
         }
     }
 
-    
+
 
 
     return (
@@ -131,25 +129,25 @@ function ChannelEditParticipants(props) {
                     </ModalHeader>
 
                     <ModalBody>
-                        
-                            <Text fontSize="xl" fontWeight="bold">PARTICIPANTS</Text>
-                            <Text fontSize="lg" fontWeight="bold">Current participants</Text>
-                            {channel.participants !== undefined ? channel.participants.items.map((participant) => {
-                                return (
-                                    <Flex key={participant.id} shadow="lg" rounded="lg" p="0.25rem" my="0.25rem" _light={{ bg: "gray.50" }} _dark={{ bg: "gray.800" }}>
-                                        <Text mx="0.5rem" mt="0.25rem">{participant.user.givenName} {participant.user.familyName}</Text>
-                                        <Spacer />
-                                        <IconButton
-                                            mx="0.5rem"
-                                            colorScheme="red"
-                                            icon={<HiOutlineUserRemove />}
-                                            onClick={ () => eliminateParticipant(participant.id)}
-                                        />
-                                    </Flex>
-                                );
-                            }) : null}
 
-                        
+                        <Text fontSize="xl" fontWeight="bold">PARTICIPANTS</Text>
+                        <Text fontSize="lg" fontWeight="bold">Current participants</Text>
+                        {channel.participants !== undefined ? channel.participants.items.map((participant) => {
+                            return (
+                                <Flex key={participant.id} shadow="lg" rounded="lg" p="0.25rem" my="0.25rem" _light={{ bg: "gray.50" }} _dark={{ bg: "gray.800" }}>
+                                    <Text mx="0.5rem" mt="0.25rem">{participant.user.givenName} {participant.user.familyName}</Text>
+                                    <Spacer />
+                                    <IconButton
+                                        mx="0.5rem"
+                                        colorScheme="red"
+                                        icon={<HiOutlineUserRemove />}
+                                        onClick={() => eliminateParticipant(participant.id)}
+                                    />
+                                </Flex>
+                            );
+                        }) : null}
+
+
                         <form
                             id="search-user"
                             onSubmit={(event) => {
@@ -159,7 +157,7 @@ function ChannelEditParticipants(props) {
                             }}
                         >
                             <Text fontSize="lg" fontWeight="bold" mt="1rem">Search user to add as participant</Text>
-                            <Text fontSize="md" >This participant will be notified</Text>
+                            {/*<Text fontSize="md" >This participant will be notified</Text>*/}
 
                             <FormControl>
                                 <FormLabel>Given name</FormLabel>
@@ -172,8 +170,8 @@ function ChannelEditParticipants(props) {
                             <Button type="submit" my="0.5rem" ml="0.5rem" form="search-user">
                                 Search
                             </Button>
-                            
-                            {searchUsers !== null && searchUsers.length >0 ? searchUsers.map((user) => {
+
+                            {searchUsers !== null && searchUsers.length > 0 ? searchUsers.map((user) => {
                                 return (
                                     <Flex key={user.id} shadow="lg" rounded="lg" p="0.25rem" my="0.25rem" _light={{ bg: "gray.50" }} _dark={{ bg: "gray.800" }}>
                                         <Text mx="0.5rem" mt="0.25rem">{user.givenName} {user.familyName}</Text>
@@ -182,7 +180,7 @@ function ChannelEditParticipants(props) {
                                             mx="0.5rem"
                                             colorScheme="green"
                                             icon={<HiOutlineUserPlus />}
-                                            onClick={ () => addParticipant(user.id, user.givenName, user.familyName)}
+                                            onClick={() => addParticipant(user.id, user.givenName, user.familyName)}
                                         />
                                     </Flex>
                                 );
@@ -192,7 +190,7 @@ function ChannelEditParticipants(props) {
                     </ModalBody>
 
                     <ModalFooter>
-                        
+
                         <Button colorScheme="blue" onClick={handleClose}>
                             Close
                         </Button>

@@ -11,7 +11,7 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Textarea 
+  Textarea
 } from "@chakra-ui/react";
 import awsExports from '../../aws-exports'
 import { Storage, Auth, API } from 'aws-amplify'
@@ -47,7 +47,7 @@ function ProfileEdit(props) {
 
       await API.graphql({ query: updateUser, variables: { input: newUserInput } })
       props.handleUpdateProfile(url, currentPosition, description);
-      
+
 
     } catch (err) {
       console.error('Error updating user profile: ', err)
@@ -71,10 +71,9 @@ function ProfileEdit(props) {
             <form
               id="edit-profile"
               onSubmit={(event) => {
-                event.preventDefault();              
+                event.preventDefault();
                 updateProfile(event.target[0].files[0] || null, event.target[1].value || null, event.target[2].value || null)
-                
-                
+
                 onClose();
               }}
             >
