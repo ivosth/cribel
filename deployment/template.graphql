@@ -1,0 +1,240 @@
+mutation UpdateInfoUsers {
+  student1: updateUser(input: {id: "IDstudent1", currentPosition: "Enrolled in university pursuing bachelor's degree in computer science", description: "As a current student pursuing a Bachelor's degree in Computer Science, I am passionate about developing my skills in programming languages, algorithms, and data structures. Through my coursework, I have gained experience in developing software applications, analyzing complex data sets, and collaborating with peers on team projects. I am also actively seeking opportunities to apply my knowledge in real-world settings through internships and research opportunities. I am a motivated self-starter with strong problem-solving skills and a dedication to continual learning, and I am eager to contribute my skills and enthusiasm to any project or team."}) { id },
+  student2: updateUser(input: {id: "IDstudent2", currentPosition: "Graduate student in psychology", description: "As a graduate student in psychology, I am pursuing a Master's degree and expanding my knowledge and skills in the field. Through my coursework, I have gained expertise in research design, data analysis, and critical thinking. I am also actively involved in research projects that investigate topics such as cognition, emotion, and behavior. I am a dedicated and detail-oriented individual who is committed to contributing to the advancement of psychological knowledge and improving the lives of individuals and communities through my work."}) { id },
+  student3: updateUser(input: {id: "IDstudent2", currentPosition: "Undergraduate student in marketing.", description: "As an undergraduate student in marketing, I am developing my skills in consumer behavior, market research, and strategic planning. Through my coursework, I have gained practical experience in analyzing data, creating marketing plans, and working in teams to develop advertising campaigns. I am a creative and analytical thinker who is passionate about understanding consumer needs and preferences. I am eager to apply my knowledge and skills to real-world marketing challenges and contribute to the success of organizations through effective marketing strategies."}) { id },
+  graduated1: updateUser(input: {id: "IDgraduated1", currentPosition: "Marketing specialist at a tech startup", description: "As a marketing specialist at a tech startup, I am responsible for developing and executing marketing strategies to promote our products and services. My role involves conducting market research, creating marketing materials, managing social media accounts, and analyzing data to measure the effectiveness of our campaigns. With my strong background in marketing and consumer behavior, I am able to craft compelling messages that resonate with our target audience. I am a results-driven individual who is passionate about helping startups grow and succeed through effective marketing tactics"}) { id },
+  graduated2: updateUser(input: {id: "IDgraduated2", currentPosition: "Software engineer at a tech company", description: "As a software engineer at a tech company, I am responsible for developing, testing, and maintaining software applications. My role involves collaborating with cross-functional teams to design and implement new features, fixing bugs and issues, and ensuring that our software products are reliable and efficient. With my strong background in computer science and programming, I am able to write clean and scalable code that meets the needs of our users. I am a detail-oriented individual who is dedicated to delivering high-quality software solutions and continuously improving my skills in the field."}) { id },
+  technical1: updateUser(input: {id: "IDtechnical1", currentPosition: "IT Support Specialist at a multinational company", description: "As an IT Support Specialist at a multinational company, I am responsible for providing technical assistance to employees on a variety of software and hardware issues. My role involves troubleshooting, diagnosing, and resolving technical problems, as well as setting up and configuring new hardware and software. With my strong background in information technology and customer service, I am able to communicate effectively with users and provide timely solutions to their technical issues. I am a reliable and detail-oriented individual who is committed to ensuring the smooth and efficient operation of our company's technical infrastructure."}) { id },
+  technical2: updateUser(input: {id: "IDtechnical2", currentPosition: "Network Administrator at a healthcare organization.", description: "As a Network Administrator at a healthcare organization, I am responsible for ensuring the secure and efficient operation of our network infrastructure. My role involves monitoring network performance, configuring network devices, implementing security protocols, and troubleshooting technical issues. With my strong background in computer networking and security, I am able to identify and resolve network problems quickly and efficiently. I am a detail-oriented and results-driven individual who is committed to providing reliable and secure network services that meet the needs of our organization and its patients."}) { id },
+  professor1: updateUser(input: {id: "IDprofessor1", currentPosition: "Professor of Biology at a university.", description: "As a Professor of Biology at a university, I am responsible for teaching undergraduate and graduate courses in biology, conducting research, and publishing scholarly articles in my field. My role involves designing and delivering lectures, leading discussions, and evaluating student performance. Additionally, I mentor graduate students and collaborate with colleagues to conduct research and secure funding. With my strong background in biology and passion for teaching and research, I am able to inspire and motivate students to learn and discover new knowledge. I am a dedicated and innovative individual who is committed to advancing the field of biology through education and research."}) { id },
+  professor2: updateUser(input: {id: "IDprofessor2", currentPosition: "Associate Professor of Physics at a research university.", description: "As an Associate Professor of Physics at a research university, I am responsible for teaching undergraduate and graduate courses in physics, conducting cutting-edge research, and publishing scholarly articles in top-tier journals. My role involves mentoring graduate students and postdoctoral researchers, securing funding for research projects, and collaborating with other researchers and industry partners. With my strong background in physics and passion for pushing the boundaries of scientific knowledge, I am able to inspire and challenge students and colleagues alike to pursue innovative solutions to complex problems. I am a dedicated and collaborative individual who is committed to advancing the field of physics through education and research."}) { id },
+}
+
+
+mutation CreateChannels {
+  professor1Python: createChannel(input: {id: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", name: "Python", description: "<p>Canal dedicado al lenguaje de programación Python</p>",
+      topics: ["PyCharm", "Machine Learning"], userOwnedChannelsId: "IDprofessor1", disabled: false, avgRating: 0.0, typeChannelsByDate: "ChannelsByDate", typeChannelsByRating: "ChannelsByRating"}) { id },
+  technical13DPrinting: createChannel(input: {id: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", name: "3D Printing", description: "<p>Canal dedicado al mundo de las impresoras 3D</p>",
+      topics: ["SLA", "Injection", "FDM", "SLS"], userOwnedChannelsId: "IDtechnical1", disabled: false, avgRating: 0.0, typeChannelsByDate: "ChannelsByDate", typeChannelsByRating: "ChannelsByRating"}) { id },
+  professor2BeginnerProjects: createChannel(input: {id: "e963cae9-ce59-45bc-8b90-e502b3a24db0", name: "Beginner Projects", description: "<p>Enfocado para principiantes y no tan principiantes. Date una vuelta y seguro que encuentras ideas interesantes</p>",
+      topics: ["Python", "Arduino", "Mobile", "React"], userOwnedChannelsId: "IDprofessor2", disabled: false, avgRating: 0.0, typeChannelsByDate: "ChannelsByDate", typeChannelsByRating: "ChannelsByRating"}) { id },
+  professor3Competitions: createChannel(input: {id: "ab64d254-8d04-4be4-b0a9-854c6aef574f", name: "Competitions", description: "<p>¿Es el mundo de las competiciones es lo que te apasiona? Entonces este es tú canal</p>",
+      topics: ["Kaggle", "Companies"], userOwnedChannelsId: "IDprofessor3", disabled: false, avgRating: 0.0, typeChannelsByDate: "ChannelsByDate", typeChannelsByRating: "ChannelsByRating"}) { id }, 
+  professor2WebProgramming: createChannel(input: {id: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a", name: "Web Programming", description: "<p>Aquí encontrarás contenido interesante sobre programación web</p>",
+      topics: ["React", "Vue", "Javascript", "PHP", "HTML", "CSS"], userOwnedChannelsId: "IDprofessor2", disabled: false, avgRating: 0.0, typeChannelsByDate: "ChannelsByDate", typeChannelsByRating: "ChannelsByRating"}) { id }
+}
+
+
+mutation UpdateChannel {
+    Python: updateChannel(input: {id: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", image: "https://bucketName.s3.eu-west-3.amazonaws.com/keyPython"}){ id },
+    Printing: updateChannel(input: {id: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", image: "https://bucketName.s3.eu-west-3.amazonaws.com/key3DPrinting"}){ id },
+    BeginnerProjects: updateChannel(input: {id: "e963cae9-ce59-45bc-8b90-e502b3a24db0", image: "https://bucketName.s3.eu-west-3.amazonaws.com/keyBeginnerProjects"}){ id },
+    WebProgramming: updateChannel(input: {id: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a", image: "https://bucketName.s3.eu-west-3.amazonaws.com/keyWebProgramming"}){ id },
+}
+
+
+mutation AddChannelParticipants {
+  technical2ToPythonChannel: createUsersParticipantChannels(input: {id: "21980e1f-b67e-4e8c-90ca-8985581361ab", 
+                                 channelParticipantsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userParticipantChannelsId: "IDtechnical2"}) { id }, 
+  professor1ToBeginnerProjectsChannel: createUsersParticipantChannels(input: {id: "107ba136-b69e-462d-986b-da4135678dff", 
+                                 channelParticipantsId: "e963cae9-ce59-45bc-8b90-e502b3a24db0", userParticipantChannelsId: "IDprofessor1"}) { id }, 
+  professor3ToBeginnerProjectsChannel: createUsersParticipantChannels(input: {id: "890b652e-63b3-4460-9d21-5b1f6ef89731", 
+                                 channelParticipantsId: "e963cae9-ce59-45bc-8b90-e502b3a24db0", userParticipantChannelsId: "IDprofessor3"}) { id }, 
+  professor1To3DPrinting: createUsersParticipantChannels(input: {id: "241924ab-43b9-45ba-a2dc-d59d66951ef4",  
+                                 channelParticipantsId: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", userParticipantChannelsId: "IDprofessor1"}) { id }, 
+  technical2ToWebProgramming: createUsersParticipantChannels(input: {id: "6cbb7406-66da-40e1-afdd-f9a573cace5b", 
+                                 channelParticipantsId: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a", userParticipantChannelsId: "IDtechnical2"}) { id } 
+}
+
+
+mutation AddChannelSubscribers {
+  student1SubscribesToPythonChannel: createSubscriptionsSubscribers(input: {id: "6eb0ea38-7600-4312-9bf0-3ca411321eee", 
+                                          channelSubscribersId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userSubscriptionsId: "IDstudent1"}) { id }, 
+  student5SubscribesToPythonChannel: createSubscriptionsSubscribers(input: {id: "be89d14b-b130-4465-a299-604997e5bb03", 
+                                          channelSubscribersId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userSubscriptionsId: "IDstudent5"}) { id },
+  student8SubscribesToPythonChannel: createSubscriptionsSubscribers(input: {id: "fe495cad-6460-471b-a55f-58a1d7b7de2f", 
+                                          channelSubscribersId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userSubscriptionsId: "IDstudent8"}) { id },
+  student1SubscribesTo3DPrintingChannel: createSubscriptionsSubscribers(input: {id: "7c935425-5a3b-4557-afd3-635b1ffcc905", 
+                                          channelSubscribersId: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", userSubscriptionsId: "IDstudent1"}) { id },
+  student2SubscribesTo3DPrintingChannel: createSubscriptionsSubscribers(input: {id: "e13a552a-1fb2-49f9-8ad8-ae39691cd473", 
+                                          channelSubscribersId: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", userSubscriptionsId: "IDstudent2"}) { id },
+  student1SubscribesToCompetitionsChannel: createSubscriptionsSubscribers(input: {id: "69136e4c-d350-4272-a118-912c162f685f", 
+                                          channelSubscribersId: "ab64d254-8d04-4be4-b0a9-854c6aef574f", userSubscriptionsId: "IDstudent1"}) { id },
+  professor1SubscribesToCompetitionsChannel: createSubscriptionsSubscribers(input: {id: "07cceeaa-f8b1-4812-ac7d-d9c86f2e0312", 
+                                          channelSubscribersId: "ab64d254-8d04-4be4-b0a9-854c6aef574f", userSubscriptionsId: "IDprofessor1"}) { id },
+  graduated3SubscribesToCompetitionChannel: createSubscriptionsSubscribers(input: {id: "4a329dc1-1e3e-4986-8804-6f43eb8d38c2", 
+                                          channelSubscribersId: "ab64d254-8d04-4be4-b0a9-854c6aef574f", userSubscriptionsId: "IDgraduated3"}) { id },
+  technical1SubscribesToWebProgramming: createSubscriptionsSubscribers(input: {id: "f2ca107e-017e-4b9d-95f3-b258549d1d0a", 
+                                          channelSubscribersId: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a", userSubscriptionsId: "IDtechnical1"}) { id },
+  student1SubscribesToWebProgramming: createSubscriptionsSubscribers(input: {id: "28697a8a-6646-4df7-b693-bafe70baf377", 
+                                          channelSubscribersId: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a", userSubscriptionsId: "IDstudent1"}) { id },
+  graduated1SubscribesToWebProgramming: createSubscriptionsSubscribers(input: {id: "fa79fd2e-57f2-447a-9815-6337d4f05254", 
+                                          channelSubscribersId: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a", userSubscriptionsId: "IDgraduated1"}) { id },
+  graduated2SubscribesToWebProgramming: createSubscriptionsSubscribers(input: {id: "5aa3d207-8d4d-4518-b27d-fee056922e4c", 
+                                          channelSubscribersId: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a", userSubscriptionsId: "IDgraduated2"}) { id }
+}
+
+
+mutation AddUserNotification {
+  student1SubscribesToPythonChannel: createUserNotification(input: {id: "36cd36e4-db69-4579-9254-c87144052c82", type: "Subscribe", 
+                                      channelID: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", channelName: "Python", message: "You have subscribed to Python channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDstudent1"}) { id },
+  student5SubscribesToPythonChannel: createUserNotification(input: {id: "7535ad10-9241-4a29-9e07-e5dfe240a602", type: "Subscribe", 
+                                      channelID: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", channelName: "Python", message: "You have subscribed to Python channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDstudent5"}) { id },
+  student8SubscribesToPythonChannel: createUserNotification(input: {id: "352633e0-c2f9-4de5-b765-c9eb67b6cf69", type: "Subscribe", 
+                                      channelID: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", channelName: "Python", message: "You have subscribed to Python channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDstudent8"}) { id },
+  student1SubscribesTo3DPrintingChannel: createUserNotification(input: {id: "6f0981c0-d96a-4b11-82df-361b659aa159", type: "Subscribe", 
+                                      channelID: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", channelName: "3D Printing", message: "You have subscribed to 3D Printing channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDstudent1"}) { id },
+  student2SubscribesTo3DPrintingChannel: createUserNotification(input: {id: "6ec6f13c-ccfa-4f1b-85b1-2caa4fd2a7da", type: "Subscribe", 
+                                      channelID: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", channelName: "3D Printing", message: "You have subscribed to 3D Printing channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDstudent2"}) { id },
+  student1SubscribesToCompetitionsChannel: createUserNotification(input: {id: "0ce23437-5da7-4860-942c-58479cb0e2f1", type: "Subscribe", 
+                                      channelID: "ab64d254-8d04-4be4-b0a9-854c6aef574f", channelName: "Competitions", message: "You have subscribed to Competitions channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDstudent1"}) { id },
+  professor1SubscribesToCompetitionsChannel:createUserNotification(input: {id: "88a3dc24-2152-43cd-8a44-7b02c8090752", type: "Subscribe", 
+                                      channelID: "ab64d254-8d04-4be4-b0a9-854c6aef574f", channelName: "Competitions", message: "You have subscribed to Competitions channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDprofessor1"}) { id },
+  graduated3SubscribesToCompetitionsChannel: createUserNotification(input: {id: "69c04b8c-92c5-4ef0-9893-19757af88415", type: "Subscribe", 
+                                      channelID: "ab64d254-8d04-4be4-b0a9-854c6aef574f", channelName: "Competitions", message: "You have subscribed to Competitions channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDgraduated3"}) { id },
+  technical1SubscribesToWebProgramming: createUserNotification(input: {id: "71baec42-5c06-4f26-bfb2-d0601c43c9cf", type: "Subscribe", 
+                                      channelID: "6cbb7406-66da-40e1-afdd-f9a573cace5b", channelName: "Web Programming", message: "You have subscribed to Web Programming channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDtechnical1"}) { id },
+  student1SubscribesToWebProgramming: createUserNotification(input: {id: "838361ee-af38-4c6c-8da9-a490df40d539", type: "Subscribe", 
+                                      channelID: "6cbb7406-66da-40e1-afdd-f9a573cace5b", channelName: "Web Programming", message: "You have subscribed to Web Programming channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDstudent1"}) { id },
+  graduated1SubscribesToWebProgramming: createUserNotification(input: {id: "73dbc171-20f1-436b-a64e-e3be33b0e305", type: "Subscribe", 
+                                      channelID: "6cbb7406-66da-40e1-afdd-f9a573cace5b", channelName: "Web Programming", message: "You have subscribed to Web Programming channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDgraduated1"}) { id },
+  graduated2SubscribesToWebProgramming: createUserNotification(input: {id: "22d8a51f-2508-4145-ba3e-d7a62ae107a4", type: "Subscribe", 
+                                      channelID: "6cbb7406-66da-40e1-afdd-f9a573cace5b", channelName: "Web Programming", message: "You have subscribed to Web Programming channel", 
+                                      typeUserNotificationsByDate: "UserNotificationsByDate", userNotificationsId: "IDgraduated2"}) { id },
+}
+
+
+mutation CreatePosts {
+  professor1Post1Python: createPost(input: {id: "127bc1de-fcb5-4057-8fff-b301adfa0689", name: "Interesante vídeo sobre trucos de PyCharm", 
+                                content: "<p><a href='https://www.youtube.com/watch?v=xKOx0rdATdM'>Awesome PyCharm Tricks / Features</a></p>",
+                                topic: "PyCharm", channelPostsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userPostsId: "IDprofessor1",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  professor1Post2Python: createPost(input: {id: "b625bb01-ab0a-4011-a2ab-97d7f9b8992d", name: "Por si todavía no te has animado a probar Google Colab", 
+                                content: "<p><a href='https://www.youtube.com/watch?v=tCVXoTV12dE'>Google Colab Introduction For Machine Learning</a></p>", 
+                                topic: "Machine Learning", channelPostsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userPostsId: "IDprofessor1",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  professor1Post3Python: createPost(input: {id: "927bc1hj-fcb5-4057-8fff-b301adfa0689", name: "7 razones por las que Python es el lenguaje de programación del futuro", 
+                                content: "<p><a href='https://maskodigo.com/7-razones-por-las-que-python-es-el-mejor-lenguaje-de-programacion-para-adolescentes/'>Link</a></p>",
+                                topic: "Machine Learning", channelPostsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userPostsId: "IDprofessor1",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  technical1Post1Python: createPost(input: {id: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", name: "Nueva versión de TensorFlow disponible con grandes mejoras!!!", 
+                                content: "<p><a href='https://github.com/tensorflow/tensorflow/releases/tag/v2.10.0'>TensorFlow 2.10.0</a></p>", 
+                                topic: "Machine Learning", channelPostsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userPostsId: "IDtechnical1",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  technical1Post2Python: createPost(input: {id: "678fa7ab-cab5-4acf-8acf-4dce6b7a8b17", name: "Interesante repositiorio para empezar en ML desde cero", 
+                                content: "<p><a href='https://github.com/madhug-nadig/Machine-Learning-Algorithms-from-Scratch'>Machine-Learning-Algorithms-from-Scratch</a></p>", 
+                                topic: "Machine Learning", channelPostsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89", userPostsId: "IDtechnical1",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  technical1Post13DPrinting: createPost(input: {id: "7d31e51e-fe9a-4ab5-ab5d-1dc415393739", name: "Guía de compra de impresoras 3D", 
+                                content: "<p>Yo particularmente uso la Ender S1 y me va genial.</p> <p><a href='https://www.impresoras3d.com/las-mejores-impresoras-3d-en-2022/'>Las mejores impresoras 3D en 2022</a></p>", 
+                                topic: "Injection", channelPostsId: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", userPostsId: "IDtechnical1",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  professor1Post33DPrinting: createPost(input: {id: "d7d72b80-cae1-4b38-8936-57f8e69d4200", name: "Manual de Usuario de la impresora PRUSA i3 PLUS", 
+                                content: "<p>Despues de un rato buscando el manual de usuario de la impresora PRUSA i3 PLUS por fin lo he encontrado. Lo dejo por aquí por si alguién lo necesita</p> <p><a href='https://colaboraeducacion30.juntadeandalucia.es/educacion/colabora/documents/119379/1003266/Original-Prusa-i3-Plus-Manual.pdf/3756a7db-3e85-4159-8e1c-0f6878e4ce1b?version=1.0'>Manual para Impresión 3D</a></p>", 
+                                topic: "Injection", channelPostsId: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8", userPostsId: "IDprofessor1",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  professor3Post1BeginnerProjects: createPost(input: {id: "862804f8-3338-4421-9a9d-351929555c69", name: "Lista de diversos proyectos de iniación", 
+                                content: "<p><a href='https://github.com/practical-tutorials/project-based-learning'>Project Based Learning</a></p>", 
+                                topic: "Python", channelPostsId: "e963cae9-ce59-45bc-8b90-e502b3a24db0", userPostsId: "IDprofessor3",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  professor2Post1BeginnerProjects: createPost(input: {id: "37085e68-62b2-4845-adf5-8b44738497e3", name: "15 proyectos de Arduino para principiantes", 
+                                content: "<p>Si queréis coger ideas para comenzar con arduino echadle un ojo a este enlace</p> <p><a href='https://www.makeuseof.com/tag/10-great-arduino-projects-for-beginners/'>15 Great Arduino Projects for Beginners</a></p>", 
+                                topic: "Arduino", channelPostsId: "e963cae9-ce59-45bc-8b90-e502b3a24db0", userPostsId: "IDprofessor2",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+  technical2Post1WebProgramming: createPost(input: {id: "f10099c2-ed37-42ce-b8b4-06e6980ab9ce", name: "Nuevo framework de editor de texto", 
+                                content: "<p>De la mano de Facebook ha surgido Lexical, un nuevo framework de editor de texto. Tiene pintaza. Echadle un ojo.</p> <p><a href='https://lexical.dev/'>Lexical</a></p>", 
+                                topic: "Javascript", channelPostsId: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a", userPostsId: "IDtechnical2",
+                                avgRating: 0.0, typePostsByDate: "PostsByDate", typePostsByRating: "PostsByRating"}) { id },
+}
+
+
+mutation createChannelNotification {
+  a: createChannelNotification(input: {message: "Interesante vídeo sobre trucos de PyCharm", type: "New Post", typeChannelNotificationsByDate: "ChannelNotificationsByDate", channelNotificationsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89"}) { id },
+  b: createChannelNotification(input: {message: "Por si todavía no te has animado a probar Google Colab", type: "New Post", typeChannelNotificationsByDate: "ChannelNotificationsByDate", channelNotificationsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89"}) { id },
+  c: createChannelNotification(input: {message: "Nueva versión de TensorFlow disponible con grandes mejoras!!!", type: "New Post", typeChannelNotificationsByDate: "ChannelNotificationsByDate", channelNotificationsId: "2c9873c8-4c01-49d6-a78a-3b66c0447a89"}) { id },
+  d: createChannelNotification(input: {message: "Guía de compra de impresoras 3D", type: "New Post", typeChannelNotificationsByDate: "ChannelNotificationsByDate", channelNotificationsId: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8"}) { id },
+  e: createChannelNotification(input: {message: "Manual de Usuario de la impresora PRUSA i3 PLUS", type: "New Post", typeChannelNotificationsByDate: "ChannelNotificationsByDate", channelNotificationsId: "ed2a9968-b5dd-45cc-b6af-041d62c22ca8"}) { id },
+  f: createChannelNotification(input: {message: "Lista de diversos proyectos de iniación", type: "New Post", typeChannelNotificationsByDate: "ChannelNotificationsByDate", channelNotificationsId: "e963cae9-ce59-45bc-8b90-e502b3a24db0"}) { id },
+  g: createChannelNotification(input: {message: "15 proyectos de Arduino para principiantes", type: "New Post", typeChannelNotificationsByDate: "ChannelNotificationsByDate", channelNotificationsId: "e963cae9-ce59-45bc-8b90-e502b3a24db0"}) { id },
+  h: createChannelNotification(input: {message: "Nuevo framework de editor de texto", type: "New Post", typeChannelNotificationsByDate: "ChannelNotificationsByDate", channelNotificationsId: "7ae6bfd6-cc0f-4094-9bfb-338e52a7f04a"}) { id },
+}
+
+mutation createRating {
+  a: createRating(input: {id: "7e039c82-7e25-4db1-baf0-c0d9965d1fe8", userRatingsId: "IDstudent1", postRatingsId: "127bc1de-fcb5-4057-8fff-b301adfa0689", stars: 5 }) { id },
+  b: createRating(input: {id: "51a81958-c61c-4f9a-91cd-37739213e02e", userRatingsId: "IDstudent2", postRatingsId: "127bc1de-fcb5-4057-8fff-b301adfa0689", stars: 4 }) { id },
+  c: createRating(input: {id: "66347822-b3dc-46a7-b8ee-02d6c7fde5de", userRatingsId: "IDstudent3", postRatingsId: "127bc1de-fcb5-4057-8fff-b301adfa0689", stars: 3.5 }) { id },
+  d: createRating(input: {id: "d0b0c694-8cb3-4a51-98e9-307e0b8a172a", userRatingsId: "IDtechnical1", postRatingsId: "127bc1de-fcb5-4057-8fff-b301adfa0689", stars: 4.5 }) { id },
+  e: createRating(input: {id: "5d5b1a7b-46dc-4d7e-b01f-6e68d6e4f56a", userRatingsId: "IDstudent5", postRatingsId: "127bc1de-fcb5-4057-8fff-b301adfa0689", stars: 3 }) { id },
+  f: createRating(input: {id: "0b33e2b2-9d06-40af-a8a1-24b7c19f49d6", userRatingsId: "IDstudent6", postRatingsId: "127bc1de-fcb5-4057-8fff-b301adfa0689", stars: 4.5 }) { id },
+  g: createRating(input: {id: "1d20e8b2-28fb-4231-a0d2-2c75e990fa77", userRatingsId: "IDgraduated1", postRatingsId: "127bc1de-fcb5-4057-8fff-b301adfa0689", stars: 5 }) { id },
+  h: createRating(input: {id: "0daa8832-2d36-47f3-8e2c-73525f00f747", userRatingsId: "IDprofessor1", postRatingsId: "127bc1de-fcb5-4057-8fff-b301adfa0689", stars: 4 }) { id },
+}
+
+mutation updatePost {
+  updatePost(input: {id: "127bc1de-fcb5-4057-8fff-b301adfa0689", avgRating: 4.19}) { id },
+}
+
+mutation createRating {
+  a: createRating(input: {id: "8e054c82-7e89-4db3-baf0-c0d9965d1fe8", userRatingsId: "IDstudent1", postRatingsId: "b625bb01-ab0a-4011-a2ab-97d7f9b8992d", stars: 5 }) { id },
+  b: createRating(input: {id: "53a84324-c61c-4f6a-91cd-37739213e02e", userRatingsId: "IDstudent2", postRatingsId: "b625bb01-ab0a-4011-a2ab-97d7f9b8992d", stars: 4 }) { id },
+  c: createRating(input: {id: "77347822-b3dc-46a7-b8ee-02d6c7fde5de", userRatingsId: "IDstudent3", postRatingsId: "b625bb01-ab0a-4011-a2ab-97d7f9b8992d", stars: 3.5 }) { id },
+  e: createRating(input: {id: "8f3147ba-50a1-44e9-bd9b-2667c3fc3fa3", userRatingsId: "IDtechnical1", postRatingsId: "b625bb01-ab0a-4011-a2ab-97d7f9b8992d", stars: 3 }) { id },
+}
+
+mutation createRating {
+  a: createRating(input: {id: "ccf9a287-84b8-4a75-9972-68f0230a12a1", userRatingsId: "IDstudent1", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 3 }) { id },
+  b: createRating(input: {id: "53f951e8-221d-4d26-9f7a-9f10489643a1", userRatingsId: "IDstudent2", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 4.5 }) { id },
+  c: createRating(input: {id: "56e0eb0d-06fc-4f4c-a4b3-4fc1c66d7ad4", userRatingsId: "IDstudent3", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 2 }) { id },
+  d: createRating(input: {id: "5a30a729-5a6b-45c9-a196-d52bae56ed22", userRatingsId: "IDtechnical2", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 3.5 }) { id },
+  e: createRating(input: {id: "a05377ba-cc16-437f-96a1-8f57d51e36cc", userRatingsId: "IDstudent5", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 4 }) { id },
+  f: createRating(input: {id: "53b1dcef-46a3-4da4-a42c-607f34d8f282", userRatingsId: "IDtechnical1", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 2.5 }) { id },
+  g: createRating(input: {id: "b80c78b3-bfef-4463-a83a-2f429b6c81fb", userRatingsId: "IDprofessor1", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 5 }) { id },
+  h: createRating(input: {id: "7a28e540-c858-4356-b49c-81e1b929cd96", userRatingsId: "IDstudent8", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 3.5 }) { id },
+  i: createRating(input: {id: "04d8f3c9-c214-4e14-baa8-10b9821f4b1a", userRatingsId: "IDgraduated1", postRatingsId: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", stars: 3 }) { id },
+}
+
+mutation updatePost {
+  updatePost(input: {id: "4a2fa7ab-cab5-4acf-8acf-4dce6b7a8b17", avgRating: 3.44}) { id },
+}
+
+mutation createRatings {
+  a: createRating(input: {id: "d0cf4c05-4a4a-4f1b-b2e1-b26f0de10f45", userRatingsId: "IDstudent1", postRatingsId: "7d31e51e-fe9a-4ab5-ab5d-1dc415393739", stars: 3 }) { id },
+  b: createRating(input: {id: "fe5d7ba5-5f89-4dbf-a9e9-7f834b74c6b1", userRatingsId: "IDstudent2", postRatingsId: "7d31e51e-fe9a-4ab5-ab5d-1dc415393739", stars: 4 }) { id },
+  c: createRating(input: {id: "0f5429c6-1d2c-42bb-98b7-6fa454b0f8da", userRatingsId: "IDstudent3", postRatingsId: "7d31e51e-fe9a-4ab5-ab5d-1dc415393739", stars: 2 }) { id },
+  d: createRating(input: {id: "c4b4f4b4-bc69-4f8c-b1c3-b2877e3f321d", userRatingsId: "IDstudent4", postRatingsId: "7d31e51e-fe9a-4ab5-ab5d-1dc415393739", stars: 5 }) { id },
+  e: createRating(input: {id: "e7d774bf-f24a-4841-bf20-71168283ed87", userRatingsId: "IDstudent5", postRatingsId: "7d31e51e-fe9a-4ab5-ab5d-1dc415393739", stars: 3.5 }) { id },
+}
+
+mutation updatePost {
+  updatePost(input: {id: "7d31e51e-fe9a-4ab5-ab5d-1dc415393739", avgRating: 3.5}) { id },
+}
+
+mutation createRating {
+  a: createRating(input: {id: "2b9cc296-0906-4d87-98b6-8138c05d2666", userRatingsId: "IDtechnical1", postRatingsId: "d7d72b80-cae1-4b38-8936-57f8e69d4200", stars: 4.5 }) { id },
+  b: createRating(input: {id: "33398e15-3a56-45bf-8bfa-5aa6dc5ab6c5", userRatingsId: "IDprofessor3", postRatingsId: "d7d72b80-cae1-4b38-8936-57f8e69d4200", stars: 5 }) { id },
+  c: createRating(input: {id: "2e12c238-6596-4f10-ba92-8f05cfaa461d", userRatingsId: "IDprofessor1", postRatingsId: "d7d72b80-cae1-4b38-8936-57f8e69d4200", stars: 3 }) { id },
+  d: createRating(input: {id: "732e1409-ffed-444d-95de-6be7b93c8f0e", userRatingsId: "IDprofessor2", postRatingsId: "d7d72b80-cae1-4b38-8936-57f8e69d4200", stars: 2 }) { id },
+}
+
+mutation createRating {
+  a: createRating(input: {id: "2c041e8e-72dd-4bf4-9354-16f8b21ad4e1", userRatingsId: "IDstudent1", postRatingsId: "862804f8-3338-4421-9a9d-351929555c69", stars: 3 }) { id },
+  b: createRating(input: {id: "21cf064b-77c1-4378-91e7-6ebdaef9c9f6", userRatingsId: "IDstudent2", postRatingsId: "862804f8-3338-4421-9a9d-351929555c69", stars: 4 }) { id },
+  c: createRating(input: {id: "a8e69e78-f580-4c72-b25a-0c1892dd0897", userRatingsId: "IDstudent3", postRatingsId: "862804f8-3338-4421-9a9d-351929555c69", stars: 4.5 }) { id },
+  d: createRating(input: {id: "5e5c5d5e-d8cc-443e-a90b-e27d846af9f5", userRatingsId: "IDprofessor1", postRatingsId: "862804f8-3338-4421-9a9d-351929555c69", stars: 2.5 }) { id },
+}
+
+mutation createRating {
+  a: createRating(input: {id: "87c15953-14f3-4e7a-9d34-985ec1d33856", userRatingsId: "IDprofessor1", postRatingsId: "37085e68-62b2-4845-adf5-8b44738497e3", stars: 3 }) { id },
+  b: createRating(input: {id: "4b8ae1a9-ecb2-4128-ab15-da06aa02414f", userRatingsId: "IDprofessor2", postRatingsId: "37085e68-62b2-4845-adf5-8b44738497e3", stars: 1 }) { id },
+}

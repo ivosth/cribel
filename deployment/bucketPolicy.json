@@ -1,0 +1,49 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": [
+				"s3:GetObject",
+				"s3:PutObject",
+				"s3:DeleteObject"
+			],
+			"Resource": [
+				"arn:aws:s3:::<bucket_name>/public/*",
+				"arn:aws:s3:::<bucket_name>/protected/${cognito-identity.amazonaws.com:sub}/*",
+				"arn:aws:s3:::<bucket_name>/private/${cognito-identity.amazonaws.com:sub}/*"
+			]
+		},
+		{
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": "s3:PutObject",
+			"Resource": "arn:aws:s3:::<bucket_name>/uploads/*"
+		},
+		{
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": "s3:GetObject",
+			"Resource": "arn:aws:s3:::<bucket_name>/protected/*"
+		},
+		{
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": "s3:ListBucket",
+			"Resource": "arn:aws:s3:::<bucket_name>",
+			"Condition": {
+				"StringLike": {
+					"s3:prefix": [
+						"public/",
+						"public/*",
+						"protected/",
+						"protected/*",
+						"private/${cognito-identity.amazonaws.com:sub}/",
+						"private/${cognito-identity.amazonaws.com:sub}/*"
+					]
+				}
+			}
+		}
+	]
+}

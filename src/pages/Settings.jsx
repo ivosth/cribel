@@ -1,11 +1,10 @@
 import {
-    Tabs, Tab, TabList, TabPanels, TabPanel,
-    Flex, Button, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer
+    Flex, useColorModeValue, Box, Link, Icon, Hide, Text, Spacer
 } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import { MdOutlineCastForEducation } from "react-icons/md";
-import { BsPersonSquare, BsTools} from "react-icons/bs";
+import { BsPersonSquare, BsTools } from "react-icons/bs";
 
 const NavLink = ({ icon, link, children }) => (
     <Link
@@ -16,7 +15,6 @@ const NavLink = ({ icon, link, children }) => (
         py={1}
         rounded={"md"}
         mx="1rem"
-        //color= {useColorModeValue("blue.900", "blue.100")}
         bgColor={useColorModeValue("blue.400", "blue.100")}
         _hover={{
             bg: useColorModeValue("blue.500", "blue.200"),
@@ -24,7 +22,7 @@ const NavLink = ({ icon, link, children }) => (
 
     >
         <Flex align="center">
-            <Icon as={icon} color={useColorModeValue("white", "black")}/>
+            <Icon as={icon} color={useColorModeValue("white", "black")} />
             <Hide below='md'>
                 <Text marginLeft="0.5rem" color={useColorModeValue("white", "black")}>
                     {children.charAt(0).toUpperCase() + children.slice(1)}
@@ -34,7 +32,7 @@ const NavLink = ({ icon, link, children }) => (
     </Link>
 );
 
-function Explore() {
+function Settings(props) {
 
     return (
         <Box
@@ -42,22 +40,28 @@ function Explore() {
             fontFamily="monospace"
             justifyContent="center"
         >
-            <Flex mb="2rem">
-                <Spacer />
-                <Flex alignItems={"center"} justifyContent={"space-between"}>
+            {props.userGroup !== "viewer" ?
+                <Flex mb="2rem">
                     <Spacer />
                     <Flex alignItems={"center"} justifyContent={"space-between"}>
-                        <NavLink icon={BsPersonSquare} link={"profile"}>{"profile"}</NavLink>
-                        <NavLink icon={MdOutlineCastForEducation} link={"channels"}>{"channels"}</NavLink>
-                        <NavLink icon={BsTools} link={"advanced"}>{"advanced"}</NavLink>
+                        <Spacer />
+                        <Flex alignItems={"center"} justifyContent={"space-between"}>
+                            <NavLink icon={BsPersonSquare} link={"profile"}>{"profile"}</NavLink>
+                            {props.userGroup === "admin" || props.userGroup === "creator" ?
+                                <NavLink icon={MdOutlineCastForEducation} link={"channels"}>{"channels"}</NavLink>
+                                : null
+                            }
+                            {props.userGroup === "admin" ? <NavLink icon={BsTools} link={"advanced"}>{"advanced"}</NavLink> : null}
+                        </Flex>
                     </Flex>
+                    <Spacer />
                 </Flex>
-                <Spacer />
-            </Flex>
+                : null
+            }
 
             <Outlet />
         </Box>
     );
 }
 
-export default Explore;
+export default Settings;

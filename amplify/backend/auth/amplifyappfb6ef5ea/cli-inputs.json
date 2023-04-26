@@ -42,7 +42,8 @@
     ],
     "triggers": {},
     "userPoolGroupList": [
-      "admin"
+      "admin",
+      "creator"
     ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,

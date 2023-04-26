@@ -1,87 +1,121 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
-
-#union Subscribable = Channel | User
-
-enum Role {
- student,
- graduated,
- technical,
- professor
-}
-
-enum Group {
- admin,
- creator,
- viewer
-}
+enum Role { student, graduated, technical, professor }
+enum Group { admin, creator, viewer }
 
 
 type User 
   @model 
   @auth(
     rules: [
-      # allow admins to create, update and delete user
-      { allow: groups, groups: ["admin"] },
-      # allow ownner to create, update and delete user
-      { allow: owner },
-      # allow all authenticated users to view other users' information
-      { allow: private, operations: [read] },
-      # allow non authenticated users to create an user
-      { allow: public, operations: [create], provider: iam }
+      # allow admins to read, create, update and delete user
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+      # allow all authenticated users to view other users' information and create user in DynamoDB
+      { allow: private, operations: [read, create] },
     ]
   ) {
 
   id: ID!
+    @auth(rules: [ 
+      { allow: private, operations: [read, create, update] }, # Needed to allow update of the image, currentPosition and description fields
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])
   email: AWSEmail!
   emailVerified: Boolean!
   disabled: Boolean! @default(value: "false")
   givenName: String!
   familyName: String!
   image: String
+    @auth(rules: [
+      { allow: private, operations: [read, create, update] }, #Allow to update only this field
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])
   role: Role @default(value: "student")
-  group: Group @default(value: "admin")
+  group: Group @default(value: "viewer")
   currentPosition: String 
+      @auth(rules: [
+      { allow: private, operations: [read, create, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])
   description: String
+      @auth(rules: [
+      { allow: private, operations: [read, create, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])
   ratings: [Rating] @hasMany
   posts: [Post] @hasMany
   ownedChannels: [Channel] @hasMany
-  subscriptions: [Channel] @manyToMany(relationName: "SubscriptionsSubscribers")
-  participantChannels: [Channel] @manyToMany(relationName: "UsersParticipantChannels")
+  subscriptions: [SubscriptionsSubscribers] @hasMany
+  participantChannels: [UsersParticipantChannels] @hasMany
   notifications: [UserNotification] @hasMany
-
-  #To prevent an owner from reassigning their record to another user https://docs.amplify.aws/cli/graphql/authorization-rules/#per-user--owner-based-data-access
-  #owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 
 }
 
-type Post @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
+type Post
+  @model 
+  @auth(
+    rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
+      # allow creators to only create, read and update posts, NOT DELETE posts
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
+      # allow all authenticated users to read posts
+      { allow: private, operations: [read] },
+    ]
+  ) {
+
   id: ID!
+    @auth(rules: [
+    { allow: private, operations: [read, update] }, # Needed to allow update of the avgRating
+    { allow: groups, groups: ["creator"], operations: [create, read, update] },
+    { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+  ]) 
   name: String!
   topic: String! #In the code a check will be made to ensure that only the topics in the channel can be selected.
-  #A @hasOne relationship always uses a reference to the primary key of the related model, by default id.
-  owner: User! @belongsTo #(fields: ["userID"]) # field to be used for storing the relationship information
+  owner: User! @belongsTo
   content: String!
   channel: Channel! @belongsTo
   avgRating: Float! @default(value: "0.0")
-  ratings: [Rating] @hasMany #@default(value: "0.0") #The value parameter must be formatted as a string regardless of the corresponding field type
-  # https://github.com/trek10inc/graphql-default-value-transformer
-  # https://docs.amplify.aws/guides/api-graphql/query-with-sorting/q/platform/js/#overview
+    @auth(rules: [
+      { allow: private, operations: [read, update] },
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])  
+  ratings: [Rating] @hasMany
   typePostsByDate: String! @default(value: "PostsByDate") @index(name: "postsByDate", queryField: "postsByDate", sortKeyFields: ["createdAt"])
   typePostsByRating: String! @default(value: "PostsByRating") @index(name: "postsByRating", queryField: "postsByRating", sortKeyFields: ["avgRating"])
   createdAt: String!
 }
 
-type Channel @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
-  id: ID!
+type Channel
+  @model 
+  @auth(
+    rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
+      # allow admins and creators to read and create
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
+      # allow all authenticated users to read channels
+      { allow: private, operations: [read] },
+    ]
+  ) {
+
+  id: ID! 
+    @auth(rules: [
+      { allow: private, operations: [read, update] }, # Needed to allow update of the avgRating
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])  
   name: String!
   topics: [String]!
   disabled: Boolean! @default(value: "false")
-  avgRating: Float! @default(value: "0.0")
+  avgRating: Float! @default(value: "0.0") 
+    @auth(rules: [
+      { allow: private, operations: [read, update] },
+      { allow: groups, groups: ["creator"], operations: [create, read, update] },
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+    ])  
   owner: User! @belongsTo
-  subscribers: [User] @manyToMany(relationName: "SubscriptionsSubscribers")
-  participants: [User] @manyToMany(relationName: "UsersParticipantChannels")
+  subscribers: [SubscriptionsSubscribers] @hasMany
+  participants: [UsersParticipantChannels] @hasMany
   description: String
   image: String
   posts: [Post] @hasMany
@@ -91,34 +125,106 @@ type Channel @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
   notifications: [ChannelNotification] @hasMany
 }
 
-type Rating @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
+
+type SubscriptionsSubscribers
+  @model 
+  @auth(
+    rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
+      # any authenticated user can read, create and update subscriptions
+      { allow: private, operations: [create, read, update, delete] }
+
+    ]
+  ) {
+    id: ID!
+    channel: Channel! @belongsTo
+    user: User! @belongsTo
+}
+
+
+type UsersParticipantChannels
+  @model 
+  @auth(
+    rules: [
+      # allow admins and creators to read and create
+      { allow: groups, groups: ["admin", "creator"], operations: [create, read, update, delete] },
+      # allow all authenticated users to read channels
+      { allow: private, operations: [read] },
+    ]
+  ) {
+    id: ID!
+    channel: Channel! @belongsTo
+    user: User! @belongsTo
+}
+
+type Rating 
+  @model 
+  @auth(
+    rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
+      # allow all authenticated users to read, create and update ratings
+      { allow: private, operations: [create, read, update] },
+    ]
+  ) {
+
   id: ID!
   user: User! @belongsTo
   post: Post! @belongsTo
   stars: Float!
 }
 
-type ChannelNotification @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
+type ChannelNotification
+  @model 
+  @auth(
+    rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
+      # allow creators to read and create
+      { allow: groups, groups: ["creator"], operations: [create, read] },
+      # allow all authenticated users to read posts
+      { allow: private, operations: [read] },
+    ]
+  ) {
+
   id: ID!
   channel: Channel! @belongsTo
+  type: String!
   message: String!
   typeChannelNotificationsByDate: String! @default(value: "ChannelNotificationsByDate") 
     @index(name: "channelNotificationsByDate", queryField: "channelNotificationsByDate", sortKeyFields: ["createdAt"])
   createdAt: String!
 }
 
-type UserNotification @model @auth(rules: [{ allow: groups, groups: ["admin"] }]){
+
+type UserNotification
+  @model 
+  @auth(
+    rules: [
+      # allow all permissions to admins
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] },
+      # allow all authenticated to read and create user notifications
+      { allow: private, operations: [create, read] },
+    ]
+  ) {
+
   id: ID!
   user: User! @belongsTo
+  type: String!
   message: String!
+  channelID: ID!
+  channelName: String!
   typeUserNotificationsByDate: String! @default(value: "UserNotificationsByDate") 
     @index(name: "userNotificationsByDate", queryField: "userNotificationsByDate", sortKeyFields: ["createdAt"])
   createdAt: String!
 }
 
 
-
+# only admin group can call changeUsergroup and changeUserStatus
 type Mutation {
-  changeUserGroup(id: ID!, group: Group!): String @function(name: "changeUserGroup-${env}"),
-  changeUserStatus(id: ID!, disable: Boolean!): String @function(name: "changeUserStatus-${env}")
+  changeUserGroup(id: ID!, group: Group!): String @function(name: "changeUserGroup-${env}") 
+    @auth(rules: [{ allow: groups, groups: ["admin"] }]),
+  changeUserStatus(id: ID!, disable: Boolean!): String @function(name: "changeUserStatus-${env}") 
+    @auth(rules: [{ allow: groups, groups: ["admin"] }]),
 }

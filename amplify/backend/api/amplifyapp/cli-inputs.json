@@ -3,7 +3,6 @@
   "serviceConfiguration": {
     "apiName": "amplifyapp",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "C:\\Users\\Javier\\Desktop\\application\\amplifyapp\\amplify\\backend\\api\\amplifyapp\\schema.graphql",
     "defaultAuthType": {
       "mode": "AMAZON_COGNITO_USER_POOLS",
       "cognitoUserPoolId": "authamplifyappfb6ef5ea"

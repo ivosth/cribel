@@ -1,5 +1,5 @@
 import {
-    Flex, Box, Icon, Text, Spacer, Image, SimpleGrid, Avatar, CircularProgress
+    Flex, Box, Icon, Text, Spacer, Avatar, CircularProgress
 } from "@chakra-ui/react";
 import { RiUserStarLine } from "react-icons/ri";
 import { BsStarFill } from "react-icons/bs";
@@ -19,16 +19,18 @@ function Profile() {
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState([]);
 
-
-    const obtainProfile = async () => {
-        setLoading(true);
-        const profile = await API.graphql({ query: getProfile, variables: { id: id } });
-        setLoading(false);
-        console.log(profile.data.getUser)
-        setProfile(profile.data.getUser);
-    };
-
     useEffect(() => {
+        const obtainProfile = async () => {
+            try {
+                setLoading(true);
+                const profile = await API.graphql({ query: getProfile, variables: { id: id } });
+                setLoading(false);
+                setProfile(profile.data.getUser);
+            } catch (error) {
+                console.error("Error obtaining profile: ", error);
+            }
+        };
+
         obtainProfile();
     }, [id]);
 
@@ -70,13 +72,13 @@ function Profile() {
 
                         <Spacer />
                         <Box>
-                            <Avatar bg='teal.500' size='xl' mb="0.5rem" src={profile.image}/>
+                            <Avatar bg='teal.500' size='xl' mb="0.5rem" src={profile.image} />
                             <Box
                                 px="0.50rem"
                                 py={1}
                                 bg="gray.600"
                                 color="gray.100"
-                                fontSize="0.8rem" //Más pequeño con xs
+                                fontSize="0.8rem" //Smaller with xs
                                 fontWeight="700"
                                 textAlign={"center"}
                                 rounded="md"
@@ -105,95 +107,94 @@ function Profile() {
                             }}
                         >
                             {profile.description ||
-                            "No description provided. \
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus ex odio, et vulputate metus suscipit quis. \
-                            Vestibulum tincidunt eros at lacinia cursus. Vivamus nec elit ac ante faucibus egestas at a arcu. Phasellus sed \
-                            nunc consectetur, porta nulla id, blandit leo. Aenean feugiat euismod mauris, sed vehicula lorem dapibus vel. \
-                            Proin lacinia neque vitae ex porttitor, a commodo mauris ultrices. Nulla bibendum quam at massa pharetra porta \
-                            a et lorem. Cras erat ligula, suscipit sed aliquet sed, scelerisque in risus."}
+                                "No description provided"}
                         </Text>
                     </Box>
 
-                    <Box borderWidth="1px" rounded="lg" px="1rem" py="0.4rem">
-                        <Flex color="gray.700"
-                            _dark={{
-                                color: "gray.200",
-                            }}>
-                            <Icon as={MdOutlineCastForEducation} boxSize="1.5rem" />
-                            <Text as="h1" px={2} fontSize="lg" fontWeight="bold">
-                                Channels
-                            </Text>
-                        </Flex>
+                    {profile.group !== "viewer" ?
+                        <Box borderWidth="1px" rounded="lg" px="1rem" py="0.4rem">
+                            <Flex color="gray.700"
+                                _dark={{
+                                    color: "gray.200",
+                                }}>
+                                <Icon as={MdOutlineCastForEducation} boxSize="1.5rem" />
+                                <Text as="h1" px={2} fontSize="lg" fontWeight="bold">
+                                    Channels
+                                </Text>
+                            </Flex>
 
-                        <Flex
-                            alignItems="center"
-                            mt={4}
-                            color="gray.700"
-                            _dark={{
-                                color: "gray.200",
-                            }}
-                        >
-                            <Box borderWidth="1px" w="full" px="1rem" py="0.4rem" rounded="lg">
-                                <Flex>
-                                    <Icon as={BsStarFill} boxSize="1.3rem" />
-                                    <Text as="h1" px={2} fontSize="md" fontWeight="bold">
-                                        As Creator
-                                    </Text>
-                                </Flex>
+                            <Flex
+                                alignItems="center"
+                                mt={4}
+                                color="gray.700"
+                                _dark={{
+                                    color: "gray.200",
+                                }}
+                            >
+                                <Box borderWidth="1px" w="full" px="1rem" py="0.4rem" rounded="lg">
+                                    <Flex>
+                                        <Icon as={BsStarFill} boxSize="1.3rem" />
+                                        <Text as="h1" px={2} fontSize="md" fontWeight="bold">
+                                            As Creator
+                                        </Text>
+                                    </Flex>
 
-                                {profile.ownedChannels.items.length > 0 ?
-                                    profile.ownedChannels.items.map(channel => (
-                                        <RouterLink key={channel.id} to={`/channel/${channel.id}/new`}>
-                                            <Text as="h2" px={2} fontSize="sm" >
-                                                {channel.name}
-                                            </Text>
-                                        </RouterLink>
-                                    ))
-                                    :
-                                    <Text as="h2" px={2} fontSize="sm" >
-                                        No channel has been created by you
-                                    </Text>
-                                }
-
-                                
-                            </Box>
-                        </Flex>
+                                    {profile.ownedChannels.items.length > 0 ?
+                                        profile.ownedChannels.items.map(channel => (
+                                            <RouterLink key={channel.id} to={`/channel/${channel.id}/new`}>
+                                                <Text as="h2" px={2} fontSize="sm" >
+                                                    {channel.name}
+                                                </Text>
+                                            </RouterLink>
+                                        ))
+                                        :
+                                        <Text as="h2" px={2} fontSize="sm" >
+                                            No channel has been created by you
+                                        </Text>
+                                    }
 
 
-                        <Flex
-                            alignItems="center"
-                            mt={4}
-                            color="gray.700"
-                            _dark={{
-                                color: "gray.200",
-                            }}
-                        >
-                            <Box borderWidth="1px" w="full" px="1rem" py="0.4rem" rounded="lg">
-                                <Flex>
-                                    <Icon as={RiUserStarLine} boxSize="1.3rem" />
-                                    <Text as="h1" px={2} fontSize="md" fontWeight="bold">
-                                        As Participant
-                                    </Text></Flex>
+                                </Box>
+                            </Flex>
+
+
+                            <Flex
+                                alignItems="center"
+                                mt={4}
+                                color="gray.700"
+                                _dark={{
+                                    color: "gray.200",
+                                }}
+                            >
+                                <Box borderWidth="1px" w="full" px="1rem" py="0.4rem" rounded="lg">
+                                    <Flex>
+                                        <Icon as={RiUserStarLine} boxSize="1.3rem" />
+                                        <Text as="h1" px={2} fontSize="md" fontWeight="bold">
+                                            As Participant
+                                        </Text></Flex>
 
 
                                     {profile.participantChannels.items.length > 0 ?
                                         profile.participantChannels.items.map(channel => (
-                                            <RouterLink to={`/channel/${channel.channelID}/new`} key={channel.channelID}>
+                                            <RouterLink to={`/channel/${channel.channelParticipantsId}/new`} key={channel.channelParticipantsId}>
                                                 <Text as="h2" px={2} fontSize="sm" >
                                                     {channel.channel.name}
                                                 </Text>
                                             </RouterLink>
-                                    ))
-                                    :
-                                    <Text as="h2" px={2} fontSize="sm" >
-                                        Does not participate in any channel
-                                    </Text>
-                                }
-                            </Box>
-                        </Flex>
+                                        ))
+                                        :
+                                        <Text as="h2" px={2} fontSize="sm" >
+                                            Does not participate in any channel
+                                        </Text>
+                                    }
+                                </Box>
+
+                            </Flex>
 
 
-                    </Box>
+                        </Box>
+                        :
+                        null}
                 </Box>
             </Flex>
         </Box>

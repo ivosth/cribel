@@ -1,16 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const changeUserGroup = /* GraphQL */ `
-  mutation ChangeUserGroup($id: ID!, $group: Group!) {
-    changeUserGroup(id: $id, group: $group)
-  }
-`;
-export const changeUserStatus = /* GraphQL */ `
-  mutation ChangeUserStatus($id: ID!, $disable: Boolean!) {
-    changeUserStatus(id: $id, disable: $disable)
-  }
-`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -75,29 +65,30 @@ export const createUser = /* GraphQL */ `
       subscriptions {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userSubscriptionsId
+          channelSubscribersId
         }
         nextToken
       }
       participantChannels {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
       notifications {
         items {
           id
+          type
           message
+          channelID
+          channelName
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -107,7 +98,6 @@ export const createUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -175,29 +165,30 @@ export const updateUser = /* GraphQL */ `
       subscriptions {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userSubscriptionsId
+          channelSubscribersId
         }
         nextToken
       }
       participantChannels {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
       notifications {
         items {
           id
+          type
           message
+          channelID
+          channelName
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -207,7 +198,6 @@ export const updateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -275,29 +265,30 @@ export const deleteUser = /* GraphQL */ `
       subscriptions {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userSubscriptionsId
+          channelSubscribersId
         }
         nextToken
       }
       participantChannels {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
       notifications {
         items {
           id
+          type
           message
+          channelID
+          channelName
           typeUserNotificationsByDate
           createdAt
           updatedAt
@@ -307,7 +298,6 @@ export const deleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -352,7 +342,6 @@ export const createPost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       content
       channel {
@@ -375,7 +364,6 @@ export const createPost = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -459,7 +447,6 @@ export const updatePost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       content
       channel {
@@ -482,7 +469,6 @@ export const updatePost = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -566,7 +552,6 @@ export const deletePost = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       content
       channel {
@@ -589,7 +574,6 @@ export const deletePost = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -675,27 +659,24 @@ export const createChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       subscribers {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userSubscriptionsId
+          channelSubscribersId
         }
         nextToken
       }
       participants {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -723,6 +704,7 @@ export const createChannel = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
           typeChannelNotificationsByDate
           createdAt
@@ -779,27 +761,24 @@ export const updateChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       subscribers {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userSubscriptionsId
+          channelSubscribersId
         }
         nextToken
       }
       participants {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -827,6 +806,7 @@ export const updateChannel = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
           typeChannelNotificationsByDate
           createdAt
@@ -883,27 +863,24 @@ export const deleteChannel = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       subscribers {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userSubscriptionsId
+          channelSubscribersId
         }
         nextToken
       }
       participants {
         items {
           id
-          userID
-          channelID
           createdAt
           updatedAt
-          owner
+          userParticipantChannelsId
+          channelParticipantsId
         }
         nextToken
       }
@@ -931,6 +908,7 @@ export const deleteChannel = /* GraphQL */ `
       notifications {
         items {
           id
+          type
           message
           typeChannelNotificationsByDate
           createdAt
@@ -941,6 +919,534 @@ export const deleteChannel = /* GraphQL */ `
       }
       updatedAt
       userOwnedChannelsId
+    }
+  }
+`;
+export const createSubscriptionsSubscribers = /* GraphQL */ `
+  mutation CreateSubscriptionsSubscribers(
+    $input: CreateSubscriptionsSubscribersInput!
+    $condition: ModelSubscriptionsSubscribersConditionInput
+  ) {
+    createSubscriptionsSubscribers(input: $input, condition: $condition) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      userSubscriptionsId
+      channelSubscribersId
+    }
+  }
+`;
+export const updateSubscriptionsSubscribers = /* GraphQL */ `
+  mutation UpdateSubscriptionsSubscribers(
+    $input: UpdateSubscriptionsSubscribersInput!
+    $condition: ModelSubscriptionsSubscribersConditionInput
+  ) {
+    updateSubscriptionsSubscribers(input: $input, condition: $condition) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      userSubscriptionsId
+      channelSubscribersId
+    }
+  }
+`;
+export const deleteSubscriptionsSubscribers = /* GraphQL */ `
+  mutation DeleteSubscriptionsSubscribers(
+    $input: DeleteSubscriptionsSubscribersInput!
+    $condition: ModelSubscriptionsSubscribersConditionInput
+  ) {
+    deleteSubscriptionsSubscribers(input: $input, condition: $condition) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      userSubscriptionsId
+      channelSubscribersId
+    }
+  }
+`;
+export const createUsersParticipantChannels = /* GraphQL */ `
+  mutation CreateUsersParticipantChannels(
+    $input: CreateUsersParticipantChannelsInput!
+    $condition: ModelUsersParticipantChannelsConditionInput
+  ) {
+    createUsersParticipantChannels(input: $input, condition: $condition) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      userParticipantChannelsId
+      channelParticipantsId
+    }
+  }
+`;
+export const updateUsersParticipantChannels = /* GraphQL */ `
+  mutation UpdateUsersParticipantChannels(
+    $input: UpdateUsersParticipantChannelsInput!
+    $condition: ModelUsersParticipantChannelsConditionInput
+  ) {
+    updateUsersParticipantChannels(input: $input, condition: $condition) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      userParticipantChannelsId
+      channelParticipantsId
+    }
+  }
+`;
+export const deleteUsersParticipantChannels = /* GraphQL */ `
+  mutation DeleteUsersParticipantChannels(
+    $input: DeleteUsersParticipantChannelsInput!
+    $condition: ModelUsersParticipantChannelsConditionInput
+  ) {
+    deleteUsersParticipantChannels(input: $input, condition: $condition) {
+      id
+      channel {
+        id
+        name
+        topics
+        disabled
+        avgRating
+        owner {
+          id
+          email
+          emailVerified
+          disabled
+          givenName
+          familyName
+          image
+          role
+          group
+          currentPosition
+          description
+          createdAt
+          updatedAt
+        }
+        subscribers {
+          nextToken
+        }
+        participants {
+          nextToken
+        }
+        description
+        image
+        posts {
+          nextToken
+        }
+        typeChannelsByDate
+        typeChannelsByRating
+        createdAt
+        notifications {
+          nextToken
+        }
+        updatedAt
+        userOwnedChannelsId
+      }
+      user {
+        id
+        email
+        emailVerified
+        disabled
+        givenName
+        familyName
+        image
+        role
+        group
+        currentPosition
+        description
+        ratings {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        ownedChannels {
+          nextToken
+        }
+        subscriptions {
+          nextToken
+        }
+        participantChannels {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      userParticipantChannelsId
+      channelParticipantsId
     }
   }
 `;
@@ -983,7 +1489,6 @@ export const createRating = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       post {
         id
@@ -1003,7 +1508,6 @@ export const createRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -1078,7 +1582,6 @@ export const updateRating = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       post {
         id
@@ -1098,7 +1601,6 @@ export const updateRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -1173,7 +1675,6 @@ export const deleteRating = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       post {
         id
@@ -1193,7 +1694,6 @@ export const deleteRating = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         content
         channel {
@@ -1256,7 +1756,6 @@ export const createChannelNotification = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1278,6 +1777,7 @@ export const createChannelNotification = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
+      type
       message
       typeChannelNotificationsByDate
       createdAt
@@ -1313,7 +1813,6 @@ export const updateChannelNotification = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1335,6 +1834,7 @@ export const updateChannelNotification = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
+      type
       message
       typeChannelNotificationsByDate
       createdAt
@@ -1370,7 +1870,6 @@ export const deleteChannelNotification = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          owner
         }
         subscribers {
           nextToken
@@ -1392,6 +1891,7 @@ export const deleteChannelNotification = /* GraphQL */ `
         updatedAt
         userOwnedChannelsId
       }
+      type
       message
       typeChannelNotificationsByDate
       createdAt
@@ -1439,9 +1939,11 @@ export const createUserNotification = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
+      type
       message
+      channelID
+      channelName
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1488,9 +1990,11 @@ export const updateUserNotification = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
+      type
       message
+      channelID
+      channelName
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1537,9 +2041,11 @@ export const deleteUserNotification = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
+      type
       message
+      channelID
+      channelName
       typeUserNotificationsByDate
       createdAt
       updatedAt
@@ -1547,549 +2053,13 @@ export const deleteUserNotification = /* GraphQL */ `
     }
   }
 `;
-export const createSubscriptionsSubscribers = /* GraphQL */ `
-  mutation CreateSubscriptionsSubscribers(
-    $input: CreateSubscriptionsSubscribersInput!
-    $condition: ModelSubscriptionsSubscribersConditionInput
-  ) {
-    createSubscriptionsSubscribers(input: $input, condition: $condition) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
+export const changeUserGroup = /* GraphQL */ `
+  mutation ChangeUserGroup($id: ID!, $group: Group!) {
+    changeUserGroup(id: $id, group: $group)
   }
 `;
-export const updateSubscriptionsSubscribers = /* GraphQL */ `
-  mutation UpdateSubscriptionsSubscribers(
-    $input: UpdateSubscriptionsSubscribersInput!
-    $condition: ModelSubscriptionsSubscribersConditionInput
-  ) {
-    updateSubscriptionsSubscribers(input: $input, condition: $condition) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deleteSubscriptionsSubscribers = /* GraphQL */ `
-  mutation DeleteSubscriptionsSubscribers(
-    $input: DeleteSubscriptionsSubscribersInput!
-    $condition: ModelSubscriptionsSubscribersConditionInput
-  ) {
-    deleteSubscriptionsSubscribers(input: $input, condition: $condition) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const createUsersParticipantChannels = /* GraphQL */ `
-  mutation CreateUsersParticipantChannels(
-    $input: CreateUsersParticipantChannelsInput!
-    $condition: ModelUsersParticipantChannelsConditionInput
-  ) {
-    createUsersParticipantChannels(input: $input, condition: $condition) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const updateUsersParticipantChannels = /* GraphQL */ `
-  mutation UpdateUsersParticipantChannels(
-    $input: UpdateUsersParticipantChannelsInput!
-    $condition: ModelUsersParticipantChannelsConditionInput
-  ) {
-    updateUsersParticipantChannels(input: $input, condition: $condition) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deleteUsersParticipantChannels = /* GraphQL */ `
-  mutation DeleteUsersParticipantChannels(
-    $input: DeleteUsersParticipantChannelsInput!
-    $condition: ModelUsersParticipantChannelsConditionInput
-  ) {
-    deleteUsersParticipantChannels(input: $input, condition: $condition) {
-      id
-      userID
-      channelID
-      user {
-        id
-        email
-        emailVerified
-        disabled
-        givenName
-        familyName
-        image
-        role
-        group
-        currentPosition
-        description
-        ratings {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        ownedChannels {
-          nextToken
-        }
-        subscriptions {
-          nextToken
-        }
-        participantChannels {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      channel {
-        id
-        name
-        topics
-        disabled
-        avgRating
-        owner {
-          id
-          email
-          emailVerified
-          disabled
-          givenName
-          familyName
-          image
-          role
-          group
-          currentPosition
-          description
-          createdAt
-          updatedAt
-          owner
-        }
-        subscribers {
-          nextToken
-        }
-        participants {
-          nextToken
-        }
-        description
-        image
-        posts {
-          nextToken
-        }
-        typeChannelsByDate
-        typeChannelsByRating
-        createdAt
-        notifications {
-          nextToken
-        }
-        updatedAt
-        userOwnedChannelsId
-      }
-      createdAt
-      updatedAt
-      owner
-    }
+export const changeUserStatus = /* GraphQL */ `
+  mutation ChangeUserStatus($id: ID!, $disable: Boolean!) {
+    changeUserStatus(id: $id, disable: $disable)
   }
 `;

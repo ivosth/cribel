@@ -1,5 +1,6 @@
+// Based on Choc UI Brand Panel With App Screenshot: https://choc-ui.com/docs/page-sections/cta
 import {
-    Flex, Box, Image, Stack, Text, Button
+    Flex, Box, Image, Text
 } from "@chakra-ui/react";
 
 export const Home = () => {
@@ -29,16 +30,16 @@ export const Home = () => {
 
                     <Text as="h1" display="block" fontWeight="bold" lineHeight="shorter" mb={6}
                         fontSize={{
-                            base: "3xl",
-                            sm: "4xl",
+                            base: "5xl",
+                            sm: "6xl",
                         }}>
                         CRIBEL
                     </Text>
                     <Text
                         display="block"
                         fontSize={{
-                            base: "2xl",
-                            sm: "3xl",
+                            base: "4xl",
+                            sm: "5xl",
                         }}
                         fontWeight="bold"
                         lineHeight="shorter"
@@ -50,14 +51,14 @@ export const Home = () => {
                     <Text
                         mb={6}
                         fontSize={{
-                            base: "lg",
-                            md: "xl",
+                            base: "xl",
+                            md: "2xl",
                         }}
                     >
-                        Tired of searching through several websites until you find quality content?<br></br>
+                        Tired of searching through several websites until you find quality content?<br /><br />
                         In Cribel you will find recommendations of quality content to learn about any topic.
                     </Text>
-                    
+
                 </Box>
                 <Box
                     w={{
@@ -72,7 +73,7 @@ export const Home = () => {
                         rounded="lg"
                         shadow="2xl"
                         src="../../screenshot.png"
-                        alt="Hellonext feedback boards software screenshot"
+                        alt="Screenshot of the Python channel on Cribel"
                     />
                 </Box>
             </Flex>
