@@ -69,21 +69,21 @@ npm start
 ```
 
 ### Post-requisites
-Para llenar de datos la aplicación:
-Ve a la carpeta deployment
+To fill the application with data:
+Go to the deployment folder
 
 ```sh
 cd deployment
 ```
 
-Edita el fichero de createContent modificando las variables, user_pool_id, client_id, bucket_name, identity_pool_id, account_id y api_appsync_url con los ARN de tus recursos ya desplegados (puedes usar el comando comentado para obtener esta información)
-Una vez editado ejecutalo:
+Edit the createContent file modifying the variables, user_pool_id, client_id, bucket_name, identity_pool_id, account_id and api_appsync_url with the ARNs of your already deployed resources (you can use the commented command to get this information).
+Once edited run it:
 
 ```sh
 python createContent.py
 ```
 
-Una vez populada de datos la aplicación te podras loguear con cualquier usuario de la siguiente lista:
+Once the application is filled with data, you will be able to log in with any user from the following list:
 - As Student:
   - User: student1@gmail.com Password: student1@gmail.com
   - User: student2@gmail.com Password: student2@gmail.com
@@ -105,11 +105,18 @@ Una vez populada de datos la aplicación te podras loguear con cualquier usuario
   
 <br>
 
-## Images
-Imagenes sacadas de los siguientes repositorios:
-- aa
-- bggb
+## Templates
+The following templates have been used as a baseline for the development of the interface:
+- Simple Navbar with user dropdown: https://chakra-templates.dev/navigation/navbar
+- Sidebar with Header: https://chakra-templates.dev/navigation/sidebar
+- Offset 2x2 Grid from Choc UI: https://choc-ui.com/docs/page-sections/features
+- Brand Panel With App Screenshot: https://choc-ui.com/docs/page-sections/cta
 
-## Creator
-**Javier Mancha Dieguez's Final Degree in Computer Science at the University of Cordoba (UCO)**
+## Images
+The profile images have been obtained from the following repository: https://github.com/cjdowner/interfaces
+
+
+## Creators
+**Juan Antonio Romero as Director of TFG http://www.uco.es/~aromero/**
+**Javier Mancha Diéguez in presentation of his Final Degree Project in Computer Science at the University of Cordoba (UCO)**
 
