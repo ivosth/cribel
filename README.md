@@ -117,6 +117,6 @@ The profile images have been obtained from the following repository: https://git
 
 
 ## Creators
-**Juan Antonio Romero as Director of TFG http://www.uco.es/~aromero/**
-**Javier Mancha Diéguez in presentation of his Final Degree Project in Computer Science at the University of Cordoba (UCO)**
+- **Juan Antonio Romero as Director of TFG http://www.uco.es/~aromero/**
+- **Javier Mancha Diéguez in presentation of his Final Degree Project in Computer Science at the University of Cordoba (UCO) https://www.linkedin.com/in/javier-mancha-dieguez/**
 
