@@ -3,6 +3,7 @@ Cribel is a social network aimed at the continuous learning of users. Here you c
 <br/>
 
 ![Cribel](./public/screenshot.png)
+Check out Cribel's presentation video!! https://www.youtube.com/watch?v=M9_dwqHgy2E
 
 <br/>
 
@@ -117,6 +118,5 @@ The profile images have been obtained from the following repository: https://git
 
 
 ## Creators
-- **Juan Antonio Romero as Director of TFG http://www.uco.es/~aromero/**
 - **Javier Mancha Diéguez in presentation of his Final Degree Project in Computer Science at the University of Cordoba (UCO) https://www.linkedin.com/in/javier-mancha-dieguez/**
-
+- **Juan Antonio Romero as Director of TFG http://www.uco.es/~aromero/**
