@@ -3,7 +3,7 @@ Cribel is a social network aimed at the continuous learning of users. Here you c
 <br/>
 
 ![Cribel](./public/screenshot.png)
-Check out Cribel's presentation video!! https://www.youtube.com/watch?v=M9_dwqHgy2E
+Check out Cribel's presentation video!! https://www.youtube.com/watch?v=iR9lLWAc4eQ
 
 <br/>
 
